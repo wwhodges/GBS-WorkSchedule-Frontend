@@ -1,0 +1,49 @@
+<app-work-filter [workParams]="workParams"></app-work-filter>
+<form [formGroup]="workTableForm">
+    <div class="md-form">
+    <table mdbTable small="true">
+        <thead>
+            <tr>
+                <th>Invoice</th>
+                <th>Batch</th>
+                <th>Account</th>
+                <th>Name</th>
+                <th>Weight</th>
+                <th>Units</th>
+                <th>Lines</th>
+                <th>Destination</th>
+                <th>Status</th>
+                <th>Work Date</th>
+                <th>Del Date</th>
+                <th>Desp Date</th>
+                <th>Add</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr formArrayName="workItems" *ngFor="let work of workTableForm.get('workItems').controls; let i = index;" mdbTableCol>
+                <ng-container [formGroupName]="i">
+                <td>{{workItems[i].invoice}}</td>
+                <td>{{workItems[i].batch}}</td>
+                <td>{{workItems[i].account}}</td>
+                <td>{{workItems[i].name}}</td>
+                <td>{{workItems[i].invWeight}}</td>
+                <td>{{workItems[i].units}}</td>
+                <td>{{workItems[i].lines}}</td>
+                <td><input mdbInput type="text" formControlName="destination" size="8" /></td>
+                <td>{{workItems[i].status}}</td>
+                <td><input mdbInput type="date" formControlName="workDate" style="width: 130px;"/></td>
+                <td><input mdbInput type="date" formControlName="delDate"  style="width: 130px;"/></td>
+                <td><input mdbInput type="date" formControlName="despDate"  style="width: 130px;"/></td>
+                <td>
+                        <div class="custom-control custom-checkbox ml-2">
+                                <input type="checkbox" formControlName="addToSchedule" class="custom-control-input" id="add-{{i}}">
+                                <label class="custom-control-label" for="add-{{i}}">Add</label>
+                              </div>
+            
+                </td>
+                </ng-container>
+            </tr>
+                  </tbody>
+    </table>
+    </div>
+    </form>

@@ -1,0 +1,12 @@
+<form [formGroup]="testForm">
+    <div *ngFor="let fish of fishes" [formGroupName]="fish.id">
+        <label>
+        First:
+        <input type="text" formControlName="fishName">
+        </label>
+        <label>
+        Second:
+        <input type="text" formControlName="fishSize">
+        </label>
+    </div>
+</form>

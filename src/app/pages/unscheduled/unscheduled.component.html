@@ -1,0 +1,66 @@
+<form [formGroup]="workForm">
+<div class="md-form">
+<table mdbTable size="small">
+    <thead>
+        <tr class="sticky-top">
+            <th>Invoice</th>
+            <th>Batch</th>
+            <th>Account</th>
+            <th>Name</th>
+            <th>Weight</th>
+            <th>Units</th>
+            <th>Lines</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>Work Date</th>
+            <th>Del Date</th>
+            <th>Desp Date</th>
+            <th>Add</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let groupedWork of unscheduledWork">
+        <tr mdbTableCol>
+            <th colspan="11">
+                {{groupedWork.group.groupName}}
+            </th>
+        </tr>
+        <tr mdbTableCol *ngFor="let work of groupedWork.work" [formGroupName]="work.workId">
+            <td>{{work.invoice}}</td>
+            <td>{{work.batch}}</td>
+            <td>{{work.account}}</td>
+            <td>{{work.name}}</td>
+            <td>{{work.invWeight}}</td>
+            <td>{{work.units}}</td>
+            <td>{{work.lines}}</td>
+            <td><input mdbInput type="text" formControlName="destination" /></td>
+            <td>{{work.status}}</td>
+            <td><input mdbInput type="date" formControlName="workDate" /></td>
+            <td><input mdbInput type="date" formControlName="delDate" /></td>
+            <td><input mdbInput type="date" formControlName="despDate" /></td>
+            <td>
+                    <div class="custom-control custom-checkbox ml-2">
+                            <input type="checkbox" formControlName="addToSchedule" class="custom-control-input" id="add-{{work.workId}}">
+                            <label class="custom-control-label" for="add-{{work.workId}}">Add</label>
+                          </div>
+
+            </td>
+        </tr>
+        </ng-container>
+
+    </tbody>
+</table>
+</div>
+</form>
+<div class="fixed-bottom" *ngIf="popupVisible">
+        <mdb-card>
+                <!--Card content-->
+                <mdb-card-body>
+                  <!--Text-->
+                  <a (click)="this.saveChanges()" mdbBtn color="primary" class="btn-sm" mdbWavesEffect>Save Changes</a>
+                  <a (click)="this.selectRanges()" mdbBtn color="secondary" class="btn-sm" mdbWavesEffect>Select Ranges</a>
+                  <a (click)="this.allocateDest()" mdbBtn color="secondary" class="btn-sm" mdbWavesEffect>Allocate Destination</a>
+                  <a (click)="this.cancelAll()" mdbBtn color="danger" class="btn-sm" mdbWavesEffect>Cancel</a>
+                </mdb-card-body>
+        </mdb-card>    
+</div>

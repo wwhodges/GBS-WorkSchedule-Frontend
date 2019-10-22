@@ -1,0 +1,48 @@
+<button type="button" mdbBtn outline="true" color="primary" size="sm" class="waves-effect" (click)="isFilterVisible = !isFilterVisible">
+    Filters
+    <mdb-icon fas icon="angle-double-down" class="ml-2" aria-hidden="true" *ngIf="!isFilterVisible"></mdb-icon>
+    <mdb-icon fas icon="angle-double-up" class="ml-2" aria-hidden="true" *ngIf="isFilterVisible"></mdb-icon>
+</button>
+<mdb-card  *ngIf="isFilterVisible">
+    <!--Card content-->
+    <mdb-card-body>
+    <!--Title-->
+    <mdb-card-title>
+        <h5>Filters</h5>
+    </mdb-card-title>
+
+    <!--Text-->
+        <mdb-card-text>
+            <form #filterForm="ngForm">
+                <div class="form-group">
+                    <mdb-checkbox [inline]="true" [default]="true" [(ngModel)]="filters.despatched" name="despatched">Despatched</mdb-checkbox>
+                    <mdb-checkbox [inline]="true" [default]="true" [(ngModel)]="filters.unstarted" name="unstarted">Unstarted</mdb-checkbox>
+                    <mdb-checkbox [inline]="true" [default]="true" [(ngModel)]="filters.picked" name="picked">Picked</mdb-checkbox>
+                    <input mdbInput type="date" [(ngModel)]="filters.dateRange.from" name="dateFrom" />
+                    <input mdbInput type="date" [(ngModel)]="filters.dateRange.to" name="dateTo" />
+                    <div class="custom-control custom-radio">
+                        <input mdbInput type="radio" class="custom-control-input" id="invoice" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="invoice" />
+                        <label class="custom-control-label" for="invoice">Invoice</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input mdbInput type="radio" class="custom-control-input" id="work" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="work" />
+                        <label class="custom-control-label" for="work">Work</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input mdbInput type="radio" class="custom-control-input" id="delivery" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="delivery"/>
+                        <label class="custom-control-label" for="delivery">Delivery</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input mdbInput type="radio" class="custom-control-input" id="despatch" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="despatch"/>
+                        <label class="custom-control-label" for="despatch">Despatch</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input mdbInput type="radio" class="custom-control-input" id="actualDesp" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="actualDesp"/>
+                        <label class="custom-control-label" for="actualDesp">Actual Despatch</label>
+                    </div>
+                </div>
+                <button type="button" mdbBtn color="primary" size="sm" class="waves-effect" (click)="updateFilter()">Update Results</button>
+            </form>
+        </mdb-card-text>
+    </mdb-card-body>
+</mdb-card>

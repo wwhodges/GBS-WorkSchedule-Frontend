@@ -1,0 +1,80 @@
+<ng-container *ngIf="isLoading">
+    <app-loading></app-loading>
+</ng-container>
+<ng-container *ngIf="!isLoading">
+<div class="row">
+<div class="col col-sm-12 col-md-6 col-lg-4 mt-2 mb-2">
+<mdb-card>
+    <!--Card content-->
+    <mdb-card-body>
+    
+        <!--Title-->
+        <mdb-card-title>
+        <h4>{{order.invoice}}</h4>
+        </mdb-card-title>
+    
+        <!--Text-->
+        <mdb-card-text>
+            <dl class="dl-horizontal">
+                <dt>Account</dt>
+                <dd>{{order.account}}</dd>
+                <dt>Name</dt>
+                <dd>{{order.name}}</dd>
+                <dt>Invoice Date</dt>
+                <dd>{{order.dateInvoiced | date: 'dd-MM-yyyy'}}</dd>
+                <dt>Batch</dt>
+                <dd>{{order.batch}}</dd>
+            </dl>
+        </mdb-card-text>
+    </mdb-card-body>
+</mdb-card>
+</div>
+<div class="col col-sm-12 col-md-6 col-lg-4 mt-2 mb-2">
+    <mdb-card>
+        <!--Card content-->
+        <mdb-card-body>
+        
+            <!--Title-->
+            <mdb-card-title>
+            <h4>Vista Data</h4>
+            </mdb-card-title>
+        
+            <!--Text-->
+            <mdb-card-text>
+                <dl>
+                    <dt>Weight</dt>
+                    <dd>{{order.invWeight}}Kg</dd>
+                    <dt>Lines</dt>
+                    <dd>{{order.lines}}</dd>
+                    <dt>Units</dt>
+                    <dd>{{order.units}}</dd>
+                    <dt>Picked</dt>
+                    <dd>{{order.pickedQty}}</dd>
+                    <dt>Destination</dt>
+                    <dd>{{order.destination}}</dd>
+                    <dt>Status</dt>
+                    <dd>{{order.status}}</dd>
+                </dl>
+            </mdb-card-text>
+        </mdb-card-body>
+    </mdb-card>
+    </div>
+<div class="col col-sm-12 col-md-6 col-lg-4 mt-2 mb-2">
+<mdb-card>
+    <!--Card content-->
+    <mdb-card-body>
+    
+        <!--Title-->
+        <mdb-card-title>
+        <h4>Schedule Info</h4>
+        </mdb-card-title>
+    
+        <!--Text-->
+        <mdb-card-text>
+            Form for user data and input goes here
+        </mdb-card-text>
+    </mdb-card-body>
+</mdb-card>
+</div>
+</div>
+</ng-container>
