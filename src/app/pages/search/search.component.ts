@@ -13,7 +13,7 @@ import { IWorkParams } from 'src/app/common/models/workParams.model';
 })
 export class SearchComponent implements OnInit, OnDestroy, OnChanges {
   private unsubscribe$: Subject<void> = new Subject();
-  private unsubscribe_params$: Subject<void> = new Subject();
+  private unsubscribeParams$: Subject<void> = new Subject();
   private searchString: string;
   private queryParam = 'terms';
   searchWork: WorkScheduledWork[] = [];
@@ -45,7 +45,7 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private route: ActivatedRoute, private awsData: AwsDataService) { }
 
   ngOnInit() {
-    this.route.paramMap.pipe(takeUntil(this.unsubscribe_params$)).subscribe((params) => {
+    this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
       // console.log(params);
       this.searchString = params.get(this.queryParam);
       this.loadData();
@@ -73,8 +73,8 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.unsubscribe();
-    this.unsubscribe_params$.next();
-    this.unsubscribe_params$.unsubscribe();
+    this.unsubscribeParams$.next();
+    this.unsubscribeParams$.unsubscribe();
 
   }
 

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AwsDataService, WorkScheduleGroupWork, WorkScheduledWork } from 'src/app/common/awsData.service';
+import { AwsDataService, WorkScheduleGroupWork, WorkScheduledWork, WorkScheduleGroup } from 'src/app/common/awsData.service';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-unscheduled',
@@ -15,11 +15,11 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
   private unscheduledWork: WorkScheduleGroupWork[];
   private workList: WorkScheduledWork[];
 
-  private workForm: FormGroup = new FormGroup({});
+  private workForm: FormGroup = new FormGroup({groups: new FormArray([])});
 
   private popupVisible = false;
 
-  constructor(private awsData: AwsDataService) { }
+  constructor(private awsData: AwsDataService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.refreshData();
@@ -29,29 +29,14 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     this.awsData.getWorkGroupUnscheduled().pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
         this.unscheduledWork = apiResult;
-        this.workList = flattenWork(this.unscheduledWork);
         this.setupForm();
       });
   }
 
   setupForm() {
-    this.workForm = new FormGroup({});
-    const today = new Date();
-    const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-    tomorrow.setDate(today.getDate() + 1);
-    this.unscheduledWork.forEach((group) => group.work.forEach((work) => {
-        work.workDate = new Date(today.toDateString());
-        work.delDate = new Date(tomorrow.toDateString());
-        work.despDate = new Date(today.toDateString());
-        this.workForm.addControl(work.workId.toString(), new FormGroup({
-          destination: new FormControl(work.destination),
-          workDate: new FormControl(work.workDate.toISOString().substring(0, 10)),
-          despDate: new FormControl(work.despDate.toISOString().substring(0, 10)),
-          delDate: new FormControl(work.delDate.toISOString().substring(0, 10)),
-          addToSchedule: new FormControl(false)
-        }));
-      }
-      ));
+    this.workForm = new FormGroup({
+      groups: this.fb.array(this.unscheduledWork.map((group) => this.createWorkGroupGroup(group)))
+    });
     this.workForm.valueChanges.subscribe((data) => this.changeval(data));
   }
 
@@ -107,11 +92,32 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     });
   }
 
+  createWorkGroupGroup(workGroup: WorkScheduleGroupWork): FormGroup {
+    const wg = this.fb.group({
+      groupId: [workGroup.group.id],
+      groupName: [workGroup.group.groupName],
+      workItems: this.fb.array(workGroup.work.map((item) => this.createWorkItemGroup(item)))
+    });
+    return wg;
+  }
 
-}
+  createWorkItemGroup(workItem: WorkScheduledWork): FormGroup {
+    const blankDate = new Date('0001-01-01');
+    const group = this.fb.group({
+      workId: [workItem.workId],
+      destination: [workItem.destination],
+      workDate: [workItem.workDate.toString() === blankDate.toISOString().substring(0,19) ?
+        new Date().toISOString().substring(0, 10) :
+        new Date(workItem.workDate).toISOString().substring(0, 10)],
+      despDate: [workItem.despDate.toString() === blankDate.toISOString().substring(0,19) ?
+        new Date().toISOString().substring(0, 10) :
+        new Date(workItem.despDate).toISOString().substring(0, 10)],
+      delDate: [workItem.delDate.toString() === blankDate.toISOString().substring(0,19) ?
+        new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().substring(0, 10) :
+        new Date(workItem.delDate).toISOString().substring(0, 10)],
+      addToSchedule: [!workItem.scheduleId ? false : true]
+    });
+    return group;
+  }
 
-function flattenWork(array: WorkScheduleGroupWork[]) {
-    let result: WorkScheduledWork[] = [];
-    array.forEach((item) => { result = result.concat(item.work); } );
-    return result;
 }
