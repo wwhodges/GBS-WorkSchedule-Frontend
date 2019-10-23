@@ -10,7 +10,6 @@ import { IWorkParams } from 'src/app/common/models/workParams.model';
 })
 export class WorkTableComponent implements OnInit, OnChanges {
   @Input() workItems: WorkScheduledWork[] = [];
-  @Input() workParams: IWorkParams;
 
   workTableForm: FormGroup;
 

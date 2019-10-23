@@ -19,7 +19,7 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
   searchWork: WorkScheduledWork[] = [];
 
   workParams: IWorkParams = {
-    INCLUDE_DESPATCHED: true,
+    INCLUDE_DESPATCHED: false,
     INCLUDE_PARTDESPATCHED: true,
     INCLUDE_PARTPACKED: true,
     INCLUDE_PARTPICKED: true,
@@ -80,6 +80,11 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
 
   buttonClick() {
     console.log(this.searchWork);
+  }
+
+  filterUpdated() {
+    console.log(this.workParams);
+    this.loadData();
   }
 
 }

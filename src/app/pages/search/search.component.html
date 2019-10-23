@@ -1,4 +1,7 @@
 <ng-container *ngIf="isLoading">
 <app-loading></app-loading>
 </ng-container>
-<app-work-table *ngIf="!isLoading" [workItems]="searchWork" [workParams]="workParams"></app-work-table>
+<ng-container *ngIf="!isLoading">
+<app-work-filter [workParams]="workParams" (updatedFilter)="filterUpdated()"></app-work-filter>
+<app-work-table [workItems]="searchWork"></app-work-table>
+</ng-container>
