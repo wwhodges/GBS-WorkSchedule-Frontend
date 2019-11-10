@@ -1,10 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AwsDataService,
-         IGBSData,
-         IGBSDespData,
-         WorkDateSummary,
-         WorkScheduledWork,
-         WorkStatusSummary } from 'src/app/common/awsData.service';
+import { ApiDataService } from 'src/app/common/services';
+import { IOrderSummary } from 'src/app/common/models';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -16,15 +12,12 @@ import { takeUntil } from 'rxjs/operators';
 export class DashboardComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
 
-  private releaseSummary$: Observable<WorkDateSummary[]>;
+  private releaseSummary$: Observable<IOrderSummary[]>;
 
   private isLoadingDespatch = true;
-  private despatchData: WorkDateSummary[];
+  private despatchData: IOrderSummary[];
   private isLoadingStatus = true;
-  private workStatusData: WorkStatusSummary[];
-
-  //public sourceData: IGBSData;
-  //public despHistory: IGBSDespData[];
+  private workStatusData: IOrderSummary[];
 
   public despChartType = 'bar';
   public despData;
@@ -53,33 +46,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
     legend: { position: 'right'},
   };
 
-  constructor(private awsData: AwsDataService) { }
+  constructor(private apiData: ApiDataService) { }
 
   ngOnInit() {
-    this.releaseSummary$ = this.awsData.getWorkScheduleSummary('release');
+    this.releaseSummary$ = this.apiData.getOrderSummary('Released');
 
     this.isLoadingDespatch = true;
-    this.awsData.getWorkScheduleSummary('despatch').pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.apiData.getOrderSummary('Despatched').pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
         this.despatchData = apiResult;
 
-        this.despLabels = this.despatchData.map(x => new Date(x.date).toDateString().slice(4, 10));
+        this.despLabels = this.despatchData.map(x => new Date(x.key).toDateString().slice(4, 10));
         this.despData = [
           { data: this.despatchData.map(x => x.invoices), label: 'Orders' },
           { data: this.despatchData.map(x => x.lines), label: 'Lines' },
           { data: this.despatchData.map(x => x.units), label: 'Units' }
         ];
-
         this.isLoadingDespatch = false;
       }
     );
 
     this.isLoadingStatus = true;
-    this.awsData.getWorkStatusSummary().pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.apiData.getOrderSummary('VistaStatus').pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
         this.workStatusData = apiResult;
 
-        this.orderChartLabels = this.workStatusData.map(x => x.status);
+        this.orderChartLabels = this.workStatusData.map(x => x.key);
         this.orderChartData = [ { data: this.workStatusData.map(x => x.invoices)} ];
 
         this.isLoadingStatus = false;

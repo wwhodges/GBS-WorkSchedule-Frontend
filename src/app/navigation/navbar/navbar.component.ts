@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActiveUserService, IActiveUser } from 'src/app/common/activeUser.service';
+import { ActiveUserService } from 'src/app/common/services';
+import { IActiveUser } from 'src/app/common/models';
 import { Observable } from 'rxjs';
 import { INavbarData } from './navbarUI.component';
 import { Router } from '@angular/router';
@@ -24,11 +25,10 @@ export class NavbarComponent implements OnInit {
     applicationName: 'Work Schedule',
     menuItems: [{menuName: 'Dashboard', menuLink: '/', menuActive: false, subMenu: []},
                 {menuName: 'Unscheduled', menuLink: '/unscheduled', menuActive: false, subMenu: []},
-                {menuName: 'Despatched', menuLink: '/despatched', menuActive: false, subMenu: []}],
+                {menuName: 'Scheduled', menuLink: '/schedule', menuActive: false, subMenu: []}],
     searchEnabled: true,
     searchPlaceholder: 'search'
   };
-
 
   constructor(private user: ActiveUserService, private router: Router) {}
 

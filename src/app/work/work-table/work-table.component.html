@@ -1,6 +1,16 @@
+<div>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="currentGroup === '*'" (click)="selectedGroup('*')">All Orders</a>
+    </li>
+    <li class="nav-item" *ngFor="let group of groups">
+      <a class="nav-link" [class.active]="currentGroup === group.id" (click)="selectedGroup(group.id)">{{group.groupName}}</a>
+    </li>
+</ul>
+</div>
 <form [formGroup]="workTableForm">
-    <div class="md-form">
-    <table mdbTable small="true">
+    <div>
+    <table class="table table-borderless table-hover">
         <thead>
             <tr>
                 <th>Invoice</th>
@@ -15,13 +25,13 @@
                 <th>Work Date</th>
                 <th>Del Date</th>
                 <th>Desp Date</th>
-                <th>Add</th>
+                <th>Scheduled</th>
             </tr>
         </thead>
         <tbody>
             <tr formArrayName="workItems" *ngFor="let work of workTableForm.get('workItems').controls; let i = index;" mdbTableCol>
                 <ng-container [formGroupName]="i">
-                <td>{{workItems[i].invoice}}</td>
+                <td><a [routerLink]="['/order', workItems[i].workId]" style="cursor: pointer;">{{workItems[i].invoice}}</a></td>
                 <td>{{workItems[i].batch}}</td>
                 <td>{{workItems[i].account}}</td>
                 <td>{{workItems[i].name}}</td>
@@ -35,8 +45,8 @@
                 <td><input mdbInput type="date" formControlName="despDate"  style="width: 130px;"/></td>
                 <td>
                         <div class="custom-control custom-checkbox ml-2">
-                                <input type="checkbox" formControlName="addToSchedule" class="custom-control-input" id="add-{{i}}">
-                                <label class="custom-control-label" for="add-{{i}}">Add</label>
+                                <input (click)="checkclicked($event)" type="checkbox" formControlName="addToSchedule" class="custom-control-input" id="add-{{i}}">
+                                <label class="custom-control-label" for="add-{{i}}"></label>
                               </div>
             
                 </td>

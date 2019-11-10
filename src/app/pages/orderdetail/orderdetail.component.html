@@ -71,7 +71,36 @@
     
         <!--Text-->
         <mdb-card-text>
-            Form for user data and input goes here
+            <form [formGroup]="scheduleForm">
+                <dl>
+                    <dt><label for="txtComments">Comments</label></dt>
+                    <dd><textarea formControlName="comments" id="txtComments"></textarea></dd>                        
+                    <dt><label for="txtStatus">Status</label></dt>
+                    <dd><input mdbInput type="text" formControlName="status" id="txtStatus"></dd>
+                </dl>
+                <button (click)="submitForm()">Save</button>
+                            <!-- <div class="checkbox">
+                                <input type="checkbox" formControlName="picked" class="checkbox__input" id="chkPicked">
+                                <label for="chkPicked" class="checkbox__label">Picked</label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" formControlName="packed" class="checkbox__input" id="chkPacked">
+                                <label for="chkPacked" class="checkbox__label">Packed</label>
+                            </div>         -->
+            </form>
+                    <!--<input mdbInput type="text" formControlName="ALP">
+                    <input mdbInput type="text" formControlName="bench">
+                    <input mdbInput type="text" formControlName="priority">
+                    <input mdbInput type="text" formControlName="holdLoc">
+                    <input mdbInput type="text" formControlName="palconPacked">
+                    
+                    <input mdbInput type="text" formControlName="workDate">
+                    <input mdbInput type="text" formControlName="delDate">
+                    <input mdbInput type="text" formControlName="despDate">
+                    <input mdbInput type="text" formControlName="palletIds">
+                    <input mdbInput type="text" formControlName="palletCount">
+                    <input mdbInput type="text" formControlName="palletNumbers"> -->
+
         </mdb-card-text>
     </mdb-card-body>
 </mdb-card>

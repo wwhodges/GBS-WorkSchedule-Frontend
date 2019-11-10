@@ -5,12 +5,11 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ActiveUserService } from './common/activeUser.service';
-import { AwsDataService } from './common/awsData.service';
+import { ActiveUserService } from './common/services/activeUser.service';
+import { ApiDataService } from './common/services/apiData.service';
 import { NavbarComponent } from './navigation/navbar/navbar.component';
 import { NavbarUIComponent } from './navigation/navbar/navbarUI.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { DespatchedComponent } from './pages/despatched/despatched.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
@@ -21,6 +20,9 @@ import { OrderdetailComponent } from './pages/orderdetail/orderdetail.component'
 import { WorkTableComponent } from './work/work-table/work-table.component';
 import { LoadingComponent } from './common/loading/loading.component';
 import { WorkFilterComponent } from './common/work-filter/work-filter.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { ScheduleComponent } from './pages/schedule/schedule.component';
+
 
 @NgModule({
   declarations: [
@@ -28,15 +30,16 @@ import { WorkFilterComponent } from './common/work-filter/work-filter.component'
     NavbarComponent,
     NavbarUIComponent,
     DashboardComponent,
-    DespatchedComponent,
     PieChartComponent,
     BarChartComponent,
     UnscheduledComponent,
     SearchComponent,
+    ScheduleComponent,
     OrderdetailComponent,
     WorkTableComponent,
     LoadingComponent,
-    WorkFilterComponent
+    WorkFilterComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,7 @@ import { WorkFilterComponent } from './common/work-filter/work-filter.component'
   ],
   providers: [
     ActiveUserService,
-    AwsDataService
+    ApiDataService
   ],
   bootstrap: [AppComponent]
 })

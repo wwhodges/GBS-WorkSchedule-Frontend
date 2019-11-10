@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AwsDataService, WorkScheduleGroupWork, WorkScheduledWork, WorkScheduleGroup } from 'src/app/common/awsData.service';
+import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { ApiDataService } from 'src/app/common/services';
+import { IOrder, ICustomerGroup, IWorkParams } from 'src/app/common/models';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
@@ -9,51 +10,71 @@ import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
   templateUrl: './unscheduled.component.html',
   styleUrls: ['./unscheduled.component.scss']
 })
-export class UnscheduledComponent implements OnInit, OnDestroy {
+export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
 
-  private unscheduledWork: WorkScheduleGroupWork[];
-  private workList: WorkScheduledWork[];
+  private isLoading = true;
+  private workList: IOrder[];
+  private customerGroups: ICustomerGroup[];
 
-  private workForm: FormGroup = new FormGroup({groups: new FormArray([])});
+  private orderParams: IWorkParams = {
+    INCLUDE_DESPATCHED: false,
+    INCLUDE_PARTDESPATCHED: true,
+    INCLUDE_PARTPACKED: true,
+    INCLUDE_PARTPICKED: true,
+    INCLUDE_SCHEDULED: false,
+    INCLUDE_UNSCHEDULED: true,
+    INCLUDE_UNSTARTED: true,
+    DATE_FROM: new Date(),
+    DATE_RANGE: '',
+    DATE_TO: new Date(),
+    INVOICE: '',
+    SITE: '',
+    BATCH: '',
+    ACCOUNT: '',
+    NAME: '',
+    GROUPID: 0,
+    WORKID: 0,
+    MIN_WEIGHT: 0,
+    MAX_WEIGHT: 0
+  };
 
   private popupVisible = false;
 
-  constructor(private awsData: AwsDataService, private fb: FormBuilder) { }
+  constructor(private apiData: ApiDataService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.refreshData();
+    this.isLoading = true;
+    this.loadData();
   }
 
-  refreshData() {
-    this.awsData.getWorkGroupUnscheduled().pipe(takeUntil(this.unsubscribe$)).subscribe(
+  ngOnChanges() {
+    this.loadData();
+  }
+
+  groupSelected(group: string) {
+    console.log('parent grp sel ' + group)
+    if (group === '*') {
+      this.orderParams.GROUPID = 0; } else {
+      this.orderParams.GROUPID = +group;
+    }
+    this.loadData();
+  }
+
+  loadData() {
+    this.unsubscribe$.next();
+    this.workList = [];
+    this.apiData.getCustomerGroups().pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
-        this.unscheduledWork = apiResult;
-        this.setupForm();
-      });
-  }
-
-  setupForm() {
-    this.workForm = new FormGroup({
-      groups: this.fb.array(this.unscheduledWork.map((group) => this.createWorkGroupGroup(group)))
-    });
-    this.workForm.valueChanges.subscribe((data) => this.changeval(data));
-  }
-
-  clickedRow($event) {
-    console.log($event);
-  }
-
-  changeval(data: any) {
-    let valuechanged = false;
-    Object.keys(this.workForm.controls).forEach(key => {
-      const originalval = this.workList.find((item) => item.workId.toString() === key);
-      const formval = this.workForm.controls[key].value;
-      if (( formval.destination !== originalval.destination) || (formval.addToSchedule === true)) {
-        valuechanged = true;
+        this.customerGroups = apiResult;
       }
-    });
-    this.popupVisible = valuechanged;
+    );
+    this.apiData.getOrderFiltered(this.orderParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
+      apiResult => {
+        this.workList = apiResult;
+        this.isLoading = false;
+      }, (error) => {console.log(error); }
+    );
   }
 
   ngOnDestroy() {
@@ -61,63 +82,9 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     this.unsubscribe$.unsubscribe();
   }
 
-  cancelAll() {
-    this.setupForm();
-  }
-
-  selectRanges() {
-    const keyName = 'addToSchedule';
-    let checked = false;
-    this.unscheduledWork.forEach((group) => group.work.forEach((work) => {
-      const formcont = this.workForm.get(work.workId.toString()).get(keyName);
-      if ( formcont.value === true) {
-        checked = !checked;
-        } else {
-          formcont.setValue(checked);
-      }
-    }));
-  }
-
-  allocateDest() {
-    const keyName = 'destination';
-    const day = 'TUE';
-    let slot = 0;
-    this.unscheduledWork.forEach((group) => {
-      slot = group.group.destinationBase;
-      group.work.forEach((work) => {
-        const formcont = this.workForm.get(work.workId.toString()).get(keyName);
-        formcont.setValue(day + slot.toString());
-        slot++;
-      });
-    });
-  }
-
-  createWorkGroupGroup(workGroup: WorkScheduleGroupWork): FormGroup {
-    const wg = this.fb.group({
-      groupId: [workGroup.group.id],
-      groupName: [workGroup.group.groupName],
-      workItems: this.fb.array(workGroup.work.map((item) => this.createWorkItemGroup(item)))
-    });
-    return wg;
-  }
-
-  createWorkItemGroup(workItem: WorkScheduledWork): FormGroup {
-    const blankDate = new Date('0001-01-01');
-    const group = this.fb.group({
-      workId: [workItem.workId],
-      destination: [workItem.destination],
-      workDate: [workItem.workDate.toString() === blankDate.toISOString().substring(0,19) ?
-        new Date().toISOString().substring(0, 10) :
-        new Date(workItem.workDate).toISOString().substring(0, 10)],
-      despDate: [workItem.despDate.toString() === blankDate.toISOString().substring(0,19) ?
-        new Date().toISOString().substring(0, 10) :
-        new Date(workItem.despDate).toISOString().substring(0, 10)],
-      delDate: [workItem.delDate.toString() === blankDate.toISOString().substring(0,19) ?
-        new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().substring(0, 10) :
-        new Date(workItem.delDate).toISOString().substring(0, 10)],
-      addToSchedule: [!workItem.scheduleId ? false : true]
-    });
-    return group;
+  filterUpdated() {
+    this.isLoading = true;
+    this.loadData();
   }
 
 }

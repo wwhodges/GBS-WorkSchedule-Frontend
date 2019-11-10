@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AwsDataService } from './awsData.service';
+import { ApiDataService } from './apiData.service';
 
-describe('AwsDataService', () => {
+describe('ApiDataService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: AwsDataService = TestBed.get(AwsDataService);
+    const service: ApiDataService = TestBed.get(ApiDataService);
     expect(service).toBeTruthy();
   });
 });
