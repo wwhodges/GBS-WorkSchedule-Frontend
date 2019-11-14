@@ -52,6 +52,7 @@ export class WorkFilterComponent implements OnInit, OnChanges {
 
   updateFilter() {
     console.log(this.filters);
+    this.isFilterVisible = false;
     this.workParams.INCLUDE_SCHEDULED = this.filters.scheduled;
     this.workParams.INCLUDE_UNSCHEDULED = this.filters.unscheduled;
     this.workParams.INCLUDE_UNSTARTED = this.filters.unstarted;

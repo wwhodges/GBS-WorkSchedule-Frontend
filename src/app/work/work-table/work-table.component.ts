@@ -72,7 +72,7 @@ export class WorkTableComponent implements OnChanges, OnInit {
 
     const blankDate = new Date('0001-01-01');
     const group = this.fb.group({
-      workId: [workItem.id],
+      id: [workItem.id],
       destination: [workItem.palDest],
       workDate: [workItem.workDate.toString() === blankDate.toISOString().substring(0, 19) ?
         new Date().toISOString().substring(0, 10) :

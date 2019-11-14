@@ -37,7 +37,10 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
     GROUPID: 0,
     WORKID: 0,
     MIN_WEIGHT: 0,
-    MAX_WEIGHT: 0
+    MAX_WEIGHT: 0,
+    SORT: 0,
+    PAGESIZE: 200,
+    PAGE: 0
   };
 
   private isLoading = true;
@@ -48,11 +51,13 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
       // console.log(params);
       this.searchString = params.get(this.queryParam);
+      this.isLoading = true;
       this.loadData();
     });
   }
 
   ngOnChanges() {
+    this.isLoading = true;
     this.loadData();
   }
 
@@ -60,7 +65,6 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
     this.unsubscribe$.next();
     this.searchWork = [];
     console.log('searching', this.searchString);
-    this.isLoading = true;
     this.apiData.getOrderBySearch(this.searchString, this.workParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
         this.searchWork = apiResult;
@@ -78,13 +82,7 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
 
   }
 
-  buttonClick() {
-    console.log(this.searchWork);
-  }
-
   filterUpdated() {
-    console.log(this.workParams);
     this.loadData();
   }
-
 }

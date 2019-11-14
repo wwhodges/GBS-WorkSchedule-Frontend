@@ -22,6 +22,7 @@ import { LoadingComponent } from './common/loading/loading.component';
 import { WorkFilterComponent } from './common/work-filter/work-filter.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
+import { GroupsComponent } from './pages/groups/groups.component';
 
 
 @NgModule({
@@ -34,12 +35,13 @@ import { ScheduleComponent } from './pages/schedule/schedule.component';
     BarChartComponent,
     UnscheduledComponent,
     SearchComponent,
-    ScheduleComponent,
     OrderdetailComponent,
     WorkTableComponent,
     LoadingComponent,
     WorkFilterComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ScheduleComponent,
+    GroupsComponent
   ],
   imports: [
     BrowserModule,

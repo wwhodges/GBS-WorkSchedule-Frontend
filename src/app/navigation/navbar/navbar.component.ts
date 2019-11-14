@@ -25,7 +25,9 @@ export class NavbarComponent implements OnInit {
     applicationName: 'Work Schedule',
     menuItems: [{menuName: 'Dashboard', menuLink: '/', menuActive: false, subMenu: []},
                 {menuName: 'Unscheduled', menuLink: '/unscheduled', menuActive: false, subMenu: []},
-                {menuName: 'Scheduled', menuLink: '/schedule', menuActive: false, subMenu: []}],
+                {menuName: 'Scheduled', menuLink: '/schedule', menuActive: false, subMenu: []},
+                {menuName: 'Groups', menuLink: '/groups', menuActive: false, subMenu: []},
+                {menuName: 'Create', menuLink: '/order/new', menuActive: false, subMenu: []}],
     searchEnabled: true,
     searchPlaceholder: 'search'
   };

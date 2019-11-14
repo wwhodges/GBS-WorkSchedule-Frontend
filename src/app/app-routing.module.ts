@@ -6,9 +6,11 @@ import { SearchComponent } from './pages/search/search.component';
 import { OrderdetailComponent } from './pages/orderdetail/orderdetail.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
+import { GroupsComponent } from './pages/groups/groups.component';
 
 
 const routes: Routes = [
+  {path: 'groups', component: GroupsComponent},
   {path: 'profile', component: UserProfileComponent },
   {path: 'unscheduled', component: UnscheduledComponent},
   {path: 'schedule', component: ScheduleComponent},

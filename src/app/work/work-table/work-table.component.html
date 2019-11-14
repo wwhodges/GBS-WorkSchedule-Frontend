@@ -31,7 +31,7 @@
         <tbody>
             <tr formArrayName="workItems" *ngFor="let work of workTableForm.get('workItems').controls; let i = index;" mdbTableCol>
                 <ng-container [formGroupName]="i">
-                <td><a [routerLink]="['/order', workItems[i].workId]" style="cursor: pointer;">{{workItems[i].invoice}}</a></td>
+                <td><a [routerLink]="['/order', workItems[i].id]" style="cursor: pointer;">{{workItems[i].invoice}}</a></td>
                 <td>{{workItems[i].batch}}</td>
                 <td>{{workItems[i].account}}</td>
                 <td>{{workItems[i].name}}</td>
@@ -39,7 +39,7 @@
                 <td>{{workItems[i].units}}</td>
                 <td>{{workItems[i].lines}}</td>
                 <td><input mdbInput type="text" formControlName="destination" size="8" /></td>
-                <td>{{workItems[i].status}}</td>
+                <td>{{workItems[i].vistaStatus}}</td>
                 <td><input mdbInput type="date" formControlName="workDate" style="width: 130px;"/></td>
                 <td><input mdbInput type="date" formControlName="delDate"  style="width: 130px;"/></td>
                 <td><input mdbInput type="date" formControlName="despDate"  style="width: 130px;"/></td>

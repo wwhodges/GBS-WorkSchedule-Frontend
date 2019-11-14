@@ -33,7 +33,10 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     GROUPID: 0,
     WORKID: 0,
     MIN_WEIGHT: 0,
-    MAX_WEIGHT: 0
+    MAX_WEIGHT: 0,
+    SORT: 0,
+    PAGESIZE: 200,
+    PAGE: 0
   };
 
   private isLoading = true;

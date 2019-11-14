@@ -22,4 +22,9 @@ export interface IWorkParams {
     INVOICE: string;
     NAME: string;
     GROUPID: number;
+
+    SORT: number;
+
+    PAGESIZE: number;
+    PAGE: number;
 }

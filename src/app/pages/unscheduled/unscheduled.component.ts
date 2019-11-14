@@ -36,7 +36,10 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
     GROUPID: 0,
     WORKID: 0,
     MIN_WEIGHT: 0,
-    MAX_WEIGHT: 0
+    MAX_WEIGHT: 0,
+    SORT: 0,
+    PAGESIZE: 200,
+    PAGE: 0
   };
 
   private popupVisible = false;
@@ -83,7 +86,6 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   filterUpdated() {
-    this.isLoading = true;
     this.loadData();
   }
 

@@ -28,7 +28,6 @@ export class Order implements IOrder {
   name: string;
   prime: string;
   id: number;
-  workId: number;
   destination: string;
   ALP: string;
   bench: string;
@@ -49,6 +48,7 @@ export class Order implements IOrder {
   public constructor(init?: Partial<Order>) {
     Object.assign(this, init);
   }
+
 }
 
 
@@ -62,7 +62,7 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
   private unsubscribeParams$: Subject<void> = new Subject();
 
   private orderId: string;
-  private order: IOrder;
+  private order: Order;
 
   private queryParam = 'id';
   private isLoading = true;
@@ -78,8 +78,8 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
       this.orderId = params.get(this.queryParam);
       this.apiData.getOrderById(this.orderId).pipe(takeUntil(this.unsubscribe$)).subscribe(
         apiResult => {
-          this.order = apiResult;
-          this.CreateScheduleForm();
+          this.order = new Order(apiResult);
+          this.scheduleForm = this.CreateScheduleForm();
           this.isLoading = false;
           console.log(this.order);
         }
@@ -87,9 +87,10 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  CreateScheduleForm() {
-    this.scheduleForm = this.fb.group({
+  CreateScheduleForm(): FormGroup {
+    const orderForm = this.fb.group({
       id: [this.order.id],
+      scheduled: [this.order.scheduled],
       destination: [this.order.palDest],
       ALP: [this.order.ALP],
       bench: [this.order.bench],
@@ -107,6 +108,7 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
       palletCount: [this.order.palletCount],
       palletNumbers: [this.order.palletNumbers]
     });
+    return orderForm;
   }
 
   ngOnDestroy() {
