@@ -22,6 +22,11 @@ export class ApiDataService {
     return this.http.get<ICustomerGroup[]>(apiURL, { withCredentials: true });
   }
 
+  getCustomerGroup(groupId: number) {
+    const apiURL = `${this.apiRoot}CustomerGroup/` + groupId;
+    return this.http.get<ICustomerGroup>(apiURL, { withCredentials: true });
+  }
+
   /*getWorkGroupUnscheduled() {
     const apiURL = `${this.apiRoot}ScheduledWork/Groups`;
     return this.http.get<IWorkScheduleGroupWork[]>(apiURL, { withCredentials: true });

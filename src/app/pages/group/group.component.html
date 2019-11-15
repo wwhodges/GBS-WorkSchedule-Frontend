@@ -1,0 +1,65 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<ng-container *ngIf="!isLoading">
+<h2>{{groupForm.get('groupName').value}}</h2>
+<div class="row">
+    <div class="col">
+        <mdb-card>
+            <mdb-card-body>
+                <form [formGroup]="groupForm">
+                    <div class="form-group row">
+                        <label for="groupName" class="col-sm-4 col-form-label col-form-label-sm">Group Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control form-control-sm" formControlName="groupName" id="groupName" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="minWeight" class="col-sm-4 col-form-label col-form-label-sm">Min Weight</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control form-control-sm" formControlName="minWeight" id="minWeight" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="destBase" class="col-sm-4 col-form-label col-form-label-sm">Destination Base</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control form-control-sm" formControlName="destinationBase" id="destBase" placeholder="000">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label col-form-label-sm">Group By Acct</label>
+                        <div class="col-sm-6">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input form-control-sm" formControlName="groupByAcct" type="checkbox" id="groupByAcct">
+                                <label class="custom-control-label" for="groupByAcct"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </form>
+            </mdb-card-body>
+        </mdb-card>
+    </div>
+    <div class="col">
+        <mdb-card>
+            <mdb-card-body>
+                Members
+                <div class="list-group">
+                    <div class="list-group-item" *ngFor="let member of group.members">
+                        <div class="row">
+                            <div class="col col-sm-10">{{member.split(',')[0]}}</div>
+                            <div class="col col-sm-2"><button type="button" class="btn btn-danger btn-sm" (click)="removeMember(member)">X</button></div>
+                        </div>
+                        <div class="row">
+                            <div class="col">{{member.split(',')[1]}}</div>
+                        </div>
+                    </div>
+                </div>
+            </mdb-card-body>
+        </mdb-card>
+    </div>
+</div>
+</ng-container>

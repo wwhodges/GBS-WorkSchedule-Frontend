@@ -1,2 +1,20 @@
-<p>groups works!</p>
-<button>{{hello}}</button>
+<mdb-card>
+    <mdb-card-body>
+    <table class="table">
+    <tr>
+        <th>Group</th>
+        <th>Min Weight</th>
+        <th>Group By Acct</th>
+        <th>Base Destination</th>
+        <th>Unscheduled Orders</th>
+    </tr>
+    <tr *ngFor="let group of groups$ | async">
+        <td><a [routerLink]="['/group',group.id]">{{group.groupName}}</a></td>
+        <td>{{group.minWeight}}</td>
+        <td>{{group.groupByAcct}}</td>
+        <td>{{group.destinationBase}}</td>
+        <td>{{group.unscheduledOrder}}</td>
+    </tr>
+</table>
+</mdb-card-body>
+</mdb-card>

@@ -7,10 +7,12 @@ import { OrderdetailComponent } from './pages/orderdetail/orderdetail.component'
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { GroupsComponent } from './pages/groups/groups.component';
+import { GroupComponent } from './pages/group/group.component';
 
 
 const routes: Routes = [
   {path: 'groups', component: GroupsComponent},
+  {path: 'group/:id', component: GroupComponent},
   {path: 'profile', component: UserProfileComponent },
   {path: 'unscheduled', component: UnscheduledComponent},
   {path: 'schedule', component: ScheduleComponent},
