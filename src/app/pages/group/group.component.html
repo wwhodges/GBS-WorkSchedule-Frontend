@@ -36,7 +36,8 @@
                     <div class="form-group row">
                         <div class="col-sm-4"></div>
                         <div class="col-sm-6">
-                            <button type="button" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-primary btn-sm" (click)="saveGroup()">Save Changes</button>
+                            <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteGroup()">Delete Group</button>
                         </div>
                     </div>
                 </form>
@@ -47,14 +48,20 @@
         <mdb-card>
             <mdb-card-body>
                 Members
+                <div class="row mb-2">
+                    <div class="col">
+                    <form class="form-inline">
+                        <ng2-completer [(ngModel)]="searchStr" [datasource]="dataService" [minSearchLength]="3" [inputClass]="['form-control','form-control-sm']"></ng2-completer>
+                        <button type="button" class="btn btn-primary btn-sm ml-2" (click)="addAccount()">Add</button>
+                    </form>
+                    </div>
+                </div>
                 <div class="list-group">
-                    <div class="list-group-item" *ngFor="let member of group.members">
+                    <div class="list-group-item py-2" *ngFor="let member of group.members">
                         <div class="row">
-                            <div class="col col-sm-10">{{member.split(',')[0]}}</div>
-                            <div class="col col-sm-2"><button type="button" class="btn btn-danger btn-sm" (click)="removeMember(member)">X</button></div>
-                        </div>
-                        <div class="row">
-                            <div class="col">{{member.split(',')[1]}}</div>
+                            <div class="col col-sm-3">{{member.split(',')[0]}}</div>
+                            <div class="col col-sm-8">{{member.split(',')[1]}}</div>
+                            <div class="col col-sm-1"><button type="button" class="btn btn-danger btn-sm" (click)="removeMember(member)"><mdb-icon fas icon="trash-alt"></mdb-icon></button></div>
                         </div>
                     </div>
                 </div>

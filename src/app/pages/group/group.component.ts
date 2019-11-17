@@ -5,6 +5,8 @@ import { ApiDataService } from 'src/app/common/services';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CompleterService, CompleterData, RemoteData } from 'ng2-completer';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-group',
@@ -22,8 +24,19 @@ export class GroupComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
   private unsubscribeParams$: Subject<void> = new Subject();
 
+  private searchStr: string;
+  private dataService: RemoteData;
 
-  constructor(private apiData: ApiDataService, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private apiData: ApiDataService,
+              private route: ActivatedRoute,
+              private fb: FormBuilder,
+              private completerService: CompleterService) {
+    this.dataService =
+      this.completerService.remote('https://ukwwhdappdi001/api/GBSWorkSchedule/Customer/Search/', 'account,name', 'account');
+
+    this.dataService.descriptionField('name');
+    this.dataService.requestOptions({withCredentials: true});
+    }
 
   ngOnInit() {
     this.loadData();
@@ -67,6 +80,14 @@ export class GroupComponent implements OnInit, OnDestroy {
       minWeight: [this.group.minWeight],
       destinationBase: [this.group.destinationBase]
     });
+  }
+
+  saveGroup() {
+
+  }
+
+  deleteGroup() {
+
   }
 
   removeMember(member: string) {

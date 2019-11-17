@@ -3,6 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
+import { Ng2CompleterModule } from 'ng2-completer';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ActiveUserService } from './common/services/activeUser.service';
@@ -52,7 +54,8 @@ import { GroupComponent } from './pages/group/group.component';
     MDBBootstrapModule.forRoot(),
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Ng2CompleterModule
   ],
   providers: [
     ActiveUserService,
