@@ -26,6 +26,8 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { GroupComponent } from './pages/group/group.component';
+import { PaginationComponent } from './common/pagination/pagination.component';
+
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { GroupComponent } from './pages/group/group.component';
     UserProfileComponent,
     ScheduleComponent,
     GroupsComponent,
-    GroupComponent
+    GroupComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,

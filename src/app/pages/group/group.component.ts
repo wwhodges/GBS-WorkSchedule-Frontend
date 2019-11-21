@@ -82,12 +82,24 @@ export class GroupComponent implements OnInit, OnDestroy {
     });
   }
 
-  saveGroup() {
+  UpdateFromForm() {
+    this.group.groupName = this.groupForm.get('groupName').value;
+    this.group.groupByAcct = this.groupForm.get('groupByAcct').value;
+    this.group.minWeight = this.groupForm.get('minWeight').value;
+    this.group.destinationBase = this.groupForm.get('destinationBase').value;
+  }
 
+  saveGroup() {
+      this.UpdateFromForm();
+      this.apiData.saveCustomerGroup(this.group).subscribe(response => {console.log(response)});
   }
 
   deleteGroup() {
+    this.apiData.deleteCustomerGroup(this.group.id).subscribe();
+  }
 
+  addAccount() {
+    this.group.members.push(this.searchStr);
   }
 
   removeMember(member: string) {

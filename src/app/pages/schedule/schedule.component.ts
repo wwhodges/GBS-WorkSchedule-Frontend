@@ -3,6 +3,7 @@ import { ApiDataService } from 'src/app/common/services';
 import { IOrder, IWorkParams } from 'src/app/common/models';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { IOrderList } from 'src/app/common/models/orderList.model';
 
 @Component({
   selector: 'app-schedule',
@@ -12,7 +13,10 @@ import { Subject } from 'rxjs';
 export class ScheduleComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
   private unsubscribeParams$: Subject<void> = new Subject();
-  searchWork: IOrder[] = [];
+  private searchWork: IOrder[] = [];
+  private orders: IOrderList;
+  private currentPage = 0;
+  private maxPages = 0;
 
   workParams: IWorkParams = {
     INCLUDE_DESPATCHED: false,
@@ -53,7 +57,9 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.apiData.getOrderFiltered(this.workParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
-        this.searchWork = apiResult;
+        this.orders = apiResult;
+        this.searchWork = this.orders.orders;
+        this.maxPages = this.orders.totalPages;
         this.isLoading = false;
       }, (error) => {console.log(error); }
     );

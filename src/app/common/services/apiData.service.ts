@@ -4,6 +4,7 @@ import { IWorkParams,
          IOrder,
          IOrderSummary,
          ICustomerGroup} from '../models/index';
+import { IOrderList } from '../models/orderList.model';
 
 
 @Injectable()
@@ -27,6 +28,21 @@ export class ApiDataService {
     return this.http.get<ICustomerGroup>(apiURL, { withCredentials: true });
   }
 
+  saveCustomerGroup(group: ICustomerGroup) {
+    if (group.id === 0) {
+      const apiURL = `${this.apiRoot}CustomerGroup`;
+      return this.http.post(apiURL, group, { withCredentials: true });
+    } else {
+      const apiURL = `${this.apiRoot}CustomerGroup/` + group.id;
+      return this.http.put(apiURL, group, { withCredentials: true });
+    }
+  }
+
+  deleteCustomerGroup(groupId: number) {
+    const apiURL = `${this.apiRoot}CustomerGroup/` + groupId;
+    return this.http.delete(apiURL, { withCredentials: true });
+  }
+
   /*getWorkGroupUnscheduled() {
     const apiURL = `${this.apiRoot}ScheduledWork/Groups`;
     return this.http.get<IWorkScheduleGroupWork[]>(apiURL, { withCredentials: true });
@@ -38,12 +54,12 @@ export class ApiDataService {
     if (term.length === 8 && parseInt(term.substring(1, 5), 10) > 0) {workParams.INVOICE = term; } else {
       workParams.NAME = '%' + term + '%'; }
     const apiURL = `${this.apiRoot}Order`;
-    return this.http.post<IOrder[]>(apiURL, workParams, { withCredentials: true });
+    return this.http.post<IOrderList>(apiURL, workParams, { withCredentials: true });
   }
 
   getOrderFiltered(workParams: IWorkParams) {
     const apiURL = `${this.apiRoot}Order`;
-    return this.http.post<IOrder[]>(apiURL, workParams, { withCredentials: true });
+    return this.http.post<IOrderList>(apiURL, workParams, { withCredentials: true });
   }
 
   getOrderById(id: string) {

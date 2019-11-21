@@ -27,6 +27,8 @@ export class WorkTableComponent implements OnChanges, OnInit {
     this.workTableForm = this.fb.group({
       workItems: this.fb.array(this.workItems.map((item) => this.createWorkItemGroup(item)))
     });
+    console.log(this.workItems);
+    console.log(this.workTableForm);
     // console.log(this.workTableForm);
     // console.log('wt curr grp' + this.currentGroup);
   }
@@ -69,20 +71,12 @@ export class WorkTableComponent implements OnChanges, OnInit {
   }
 
   createWorkItemGroup(workItem: IOrder): FormGroup {
-
-    const blankDate = new Date('0001-01-01');
     const group = this.fb.group({
       id: [workItem.id],
-      destination: [workItem.palDest],
-      workDate: [workItem.workDate.toString() === blankDate.toISOString().substring(0, 19) ?
-        new Date().toISOString().substring(0, 10) :
-        new Date(workItem.workDate).toISOString().substring(0, 10)],
-      despDate: [workItem.despDate.toString() === blankDate.toISOString().substring(0, 19) ?
-        new Date().toISOString().substring(0, 10) :
-        new Date(workItem.despDate).toISOString().substring(0, 10)],
-      delDate: [workItem.delDate.toString() === blankDate.toISOString().substring(0, 19) ?
-        new Date(new Date().getTime() + 24 * 60 * 60 * 1000).toISOString().substring(0, 10) :
-        new Date(workItem.delDate).toISOString().substring(0, 10)],
+      palDest: [workItem.palDest],
+      workDate: [new Date(workItem.workDate).toISOString().substring(0, 10)],
+      despDate: [new Date(workItem.despDate).toISOString().substring(0, 10)],
+      delDate: [new Date(workItem.delDate).toISOString().substring(0, 10)],
       addToSchedule: [workItem.scheduled]
     });
     return group;

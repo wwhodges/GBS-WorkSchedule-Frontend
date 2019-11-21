@@ -4,6 +4,7 @@ import { IOrder, ICustomerGroup, IWorkParams } from 'src/app/common/models';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { IOrderList } from 'src/app/common/models/orderList.model';
 
 @Component({
   selector: 'app-unscheduled',
@@ -14,8 +15,12 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
 
   private isLoading = true;
+  private orders: IOrderList;
   private workList: IOrder[];
   private customerGroups: ICustomerGroup[];
+
+  private currentPage: number = 0;
+  private maxPages: number = 5;
 
   private orderParams: IWorkParams = {
     INCLUDE_DESPATCHED: false,
@@ -72,9 +77,12 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
         this.customerGroups = apiResult;
       }
     );
+    this.orderParams.PAGE = this.currentPage;
     this.apiData.getOrderFiltered(this.orderParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
-        this.workList = apiResult;
+        this.orders = apiResult;
+        this.workList = this.orders.orders;
+        this.maxPages = this.orders.totalPages;
         this.isLoading = false;
       }, (error) => {console.log(error); }
     );
@@ -86,6 +94,11 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   filterUpdated() {
+    this.loadData();
+  }
+
+  pageChange($event) {
+    this.currentPage = $event;
     this.loadData();
   }
 

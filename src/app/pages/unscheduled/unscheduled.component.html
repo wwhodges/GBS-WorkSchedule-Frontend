@@ -1,19 +1,22 @@
-<ng-container *ngIf="isLoading">
-    <app-loading></app-loading>
-    </ng-container>
-    <ng-container *ngIf="!isLoading">
-    <app-work-filter [workParams]="orderParams" (updatedFilter)="filterUpdated()"></app-work-filter>
-    <app-work-table [workItems]="workList" [groups]="customerGroups" (updatedGroup)="groupSelected($event)"></app-work-table>
+<app-loading *ngIf="isLoading"></app-loading>
+<ng-container *ngIf="!isLoading">
+    <div class="row">
+        <div class="col"><app-work-filter [workParams]="orderParams" (updatedFilter)="filterUpdated()"></app-work-filter></div>
+        <div class="col"><app-pagination [currentPage]="currentPage" [maxPages]="maxPages" (pageSelected)="pageChange($event)"></app-pagination></div>
+    </div>
+    <app-work-table [workItems]="workList" [groups]="customerGroups" (updatedGroup)="groupSelected($event)">
+    </app-work-table>
 </ng-container>
 <div class="fixed-bottom" *ngIf="popupVisible">
-        <mdb-card>
-                <!--Card content-->
-                <mdb-card-body>
-                    <!--Text-->
-                    <a (click)="this.saveChanges()" mdbBtn color="primary" class="btn-sm" mdbWavesEffect>Save Changes</a>
-                    <a (click)="this.selectRanges()" mdbBtn color="secondary" class="btn-sm" mdbWavesEffect>Select Ranges</a>
-                    <a (click)="this.allocateDest()" mdbBtn color="secondary" class="btn-sm" mdbWavesEffect>Allocate Destination</a>
-                    <a (click)="this.cancelAll()" mdbBtn color="danger" class="btn-sm" mdbWavesEffect>Cancel</a>
-                </mdb-card-body>
-        </mdb-card>    
+    <mdb-card>
+        <!--Card content-->
+        <mdb-card-body>
+            <!--Text-->
+            <a (click)="this.saveChanges()" mdbBtn color="primary" class="btn-sm" mdbWavesEffect>Save Changes</a>
+            <a (click)="this.selectRanges()" mdbBtn color="secondary" class="btn-sm" mdbWavesEffect>Select Ranges</a>
+            <a (click)="this.allocateDest()" mdbBtn color="secondary" class="btn-sm" mdbWavesEffect>Allocate
+                Destination</a>
+            <a (click)="this.cancelAll()" mdbBtn color="danger" class="btn-sm" mdbWavesEffect>Cancel</a>
+        </mdb-card-body>
+    </mdb-card>
 </div>

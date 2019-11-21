@@ -1,168 +1,256 @@
 <ng-container *ngIf="isLoading">
-    <app-loading></app-loading>
+  <app-loading></app-loading>
 </ng-container>
 <ng-container *ngIf="!isLoading">
-<div class="row">
-<div class="col col-sm-12 col-md-6 col-lg-4 mt-2 mb-2">
-<mdb-card>
-    <!--Card content-->
-    <mdb-card-body>
-    
-        <!--Title-->
-        <mdb-card-title>
-        <h4>{{order.invoice}}</h4>
-        </mdb-card-title>
-    
-        <!--Text-->
-        <mdb-card-text>
-            <dl class="dl-horizontal">
-                <dt>Account</dt>
-                <dd>{{order.account}}</dd>
-                <dt>Name</dt>
-                <dd>{{order.name}}</dd>
-                <dt>Invoice Date</dt>
-                <dd>{{order.dateInvoiced | date: 'dd-MM-yyyy'}}</dd>
-                <dt>Batch</dt>
-                <dd>{{order.batch}}</dd>
-            </dl>
-        </mdb-card-text>
-    </mdb-card-body>
-</mdb-card>
-</div>
-<div class="col col-sm-12 col-md-6 col-lg-4 mt-2 mb-2">
-    <mdb-card>
-        <!--Card content-->
-        <mdb-card-body>
-        
+  <form [formGroup]="scheduleForm">
+    <div class="row">
+      <div class="col col-sm-12 col-md-6 col-lg-6 mt-2 mb-2">
+        <mdb-card>
+          <!--Card content-->
+          <mdb-card-body>
+
             <!--Title-->
             <mdb-card-title>
-            <h4>Vista Data</h4>
+              <h4>{{order.invoice}}</h4>
             </mdb-card-title>
-        
+
             <!--Text-->
             <mdb-card-text>
-                <dl>
-                    <dt>Weight</dt>
-                    <dd>{{order.invWeight}}Kg</dd>
-                    <dt>Lines</dt>
-                    <dd>{{order.lines}}</dd>
-                    <dt>Units</dt>
-                    <dd>{{order.units}}</dd>
-                    <dt>Picked</dt>
-                    <dd>{{order.pickedQty}}</dd>
-                    <dt>Destination</dt>
-                    <dd>{{order.destination}}</dd>
-                    <dt>Status</dt>
-                    <dd>{{order.status}}</dd>
-                </dl>
-            </mdb-card-text>
-        </mdb-card-body>
-    </mdb-card>
-    </div>
-<div class="col col-sm-12 col-md-6 col-lg-4 mt-2 mb-2">
-<mdb-card>
-    <!--Card content-->
-    <mdb-card-body>
-    
-        <!--Title-->
-        <mdb-card-title>
-        <h4>Schedule Info</h4>
-        </mdb-card-title>
-    
-        <!--Text-->
-        <mdb-card-text>
-            <form [formGroup]="scheduleForm">
-                <dl>
-                    <dt><label for="txtComments">Comments</label></dt>
-                    <dd><textarea formControlName="comments" id="txtComments"></textarea></dd>                        
-                    <dt><label for="txtStatus">Status</label></dt>
-                    <dd><input mdbInput type="text" formControlName="status" id="txtStatus"></dd>
-                </dl>
-                <button (click)="submitForm()">Save</button>
-                            <!-- <div class="checkbox">
-                                <input type="checkbox" formControlName="picked" class="checkbox__input" id="chkPicked">
-                                <label for="chkPicked" class="checkbox__label">Picked</label>
-                            </div>
-                            <div class="checkbox">
-                                <input type="checkbox" formControlName="packed" class="checkbox__input" id="chkPacked">
-                                <label for="chkPacked" class="checkbox__label">Packed</label>
-                            </div>         -->
-            </form>
-                    <!--<input mdbInput type="text" formControlName="ALP">
-                    <input mdbInput type="text" formControlName="bench">
-                    <input mdbInput type="text" formControlName="priority">
-                    <input mdbInput type="text" formControlName="holdLoc">
-                    <input mdbInput type="text" formControlName="palconPacked">
-                    
-                    <input mdbInput type="text" formControlName="workDate">
-                    <input mdbInput type="text" formControlName="delDate">
-                    <input mdbInput type="text" formControlName="despDate">
-                    <input mdbInput type="text" formControlName="palletIds">
-                    <input mdbInput type="text" formControlName="palletCount">
-                    <input mdbInput type="text" formControlName="palletNumbers"> -->
-
-        </mdb-card-text>
-    </mdb-card-body>
-</mdb-card>
-</div>
-</div>
-<div class="row">
-    <div class="col">
-        <form>
-            <div class="form-group row">
-              <label for="inputEmail3" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control form-control-sm" id="inputEmail3" placeholder="Email">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputPassword3" class="col-sm-2 col-form-label col-form-label-sm">Password</label>
-              <div class="col-sm-10">
-                <input type="password" class="form-control form-control-sm" id="inputPassword3" placeholder="Password">
-              </div>
-            </div>
-            <fieldset class="form-group">
               <div class="row">
-                <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
-                <div class="col-sm-10">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                    <label class="form-check-label" for="gridRadios1">
-                      First radio
-                    </label>
+                <div class="col">
+                  <div class="form-group row">
+                    <label for="account" class="col-sm-4 col-form-label col-form-label-sm">Account</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="account" formControlName="account">
+                    </div>
                   </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                    <label class="form-check-label" for="gridRadios2">
-                      Second radio
-                    </label>
+                  <div class="form-group row">
+                    <label for="name" class="col-sm-4 col-form-label col-form-label-sm">Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="name" formControlName="name">
+                    </div>
                   </div>
-                  <div class="form-check disabled">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
-                    <label class="form-check-label" for="gridRadios3">
-                      Third disabled radio
-                    </label>
+                  <div class="form-group row">
+                    <label for="dateInvoiced" class="col-sm-4 col-form-label col-form-label-sm">Invoice Date</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="dateInvoiced"
+                        formControlName="dateInvoiced">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="batch" class="col-sm-4 col-form-label col-form-label-sm">Batch</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="batch" formControlName="batch">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="dateDespatchedActual" class="col-sm-4 col-form-label col-form-label-sm">Actual Despatch
+                      Date</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="dateDespatchedActual"
+                        formControlName="dateDespatchedActual">
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </mdb-card-text>
+          </mdb-card-body>
+        </mdb-card>
+        
+        <div class="mt-2 mb-2">
+        <mdb-card>
+          <!--Card content-->
+          <mdb-card-body>
+
+            <!--Title-->
+            <mdb-card-title>
+              <h4>Vista Data</h4>
+            </mdb-card-title>
+
+            <!--Text-->
+            <mdb-card-text>
+              <div class="row">
+                <div class="col">
+                    <div class="form-group row">
+                        <label for="vistaStatus" class="col-sm-4 col-form-label col-form-label-sm">Status</label>
+                        <div class="col-sm-8">
+                          <input type="text" class="form-control form-control-sm" id="vistaStatus"
+                            formControlName="vistaStatus">
+                        </div>
+                      </div>    
+                  <div class="form-group row">
+                    <label for="invWeight" class="col-sm-4 col-form-label col-form-label-sm">Weight</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="invWeight"
+                        formControlName="invWeight">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="units" class="col-sm-4 col-form-label col-form-label-sm">Units</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="units" formControlName="units" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="lines" class="col-sm-4 col-form-label col-form-label-sm">Lines</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="lines" formControlName="lines">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="pickedQty" class="col-sm-4 col-form-label col-form-label-sm">Picked Qty</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="pickedQty"
+                        formControlName="pickedQty">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="pickedBulk" class="col-sm-4 col-form-label col-form-label-sm">Picked Bulk</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="pickedBulk"
+                        formControlName="pickedBulk">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="pickedLoose" class="col-sm-4 col-form-label col-form-label-sm">Picked
+                      Loose</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="pickedLoose"
+                        formControlName="pickedLoose">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-4 col-form-label col-form-label-sm">Picked</div>
+                    <div class="col-sm-8">
+                      <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="vistaPicked"
+                          formControlName="vistaPicked">
+                        <label class="custom-control-label" for="vistaPicked"></label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-4 col-form-label col-form-label-sm">Packed</div>
+                    <div class="col-sm-8">
+                      <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="vistaPacked"
+                          formControlName="vistaPacked">
+                        <label class="custom-control-label" for="vistaPacked"></label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="destination" class="col-sm-4 col-form-label col-form-label-sm">Destination</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control form-control-sm" id="destination"
+                        formControlName="destination">
+                    </div>
                   </div>
                 </div>
               </div>
-            </fieldset>
-            <div class="form-group row">
-              <div class="col-sm-2">Checkbox</div>
-              <div class="col-sm-10">
-                <div class="custom-control custom-checkbox">
-                  <input class="custom-control-input" type="checkbox" id="gridCheck1">
-                  <label class="custom-control-label" for="gridCheck1">
-                    Example checkbox
-                  </label>
+            </mdb-card-text>
+          </mdb-card-body>
+        </mdb-card>
+        </div>
+      </div>
+      <div class="col col-sm-12 col-md-6 col-lg-6 mt-2 mb-2">
+        <mdb-card>
+          <mdb-card-body>
+            <mdb-card-title>
+              <h4>Schedule Details</h4>
+            </mdb-card-title>
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <div class="col-sm-4 col-form-label col-form-label-sm">Scheduled</div>
+                  <div class="col-sm-8">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="Scheduled" formControlName="scheduled">
+                      <label class="custom-control-label" for="Scheduled"></label>
+                    </div>
+                  </div>
                 </div>
+
+                <div class="form-group row">
+                  <label for="palDest" class="col-sm-4 col-form-label col-form-label-sm">Destination</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="palDest" formControlName="palDest">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="ALP" class="col-sm-4 col-form-label col-form-label-sm">ALP</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="ALP" formControlName="ALP">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="bench" class="col-sm-4 col-form-label col-form-label-sm">Bench</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="bench" formControlName="bench">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="priority" class="col-sm-4 col-form-label col-form-label-sm">Priority</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="priority" formControlName="priority">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-4 col-form-label col-form-label-sm">Picked</div>
+                  <div class="col-sm-8">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="picked" formControlName="picked">
+                      <label class="custom-control-label" for="picked"></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-4 col-form-label col-form-label-sm">Packed</div>
+                  <div class="col-sm-8">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="packed" formControlName="packed">
+                      <label class="custom-control-label" for="packed"></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="holdLoc" class="col-sm-4 col-form-label col-form-label-sm">Hold Loc</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="holdLoc" formControlName="holdLoc">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="palconPakced" class="col-sm-4 col-form-label col-form-label-sm">Palcon Packed</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="palconPacked"
+                      formControlName="palconPacked">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="status" class="col-sm-4 col-form-label col-form-label-sm">Status</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="status" formControlName="status">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="comments" class="col-sm-4 col-form-label col-form-label-sm">Comments</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="comments" formControlName="comments">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+
               </div>
             </div>
-            <div class="form-group row">
-              <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Sign in</button>
-              </div>
-            </div>
-          </form>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
     </div>
-</div>
+  </form>
 </ng-container>

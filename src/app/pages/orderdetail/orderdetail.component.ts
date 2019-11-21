@@ -90,8 +90,25 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
   CreateScheduleForm(): FormGroup {
     const orderForm = this.fb.group({
       id: [this.order.id],
+      site: [this.order.site],
+      invoice: [this.order.invoice],
+      batch: [this.order.batch],
+      doc: [this.order.doc],
+      account: [this.order.account],
+      invWeight: [this.order.invWeight],
+      units: [this.order.units],
+      lines: [this.order.lines],
+      pickedQty: [this.order.pickedQty],
+      pickedBulk: [this.order.pickedBulk],
+      pickedLoose: [this.order.pickedLoose],
+      vistaPicked: [this.order.vistaPicked],
+      vistaPacked: [this.order.vistaPacked],
+      destination: [this.order.destination],
+      vistaStatus: [this.order.vistaStatus],
+      dateDespatchedActual: [this.order.dateDespatchedActual],
+      dateInvoiced: [this.order.dateInvoiced],
       scheduled: [this.order.scheduled],
-      destination: [this.order.palDest],
+      palDest: [this.order.palDest],
       ALP: [this.order.ALP],
       bench: [this.order.bench],
       priority: [this.order.priority],
@@ -106,7 +123,8 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
       despDate: [this.order.despDate],
       palletIds: [this.order.palletIds],
       palletCount: [this.order.palletCount],
-      palletNumbers: [this.order.palletNumbers]
+      palletNumbers: [this.order.palletNumbers],
+      name: [this.order.name]
     });
     return orderForm;
   }

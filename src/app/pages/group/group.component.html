@@ -49,11 +49,9 @@
             <mdb-card-body>
                 Members
                 <div class="row mb-2">
-                    <div class="col">
-                    <form class="form-inline">
+                    <div class="col form-inline">
                         <ng2-completer [(ngModel)]="searchStr" [datasource]="dataService" [minSearchLength]="3" [inputClass]="['form-control','form-control-sm']"></ng2-completer>
                         <button type="button" class="btn btn-primary btn-sm ml-2" (click)="addAccount()">Add</button>
-                    </form>
                     </div>
                 </div>
                 <div class="list-group">

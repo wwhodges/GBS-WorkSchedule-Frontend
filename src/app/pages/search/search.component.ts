@@ -5,6 +5,7 @@ import { IOrder } from 'src/app/common/models';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { IWorkParams } from 'src/app/common/models/workParams.model';
+import { IOrderList } from 'src/app/common/models/orderList.model';
 
 @Component({
   selector: 'app-search',
@@ -16,7 +17,10 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
   private unsubscribeParams$: Subject<void> = new Subject();
   private searchString: string;
   private queryParam = 'terms';
-  searchWork: IOrder[] = [];
+  private searchWork: IOrder[] = [];
+  private searchOrders: IOrderList;
+  private currentPage = 0;
+  private maxPages = 0;
 
   workParams: IWorkParams = {
     INCLUDE_DESPATCHED: false,
@@ -67,7 +71,9 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
     console.log('searching', this.searchString);
     this.apiData.getOrderBySearch(this.searchString, this.workParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
-        this.searchWork = apiResult;
+        this.searchOrders = apiResult;
+        this.searchWork = this.searchOrders.orders;
+        this.maxPages = this.searchOrders.totalPages;
         this.isLoading = false;
         console.log('got response');
       }, (error) => {console.log(error); }
