@@ -1,7 +1,7 @@
 <nav aria-label="pagination">
     <ul class="pagination pagination-circle pg-blue">
-      <li class="page-item" [class.disabled]="firstEnabled"><a class="page-link" mdbWavesEffect (click)="sendPage(0)">First</a></li>
-      <li class="page-item" [class.disabled]="firstEnabled">
+      <li class="page-item" [class.disabled]="!firstEnabled"><a class="page-link" mdbWavesEffect (click)="sendPage(0)">First</a></li>
+      <li class="page-item" [class.disabled]="!firstEnabled">
         <a class="page-link" aria-label="Previous" mdbWavesEffect (click)="sendPage(currentPage - 1)">
           <span aria-hidden="true">&laquo;</span>
           <span class="sr-only">Previous</span>
@@ -11,12 +11,12 @@
         class="page-item" [class.active]="page + startPage === currentPage">
           <a class="page-link" mdbWavesEffect (click)="sendPage(page + startPage)">{{page + startPage +1}}</a>
       </li>
-      <li class="page-item" [class.disabled]="lastEnabled">
+      <li class="page-item" [class.disabled]="!lastEnabled">
         <a class="page-link" aria-label="Next" mdbWavesEffect (click)="sendPage(currentPage + 1)">
           <span aria-hidden="true">&raquo;</span>
           <span class="sr-only">Next</span>
         </a>
       </li>
-      <li class="page-item" [class.disabled]="lastEnabled"><a class="page-link" mdbWavesEffect (click)="sendPage(maxPages)">Last</a></li>
+      <li class="page-item" [class.disabled]="!lastEnabled"><a class="page-link" mdbWavesEffect (click)="sendPage(maxPages)">Last</a></li>
     </ul>
   </nav>

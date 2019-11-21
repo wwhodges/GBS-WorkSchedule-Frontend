@@ -43,7 +43,7 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
     MIN_WEIGHT: 0,
     MAX_WEIGHT: 0,
     SORT: 0,
-    PAGESIZE: 200,
+    PAGESIZE: 50,
     PAGE: 0
   };
 

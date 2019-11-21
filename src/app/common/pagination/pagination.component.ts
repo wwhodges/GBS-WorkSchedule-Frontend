@@ -21,10 +21,11 @@ export class PaginationComponent implements OnInit, OnChanges {
 
     ngOnChanges() {
         this.firstEnabled = this.currentPage !== 0;
-        this.lastEnabled = this.currentPage >= this.maxPages;
+        this.lastEnabled = this.currentPage < this.maxPages;
         const pages = this.maxPages < 5 ? this.maxPages : 5;
         this.listPages = new Array(pages);
-        this.startPage = this.currentPage - 2 < 0 ? 0 : this.currentPage - 2;
+        this.startPage = this.currentPage - 2 < 0 ? 0 :
+            this.currentPage + 2 > this.maxPages ? this.maxPages - pages + 1 : this.currentPage - 2;
     }
 
     sendPage(page: number) {

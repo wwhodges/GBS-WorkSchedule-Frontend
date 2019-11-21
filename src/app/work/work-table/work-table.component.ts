@@ -27,8 +27,8 @@ export class WorkTableComponent implements OnChanges, OnInit {
     this.workTableForm = this.fb.group({
       workItems: this.fb.array(this.workItems.map((item) => this.createWorkItemGroup(item)))
     });
-    console.log(this.workItems);
-    console.log(this.workTableForm);
+    //console.log(this.workItems);
+    //console.log(this.workTableForm);
     // console.log(this.workTableForm);
     // console.log('wt curr grp' + this.currentGroup);
   }
