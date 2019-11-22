@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { Ng2CompleterModule } from 'ng2-completer';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -58,7 +59,8 @@ import { PaginationComponent } from './common/pagination/pagination.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    Ng2CompleterModule
+    Ng2CompleterModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     ActiveUserService,

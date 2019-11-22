@@ -39,6 +39,7 @@ export class SearchComponent implements OnInit, OnDestroy, OnChanges {
     ACCOUNT: '',
     NAME: '',
     GROUPID: 0,
+    PRIME: '',
     WORKID: 0,
     MIN_WEIGHT: 0,
     MAX_WEIGHT: 0,

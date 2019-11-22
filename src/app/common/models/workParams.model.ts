@@ -22,6 +22,7 @@ export interface IWorkParams {
     INVOICE: string;
     NAME: string;
     GROUPID: number;
+    PRIME: string;
 
     SORT: number;
 

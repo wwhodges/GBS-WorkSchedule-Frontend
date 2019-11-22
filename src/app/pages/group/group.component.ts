@@ -2,11 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ICustomerGroup } from 'src/app/common/models';
 import { Subject } from 'rxjs';
 import { ApiDataService } from 'src/app/common/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CompleterService, CompleterData, RemoteData } from 'ng2-completer';
 import { HttpHeaders } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-group',
@@ -29,8 +30,10 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   constructor(private apiData: ApiDataService,
               private route: ActivatedRoute,
+              private router: Router,
               private fb: FormBuilder,
-              private completerService: CompleterService) {
+              private completerService: CompleterService,
+              private toastr: ToastrService) {
     this.dataService =
       this.completerService.remote('https://ukwwhdappdi001/api/GBSWorkSchedule/Customer/Search/', 'account,name', 'account');
 
@@ -52,6 +55,7 @@ export class GroupComponent implements OnInit, OnDestroy {
           groupName: 'New Group',
           minWeight: 0,
           groupByAcct: false,
+          prime: '',
           destinationBase: 0,
           unscheduledOrder: 0,
           members: []
@@ -78,7 +82,8 @@ export class GroupComponent implements OnInit, OnDestroy {
       groupName: [this.group.groupName],
       groupByAcct: [this.group.groupByAcct],
       minWeight: [this.group.minWeight],
-      destinationBase: [this.group.destinationBase]
+      destinationBase: [this.group.destinationBase],
+      prime: [this.group.prime]
     });
   }
 
@@ -87,15 +92,28 @@ export class GroupComponent implements OnInit, OnDestroy {
     this.group.groupByAcct = this.groupForm.get('groupByAcct').value;
     this.group.minWeight = this.groupForm.get('minWeight').value;
     this.group.destinationBase = this.groupForm.get('destinationBase').value;
+    this.group.prime = this.groupForm.get('prime').value;
   }
 
   saveGroup() {
       this.UpdateFromForm();
-      this.apiData.saveCustomerGroup(this.group).subscribe(response => {console.log(response)});
+      this.apiData.saveCustomerGroup(this.group).subscribe(response => {
+        // console.log(response);
+        if (this.group.id === 0) {this.group.id = +response; }
+        this.toastr.success('Group saved successfully', 'Saved');
+      },
+      error => {
+        this.toastr.warning('A problem occurred saving the group', 'Not Saved');
+      });
   }
 
   deleteGroup() {
-    this.apiData.deleteCustomerGroup(this.group.id).subscribe();
+    this.apiData.deleteCustomerGroup(this.group.id).subscribe(
+      response => {
+        this.toastr.success('Group deleted successfully', 'Deleted');
+        this.router.navigate(['groups']);
+      }
+    );
   }
 
   addAccount() {

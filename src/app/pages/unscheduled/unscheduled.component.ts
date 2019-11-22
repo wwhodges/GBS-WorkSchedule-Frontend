@@ -19,8 +19,8 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
   private workList: IOrder[];
   private customerGroups: ICustomerGroup[];
 
-  private currentPage: number = 0;
-  private maxPages: number = 5;
+  private currentPage = 0;
+  private maxPages = 5;
 
   private orderParams: IWorkParams = {
     INCLUDE_DESPATCHED: false,
@@ -44,7 +44,8 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
     MAX_WEIGHT: 0,
     SORT: 0,
     PAGESIZE: 50,
-    PAGE: 0
+    PAGE: 0,
+    PRIME: ''
   };
 
   private popupVisible = false;
@@ -61,10 +62,20 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   groupSelected(group: string) {
-    console.log('parent grp sel ' + group)
     if (group === '*') {
-      this.orderParams.GROUPID = 0; } else {
-      this.orderParams.GROUPID = +group;
+      this.orderParams.GROUPID = 0;
+      this.orderParams.PRIME = '';
+    } else {
+      const groupObj = this.customerGroups.find(grp => grp.id === +group);
+      if (groupObj.prime !== '') {
+        this.orderParams.PRIME = groupObj.prime;
+        this.orderParams.GROUPID = 0;
+      } else {
+        this.orderParams.PRIME = '';
+        this.orderParams.GROUPID = +group;
+      }
+      this.orderParams.MIN_WEIGHT = groupObj.minWeight;
+      this.orderParams.SORT = groupObj.groupByAcct ? 1 : 0;
     }
     this.loadData();
   }
@@ -84,7 +95,7 @@ export class UnscheduledComponent implements OnInit, OnChanges, OnDestroy {
         this.workList = this.orders.orders;
         this.maxPages = this.orders.totalPages;
         this.isLoading = false;
-      }, (error) => {console.log(error); }
+      }, (error) => { console.log(error); }
     );
   }
 

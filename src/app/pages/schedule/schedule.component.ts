@@ -35,6 +35,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     ACCOUNT: '',
     NAME: '',
     GROUPID: 0,
+    PRIME: '',
     WORKID: 0,
     MIN_WEIGHT: 0,
     MAX_WEIGHT: 0,
