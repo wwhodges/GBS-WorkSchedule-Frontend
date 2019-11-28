@@ -5,6 +5,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { Ng2CompleterModule } from 'ng2-completer';
 import { ToastrModule } from 'ngx-toastr';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +29,8 @@ import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { GroupComponent } from './pages/group/group.component';
 import { PaginationComponent } from './common/pagination/pagination.component';
+import { TestComponent } from './pages/test/test.component';
+import { OrderTableComponent } from './common/order-table/order-table.component';
 
 
 
@@ -49,7 +52,9 @@ import { PaginationComponent } from './common/pagination/pagination.component';
     ScheduleComponent,
     GroupsComponent,
     GroupComponent,
-    PaginationComponent
+    PaginationComponent,
+    TestComponent,
+    OrderTableComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,8 @@ import { PaginationComponent } from './common/pagination/pagination.component';
     FormsModule,
     ReactiveFormsModule,
     Ng2CompleterModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    DragDropModule
   ],
   providers: [
     ActiveUserService,

@@ -1,8 +1,3 @@
-<button type="button" mdbBtn outline="true" color="primary" size="sm" class="waves-effect" (click)="isFilterVisible = !isFilterVisible">
-    Filters
-    <mdb-icon fas icon="angle-double-down" class="ml-2" aria-hidden="true" *ngIf="!isFilterVisible"></mdb-icon>
-    <mdb-icon fas icon="angle-double-up" class="ml-2" aria-hidden="true" *ngIf="isFilterVisible"></mdb-icon>
-</button>
 <mdb-card  *ngIf="isFilterVisible">
     <!--Card content-->
     <mdb-card-body>

@@ -1,56 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IOrder } from 'src/app/common/models';
+import { IOrder, Order } from 'src/app/common/models';
 import { ApiDataService } from 'src/app/common/services';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
-
-export class Order implements IOrder {
-  site: string;
-  invoice: string;
-  batch: string;
-  doc: string;
-  account: string;
-  invWeight: number;
-  units: number;
-  lines: number;
-  pickedQty: number;
-  pickedBulk: number;
-  pickedLoose: number;
-  vistaPicked: boolean;
-  vistaPacked: boolean;
-  vistaStatus: string;
-  dateDespatchedActual: Date;
-  dateInvoiced: Date;
-  scheduled: boolean;
-  palDest: string;
-  name: string;
-  prime: string;
-  id: number;
-  destination: string;
-  ALP: string;
-  bench: string;
-  priority: string;
-  picked: boolean;
-  packed: boolean;
-  holdLoc: string;
-  palconPacked: number;
-  status: string;
-  comments: string;
-  workDate: Date;
-  delDate: Date;
-  despDate: Date;
-  palletIds: string;
-  palletCount: number;
-  palletNumbers: string;
-
-  public constructor(init?: Partial<Order>) {
-    Object.assign(this, init);
-  }
-
-}
-
 
 @Component({
   selector: 'app-orderdetail',
@@ -67,7 +21,7 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
   private queryParam = 'id';
   private isLoading = true;
 
-  private scheduleForm: FormGroup;
+  private orderForm: FormGroup;
 
   constructor(private apiData: ApiDataService, private route: ActivatedRoute, private fb: FormBuilder) { }
 
@@ -78,66 +32,23 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
       this.orderId = params.get(this.queryParam);
       this.apiData.getOrderById(this.orderId).pipe(takeUntil(this.unsubscribe$)).subscribe(
         apiResult => {
-          this.order = new Order(apiResult);
-          this.scheduleForm = this.CreateScheduleForm();
+          this.order = apiResult;
+          this.orderForm = this.order.CreateFormGroup();
           this.isLoading = false;
           console.log(this.order);
         }
       );
     });
   }
-
-  CreateScheduleForm(): FormGroup {
-    const orderForm = this.fb.group({
-      id: [this.order.id],
-      site: [this.order.site],
-      invoice: [this.order.invoice],
-      batch: [this.order.batch],
-      doc: [this.order.doc],
-      account: [this.order.account],
-      invWeight: [this.order.invWeight],
-      units: [this.order.units],
-      lines: [this.order.lines],
-      pickedQty: [this.order.pickedQty],
-      pickedBulk: [this.order.pickedBulk],
-      pickedLoose: [this.order.pickedLoose],
-      vistaPicked: [this.order.vistaPicked],
-      vistaPacked: [this.order.vistaPacked],
-      destination: [this.order.destination],
-      vistaStatus: [this.order.vistaStatus],
-      dateDespatchedActual: [this.order.dateDespatchedActual],
-      dateInvoiced: [this.order.dateInvoiced],
-      scheduled: [this.order.scheduled],
-      palDest: [this.order.palDest],
-      ALP: [this.order.ALP],
-      bench: [this.order.bench],
-      priority: [this.order.priority],
-      picked: [this.order.picked],
-      packed: [this.order.packed],
-      holdLoc: [this.order.holdLoc],
-      palconPacked: [this.order.palconPacked],
-      status: [this.order.status],
-      comments: [this.order.comments],
-      workDate: [this.order.workDate],
-      delDate: [this.order.delDate],
-      despDate: [this.order.despDate],
-      palletIds: [this.order.palletIds],
-      palletCount: [this.order.palletCount],
-      palletNumbers: [this.order.palletNumbers],
-      name: [this.order.name]
-    });
-    return orderForm;
-  }
-
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.unsubscribe();
   }
 
   submitForm() {
-    console.log(this.scheduleForm);
-    const sched = new Order(this.scheduleForm.value);
-    console.log(sched);
+    // console.log(this.orderForm);
+    const sched = new Order().deserialise(this.orderForm.value);
+    // console.log(sched);
     this.apiData.insertOrder(sched).subscribe( response => { console.log(response); }, errormsg => {console.log(errormsg); });
   }
 

@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IWorkParams,
          IOrder,
+         Order,
          IOrderSummary,
          ICustomerGroup} from '../models/index';
-import { IOrderList } from '../models/orderList.model';
+import { IOrderList, OrderList } from '../models/orderList.model';
+import { map } from 'rxjs/operators';
+import { IUserSetting } from '../models/userSetting.model';
 
 
 @Injectable()
@@ -62,9 +65,18 @@ export class ApiDataService {
     return this.http.post<IOrderList>(apiURL, workParams, { withCredentials: true });
   }
 
+  getOrderFilteredType(workParams: IWorkParams) {
+    const apiURL = `${this.apiRoot}Order`;
+    return this.http.post<OrderList>(apiURL, workParams, { withCredentials: true }).pipe(
+      map(response => new OrderList().deserialise(response))
+    );
+  }
+
   getOrderById(id: string) {
     const apiURL = `${this.apiRoot}Order/` + id;
-    return this.http.get<IOrder>(apiURL, { withCredentials: true });
+    return this.http.get<Order>(apiURL, { withCredentials: true }).pipe(
+      map(response => new Order().deserialise(response))
+    );
   }
 
   insertOrder(order: IOrder) {
@@ -76,5 +88,21 @@ export class ApiDataService {
     const apiURL = `${this.apiRoot}Order/` + order.id;
     return this.http.put<IOrder>(apiURL, order, {withCredentials: true});
   }
+
+  getUserSetting(setting: string) {
+    const apiURL = `${this.apiRoot}UserSetting/` + setting;
+    return this.http.get<IUserSetting>(apiURL, { withCredentials: true });
+  }
+
+  insertUserSetting(setting: string, data: string) {
+    const newSetting: IUserSetting = {
+      username: '',
+      settingKey: setting,
+      settingData: data
+    };
+    const apiURL = `${this.apiRoot}UserSetting`;
+    return this.http.post<IUserSetting>(apiURL, newSetting, { withCredentials: true });
+  }
+
 
 }

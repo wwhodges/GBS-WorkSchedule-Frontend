@@ -1,47 +1,80 @@
 <app-loading *ngIf="isLoading"></app-loading>
 <ng-container *ngIf="!isLoading">
-<div class="row">
+  <div class="row">
     <div class="col-md-2 ml-4">
-        <div class="view overlay zoom">
-            <img src="{{userImage}}" class="img-fluid z-depth-1" alt="zoom">
-            <div class="mask flex-center waves-effect waves-light">
-              <p class="white-text">PRH User</p>
-            </div>
-          </div>
+      <div class="view overlay zoom">
+        <img src="{{userImage}}" class="img-fluid z-depth-1" alt="zoom">
+        <div class="mask flex-center waves-effect waves-light">
+          <p class="white-text">PRH User</p>
+        </div>
+      </div>
     </div>
     <div class="col-md-6">
-            <!--Card-->
-            <mdb-card>
-              <mdb-card-body cascade="true" class="text-center pb-0 px-0">
-                <!--Card content-->
-                <h4 class="card-title">
-                  <strong>{{user.forename}} {{user.surname}}</strong>
-                </h4>
-                <h5>{{user.title}}</h5>
-                <h5>{{user.division}}</h5>
-        
-                <mdb-card-text>
-                <!--Telephone-->
-                  <div>
-                    <i class="fas fa-phone"></i>
-                    {{user.telephone}}
-                  </div>
-                <!--Email-->
-                <div>
-                  <i class="fas fa-at"></i>
-                  {{user.email}}
-                </div>
-              </mdb-card-text>
-                <!-- Card footer -->
-                <div class="card-footer text-muted text-center mt-4">
-                  2 days ago
-                </div>
-        
-              </mdb-card-body>
-              <!--/.Card content-->
-        
-            </mdb-card>
-            <!--/.Card-->
+      <!--Card-->
+      <mdb-card>
+        <mdb-card-body cascade="true" class="text-center pb-0 px-0">
+          <!--Card content-->
+          <h4 class="card-title">
+            <strong>{{user.forename}} {{user.surname}}</strong>
+          </h4>
+          <h5>{{user.title}}</h5>
+          <h5>{{user.division}}</h5>
+
+          <mdb-card-text>
+            <!--Telephone-->
+            <div>
+              <i class="fas fa-phone"></i>
+              {{user.telephone}}
+            </div>
+            <!--Email-->
+            <div>
+              <i class="fas fa-at"></i>
+              {{user.email}}
+            </div>
+          </mdb-card-text>
+          <!-- Card footer -->
+          <div class="card-footer text-muted text-center mt-4">
+            2 days ago
+          </div>
+
+        </mdb-card-body>
+        <!--/.Card content-->
+
+      </mdb-card>
+      <!--/.Card-->
     </div>
-</div>
+  </div>
+  <div class="row">
+  <div class="col-md-4">
+    <!--Card-->
+    <mdb-card>
+      <mdb-card-body>
+        <ul class="list-group">
+          <li cdkDrag class="list-group-item" *ngFor="let field of allFields;">{{field.desc}}</li>
+        </ul>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+  <div class="col-md-4">
+    <!--Card-->
+    <mdb-card>
+      <mdb-card-body>
+        <ul class="list-group" cdkDropList (cdkDropListDropped)="drop($event)">
+          <li cdkDrag class="list-group-item" *ngFor="let field of scheduledFields;">{{field.desc}}</li>
+        </ul>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+  <div class="col-md-4">
+    <!--Card-->
+    <mdb-card>
+      <mdb-card-body>
+        <ul class="list-group" cdkDropList (cdkDropListDropped)="drop($event)">
+          <li cdkDrag class="list-group-item" *ngFor="let field of unscheduledFields;">{{field.desc}}</li>
+        </ul>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+
+  </div>
 </ng-container>

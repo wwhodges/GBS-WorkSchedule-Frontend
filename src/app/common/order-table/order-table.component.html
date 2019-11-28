@@ -1,0 +1,79 @@
+<div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="currentGroup === '*'" (click)="selectedGroup('*')">All Orders</a>
+        </li>
+        <li class="nav-item" *ngFor="let group of groups">
+            <a class="nav-link" [class.active]="currentGroup === group.id"
+                (click)="selectedGroup(group.id)">{{group.groupName}}</a>
+        </li>
+    </ul>
+</div>
+<form [formGroup]="ordersForm">
+    <div>
+        <table class="table table-borderless table-hover">
+            <thead>
+                <tr>
+                    <th>Invoice</th>
+                    <ng-container *ngFor="let field of listedFields">
+                        <th>{{field.desc}}</th>
+                    </ng-container>
+                    <th>Scheduled</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr formArrayName="orders" *ngFor="let order of ordersForm.controls.orders.controls; let i = index;">
+                    <ng-container [formGroupName]="i">
+                        <td><a [routerLink]="['/order', orders[i].id]"
+                                style="cursor: pointer;">{{orders[i].invoice}}</a></td>
+                        <ng-container *ngFor="let field of listedFields">
+                            <ng-container *ngIf="field.edit; else notEdit">
+                                <ng-container [ngSwitch]="field.type">
+                                    <td *ngSwitchCase="'text'"><input type="{{field.type}}"
+                                            formControlName="{{field.name}}" size="{{field.size}}" /></td>
+                                    <td *ngSwitchCase="'date'"><input type="{{field.type}}"
+                                            formControlName="{{field.name}}" /></td>
+                                    <td *ngSwitchCase="'select'"><select formControlName="{{field.name}}">
+                                            <option *ngFor="let status of myCodes" [value]="status">{{status}}
+                                            </option>
+                                        </select></td>
+                                </ng-container>
+                            </ng-container>
+                            <ng-template #notEdit>
+                                <td *ngIf="field.type !== 'date'">{{orders[i][field.name]}}</td>
+                                <td *ngIf="field.type ==='date'">{{orders[i][field.name] | date:'dd-MM-yyyy'}}</td>
+                            </ng-template>
+                        </ng-container>
+                        <td>
+                            <div class="custom-control custom-checkbox ml-2">
+                                <input (click)="checkclicked($event)" type="checkbox" formControlName="scheduled"
+                                    class="custom-control-input" id="add-{{i}}">
+                                <label class="custom-control-label" for="add-{{i}}"></label>
+                            </div>
+
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+<div class="card fixed-bottom">
+    <!-- <mdb-card>
+            <mdb-card-body> -->
+    <div class="row justify-content-center">
+        <button type="button" (click)="isFilterVisible = !isFilterVisible" class="btn btn-info btn-sm fw-btn">
+            Filters
+            <mdb-icon fas icon="angle-double-down" class="ml-2" aria-hidden="true" *ngIf="!isFilterVisible"></mdb-icon>
+            <mdb-icon fas icon="angle-double-up" class="ml-2" aria-hidden="true" *ngIf="isFilterVisible"></mdb-icon>
+        </button>
+        <div class="col col-sm-auto"><button (click)="this.allocateDest()" class="btn btn-primary btn-sm fw-btn"
+                mdbWavesEffect>Set Destination</button></div>
+        <div class="col col-sm-auto"><button (click)="this.saveChanges()" class="btn btn-primary btn-sm fw-btn"
+                mdbWavesEffect>Save Changes</button></div>
+        <div class="col col-sm-auto"><button (click)="this.cancelAll()" class="btn btn-danger btn-sm fw-btn"
+                mdbWavesEffect>Cancel</button></div>
+    </div>
+    <app-work-filter [workParams]="filters" [isFilterVisible]="isFilterVisible" (updatedFilter)="filterUpdated()">
+    </app-work-filter>
+</div>

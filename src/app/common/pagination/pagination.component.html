@@ -8,8 +8,8 @@
         </a>
       </li>
       <li *ngFor="let pageItem of listPages; let page = index;"
-        class="page-item" [class.active]="page + startPage === currentPage">
-          <a class="page-link" mdbWavesEffect (click)="sendPage(page + startPage)">{{page + startPage +1}}</a>
+        class="page-item" [class.active]="page - 1 + startPage === currentPage ">
+          <a class="page-link" mdbWavesEffect (click)="sendPage(page + startPage - 1)">{{page + startPage}}</a>
       </li>
       <li class="page-item" [class.disabled]="!lastEnabled">
         <a class="page-link" aria-label="Next" mdbWavesEffect (click)="sendPage(currentPage + 1)">
@@ -17,6 +17,6 @@
           <span class="sr-only">Next</span>
         </a>
       </li>
-      <li class="page-item" [class.disabled]="!lastEnabled"><a class="page-link" mdbWavesEffect (click)="sendPage(maxPages)">Last</a></li>
+      <li class="page-item" [class.disabled]="!lastEnabled"><a class="page-link" mdbWavesEffect (click)="sendPage(maxPages - 1)">Last</a></li>
     </ul>
   </nav>

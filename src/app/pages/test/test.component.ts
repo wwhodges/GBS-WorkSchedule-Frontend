@@ -1,25 +1,24 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ApiDataService } from 'src/app/common/services';
-import { IWorkParams, ICustomerGroup } from 'src/app/common/models';
+import { IWorkParams } from 'src/app/common/models';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { OrderList } from 'src/app/common/models/orderList.model';
 import { FormGroup, FormArray } from '@angular/forms';
 
 @Component({
-  selector: 'app-unscheduled',
-  templateUrl: './unscheduled.component.html',
-  styleUrls: ['./unscheduled.component.scss']
+  selector: 'app-test',
+  templateUrl: './test.component.html',
+  styleUrls: ['./test.component.scss']
 })
-export class UnscheduledComponent implements OnInit, OnDestroy {
+export class TestComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
+  private unsubscribeParams$: Subject<void> = new Subject();
   private orders: OrderList;
   private ordersForm: FormGroup;
   private currentPage = 0;
   private maxPages = 0;
   private isFilterVisible = false;
-  private isLoading = true;
-  private customerGroups: ICustomerGroup[];
 
   private listedFields = [
     { name: 'batch', edit: false, type: 'text', desc: 'Batch', size: '5', style: '' },
@@ -35,7 +34,7 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     { name: 'despDate', edit: true, type: 'date', desc: 'Despatch', size: '10', style: 'width: 130px;' },
   ];
 
-  private orderParams: IWorkParams = {
+  workParams: IWorkParams = {
     INCLUDE_DESPATCHED: false,
     INCLUDE_PARTDESPATCHED: true,
     INCLUDE_PARTPACKED: true,
@@ -52,52 +51,27 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     ACCOUNT: '',
     NAME: '',
     GROUPID: 0,
+    PRIME: '',
     WORKID: 0,
     MIN_WEIGHT: 0,
     MAX_WEIGHT: 0,
     SORT: 0,
-    PAGESIZE: 50,
-    PAGE: 0,
-    PRIME: ''
+    PAGESIZE: 200,
+    PAGE: 0
   };
+
+  private isLoading = true;
 
   constructor(private apiData: ApiDataService) { }
 
   ngOnInit() {
-    this.isLoading = true;
-    this.loadData();
-  }
-
-  groupSelected(group: string) {
-    if (group === '*') {
-      this.orderParams.GROUPID = 0;
-      this.orderParams.PRIME = '';
-      this.orderParams.MIN_WEIGHT = 0;
-    } else {
-      const groupObj = this.customerGroups.find(grp => grp.id === +group);
-      if (groupObj.prime !== '') {
-        this.orderParams.PRIME = groupObj.prime;
-        this.orderParams.GROUPID = 0;
-      } else {
-        this.orderParams.PRIME = '';
-        this.orderParams.GROUPID = +group;
-      }
-      this.orderParams.MIN_WEIGHT = groupObj.minWeight;
-      this.orderParams.SORT = groupObj.groupByAcct ? 1 : 0;
-    }
-    this.currentPage = 0;
     this.loadData();
   }
 
   loadData() {
     this.unsubscribe$.next();
-    this.apiData.getCustomerGroups().pipe(takeUntil(this.unsubscribe$)).subscribe(
-      apiResult => {
-        this.customerGroups = apiResult;
-      }
-    );
-    this.orderParams.PAGE = this.currentPage;
-    this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
+    this.isLoading = true;
+    this.apiData.getOrderFilteredType(this.workParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         apiResult => {
           this.orders = apiResult;
@@ -111,11 +85,8 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.unsubscribe();
-  }
-
-  pageChange($event) {
-    this.currentPage = $event;
-    this.loadData();
+    this.unsubscribeParams$.next();
+    this.unsubscribeParams$.unsubscribe();
   }
 
   formAction($event) {
@@ -132,8 +103,9 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     if ($event === 'cancel') {
       this.ordersForm = this.orders.CreateFormGroup();
     }
-    if ($event === 'updated' ) {
-      this.loadData();
-    }
+  }
+
+  filterUpdated() {
+    this.loadData();
   }
 }

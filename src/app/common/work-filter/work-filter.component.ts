@@ -8,8 +8,10 @@ import { IWorkParams } from '../models/workParams.model';
 })
 export class WorkFilterComponent implements OnInit, OnChanges {
   @Input() workParams: IWorkParams;
+  @Input() isFilterVisible = false;
+
   @Output() updatedFilter = new EventEmitter();
-  private isFilterVisible = false;
+
 
   private filters = {
     scheduled: true,
