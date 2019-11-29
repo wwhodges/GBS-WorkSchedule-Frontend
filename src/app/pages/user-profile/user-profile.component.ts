@@ -5,6 +5,7 @@ import { ActiveUserService, ApiDataService } from 'src/app/common/services';
 import { takeUntil } from 'rxjs/operators';
 import { fieldSettings, defaultScheduledFields, defaultUnscheduledFields, IFieldSettings } from 'src/app/common/models/orderFields';
 import { IUserSetting } from 'src/app/common/models/userSetting.model';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-user-profile',
@@ -37,7 +38,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         if (setting === null) {
           this.scheduledFields = defaultScheduledFields;
           // this.apiData.insertUserSetting('schedule', JSON.stringify(this.scheduleFields)).subscribe(
-            // response => { console.log(response); }
+          // response => { console.log(response); }
           // );
         } else {
           this.scheduledFields = JSON.parse(setting.settingData);
@@ -53,9 +54,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         if (setting === null) {
           this.unscheduledFields = defaultUnscheduledFields;
           // this.apiData.insertUserSetting('unscheduled',
-            // JSON.stringify(this.unscheduledFields)).subscribe(
-             // response => { console.log(response); }
-           // );
+          // JSON.stringify(this.unscheduledFields)).subscribe(
+          // response => { console.log(response); }
+          // );
         } else {
           this.unscheduledFields = JSON.parse(setting.settingData);
         }
@@ -71,6 +72,32 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.unsubscribe();
+  }
+
+  onDrop(event: CdkDragDrop<IFieldSettings[]>) {
+    console.log(event);
+    if ((!event.isPointerOverContainer || event.container.id === 'allFieldList') && event.previousContainer.id !== 'allFieldList') {
+      event.previousContainer.data.splice(event.previousIndex, 1);
+    } else {
+      if (event.previousContainer === event.container) {
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      } else {
+        if (event.previousContainer.id === 'allFieldList' &&
+          !event.container.data.some(item => item.desc === event.previousContainer.data[event.previousIndex].desc)) {
+          copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+        }
+      }
+    }
+  }
+
+  saveData() {
+    this.apiData.insertUserSetting('scheduled', JSON.stringify(this.scheduledFields)).subscribe(
+      response => { console.log(response); }
+    );
+    this.apiData.insertUserSetting('unscheduled', JSON.stringify(this.unscheduledFields)).subscribe(
+      response => { console.log(response); }
+    );
+
   }
 
 }
