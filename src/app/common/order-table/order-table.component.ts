@@ -43,7 +43,8 @@ export class OrderTableComponent implements OnChanges, OnInit {
   checkclicked(data: any) {
     const target = data.target || data.srcElement || data.currentTarget;
     const value = target.attributes.id.nodeValue;
-    const currentCheckId = +value.substring(4);
+    //console.log(value);
+    const currentCheckId = +value.substring(10);
     let currentCheck = target.checked;
     if (data.ctrlKey) {
       if (this.lastCheckedId !== null) {

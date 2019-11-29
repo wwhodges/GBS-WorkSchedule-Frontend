@@ -12,6 +12,7 @@ export const fieldSettings: IFieldSettings[] = [
     { name: 'site', edit: false, type: 'text', desc: 'Site', size: '1', style: '', options: [] },
     { name: 'invoice', edit: false, type: 'text', desc: 'Invoice', size: '8', style: '', options: [] },
     { name: 'batch', edit: false, type: 'text', desc: 'Batch', size: '5', style: '', options: [] },
+    { name: 'doc', edit: false, type: 'text', desc: 'Doc', size: '3', style: '', options: [] },
     { name: 'account', edit: false, type: 'text', desc: 'Account', size: '10', style: '', options: [] },
     { name: 'vistaStatus', edit: true, type: 'text', desc: 'Status (V)', size: '15', style: '', options: [
             'Despatched',
@@ -109,7 +110,7 @@ export const defaultUnscheduledFields: IFieldSettings[] = [
     { name: 'workDate', edit: true, type: 'date', desc: 'Work Date', size: '10', style: 'width: 130px;', options: [] },
     { name: 'delDate', edit: true, type: 'date', desc: 'Deliver Date', size: '10', style: 'width: 130px;', options: [] },
     { name: 'despDate', edit: true, type: 'date', desc: 'Despatch Date', size: '10', style: 'width: 130px;', options: [] },
-    { name: 'scheduled', edit: false, type: 'checkbox', desc: 'Scheduled', size: '1', style: '', options: [] },
+    { name: 'scheduled', edit: true, type: 'checkbox', desc: 'Scheduled', size: '1', style: '', options: [] },
 ];
 
 export const defaultScheduledFields: IFieldSettings[] = [

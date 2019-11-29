@@ -26,13 +26,9 @@ export class PaginationComponent implements OnInit, OnChanges {
         this.listPages = new Array(pages);
         this.startPage = this.currentPage - 2 < 0 ? 1 :
             this.currentPage + 3 > this.maxPages ? this.maxPages - pages + 1 : this.currentPage - 1;
-        console.log(this.listPages);
-        console.log(this.startPage);
-        console.log(this.currentPage);
     }
 
     sendPage(page: number) {
-        console.log(page);
         this.pageSelected.emit(page);
     }
 }

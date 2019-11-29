@@ -4,7 +4,7 @@ import { IActiveUser } from 'src/app/common/models/activeUser.model';
 import { ActiveUserService, ApiDataService } from 'src/app/common/services';
 import { takeUntil } from 'rxjs/operators';
 import { fieldSettings, defaultScheduledFields, defaultUnscheduledFields, IFieldSettings } from 'src/app/common/models/orderFields';
-import { IUserSetting } from 'src/app/common/models/userSetting.model';
+import { IUserSetting, IUserConfig } from 'src/app/common/models/userSetting.model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -21,8 +21,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   private allFields = fieldSettings;
 
-  private scheduledFields: IFieldSettings[];
-  private unscheduledFields: IFieldSettings[];
+  private userConfig: IUserConfig = { screenRows: 200, scheduledScreen: [], unscheduledScreen: []};
+  // private scheduledFields: IFieldSettings[];
+  // private unscheduledFields: IFieldSettings[];
 
   constructor(private userService: ActiveUserService, private apiData: ApiDataService) { }
 
@@ -33,40 +34,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         this.user = userdata;
         this.isLoading = false;
       });
-    this.apiData.getUserSetting('scheduled').subscribe(
-      setting => {
-        if (setting === null) {
-          this.scheduledFields = defaultScheduledFields;
-          // this.apiData.insertUserSetting('schedule', JSON.stringify(this.scheduleFields)).subscribe(
-          // response => { console.log(response); }
-          // );
-        } else {
-          this.scheduledFields = JSON.parse(setting.settingData);
-        }
-        console.log(this.scheduledFields);
-      },
-      error => {
-        console.log(error);
-      }
+    this.userService.getUserConfig().subscribe(
+      config => { this.userConfig = config; }
     );
-    this.apiData.getUserSetting('unscheduled').subscribe(
-      setting => {
-        if (setting === null) {
-          this.unscheduledFields = defaultUnscheduledFields;
-          // this.apiData.insertUserSetting('unscheduled',
-          // JSON.stringify(this.unscheduledFields)).subscribe(
-          // response => { console.log(response); }
-          // );
-        } else {
-          this.unscheduledFields = JSON.parse(setting.settingData);
-        }
-        console.log(this.unscheduledFields);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-
   }
 
   ngOnDestroy() {
@@ -91,13 +61,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   saveData() {
-    this.apiData.insertUserSetting('scheduled', JSON.stringify(this.scheduledFields)).subscribe(
+    this.userService.saveUserConfig(this.userConfig).subscribe(
       response => { console.log(response); }
     );
-    this.apiData.insertUserSetting('unscheduled', JSON.stringify(this.unscheduledFields)).subscribe(
-      response => { console.log(response); }
-    );
-
   }
 
 }

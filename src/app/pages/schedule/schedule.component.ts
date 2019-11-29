@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { ApiDataService } from 'src/app/common/services';
+import { ApiDataService, ActiveUserService } from 'src/app/common/services';
 import { IWorkParams, ICustomerGroup } from 'src/app/common/models';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { OrderList } from 'src/app/common/models/orderList.model';
 import { FormGroup, FormArray } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-schedule',
@@ -64,9 +65,12 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     PRIME: ''
   };
 
-  constructor(private apiData: ApiDataService) { }
+  constructor(private apiData: ApiDataService,
+              private userService: ActiveUserService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.listedFields = this.userService.config.scheduledScreen;
     this.isLoading = true;
     this.loadData();
   }
@@ -123,14 +127,19 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   formAction($event) {
     if ($event === 'save') {
+      let savecount = 0;
       const ordArray = this.ordersForm.controls.orders as FormArray;
       for (let i = 0; i < ordArray.length; i++) {
         const ordForm = ordArray.controls[i] as FormGroup;
         const order = this.orders.orders[i];
         if (order.CheckForChanges(ordForm)) {
           // save order
+          console.log('saving order' + order.invoice);
+          savecount++;
+          this.apiData.updateOrder(order).subscribe( response => console.log(response));
         }
       }
+      this.toastr.success('Saved ' + savecount + ' orders', 'Success');
     }
     if ($event === 'cancel') {
       this.ordersForm = this.orders.CreateFormGroup();

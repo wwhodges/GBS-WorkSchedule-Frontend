@@ -14,18 +14,14 @@
         <table class="table table-borderless table-hover">
             <thead>
                 <tr>
-                    <th>Invoice</th>
                     <ng-container *ngFor="let field of listedFields">
                         <th>{{field.desc}}</th>
                     </ng-container>
-                    <th>Scheduled</th>
                 </tr>
             </thead>
             <tbody>
                 <tr formArrayName="orders" *ngFor="let order of ordersForm.controls.orders.controls; let i = index;">
                     <ng-container [formGroupName]="i">
-                        <td><a [routerLink]="['/order', orders[i].id]"
-                                style="cursor: pointer;">{{orders[i].invoice}}</a></td>
                         <ng-container *ngFor="let field of listedFields">
                             <ng-container *ngIf="field.edit; else notEdit">
                                 <ng-container [ngSwitch]="field.type">
@@ -34,24 +30,41 @@
                                     <td *ngSwitchCase="'date'"><input type="{{field.type}}"
                                             formControlName="{{field.name}}" /></td>
                                     <td *ngSwitchCase="'select'"><select formControlName="{{field.name}}">
-                                            <option *ngFor="let status of myCodes" [value]="status">{{status}}
+                                            <option *ngFor="let option of field.options" [value]="option">{{option}}
                                             </option>
                                         </select></td>
+                                    <td *ngSwitchCase="'checkbox'">
+                                        <div class="custom-control custom-checkbox ml-2">
+                                            <input (click)="checkclicked($event)" type="checkbox"
+                                                formControlName="{{field.name}}" class="custom-control-input"
+                                                id="{{field.name}}-{{i}}">
+                                            <label class="custom-control-label" for="{{field.name}}-{{i}}"></label>
+                                        </div>
+                                    </td>
                                 </ng-container>
                             </ng-container>
                             <ng-template #notEdit>
-                                <td *ngIf="field.type !== 'date'">{{orders[i][field.name]}}</td>
-                                <td *ngIf="field.type ==='date'">{{orders[i][field.name] | date:'dd-MM-yyyy'}}</td>
+                                <ng-container [ngSwitch]="field.type">
+                                    <td *ngSwitchCase="'date'">{{orders[i][field.name] | date:'dd-MM-yyyy'}}</td>
+                                    <td *ngSwitchCase="'checkbox'">
+                                        <div class="custom-control custom-checkbox ml-2">
+                                            <input (click)="checkclicked($event)" type="checkbox"
+                                                formControlName="{{field.name}}" class="custom-control-input"
+                                                id="{{field.name}}-{{i}}" disabled>
+                                            <label class="custom-control-label" for="{{field.name}}-{{i}}"></label>
+                                        </div>
+                                    </td>
+                                    <td *ngSwitchDefault>
+                                        <ng-container *ngIf="field.name === 'invoice'; else notInvoice">
+                                            <a [routerLink]="['/order', orders[i].id]" style="cursor: pointer;">{{orders[i][field.name]}}</a>
+                                        </ng-container>
+                                        <ng-template #notInvoice>
+                                            {{orders[i][field.name]}}
+                                        </ng-template>
+                                    </td>
+                                </ng-container>
                             </ng-template>
                         </ng-container>
-                        <td>
-                            <div class="custom-control custom-checkbox ml-2">
-                                <input (click)="checkclicked($event)" type="checkbox" formControlName="scheduled"
-                                    class="custom-control-input" id="add-{{i}}">
-                                <label class="custom-control-label" for="add-{{i}}"></label>
-                            </div>
-
-                        </td>
                     </ng-container>
                 </tr>
             </tbody>

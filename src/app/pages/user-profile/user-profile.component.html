@@ -34,7 +34,7 @@
           </mdb-card-text>
           <!-- Card footer -->
           <div class="card-footer text-muted text-center mt-4">
-            2 days ago
+            Last Login: {{userService.lastLogin | date:'dd-MM-yyyy'}}
           </div>
 
         </mdb-card-body>
@@ -63,16 +63,16 @@
             </div>
             <div class="col col-4">
               <h4>Unscheduled Screen</h4>
-              <ul class="list-group" cdkDropList #unschList="cdkDropList" [cdkDropListData]="unscheduledFields"
+              <ul class="list-group" cdkDropList #unschList="cdkDropList" [cdkDropListData]="userConfig.unscheduledScreen"
                 [cdkDropListConnectedTo]="allList" (cdkDropListDropped)="onDrop($event)">
-                <li cdkDrag class="list-group-item" *ngFor="let field of unscheduledFields;">{{field.desc}}</li>
+                <li cdkDrag class="list-group-item" *ngFor="let field of userConfig.unscheduledScreen;">{{field.desc}}</li>
               </ul>
             </div>
             <div class="col col-4">
               <h4>Scheduled Screen</h4>
-              <ul class="list-group" cdkDropList #schList="cdkDropList" [cdkDropListData]="scheduledFields"
+              <ul class="list-group" cdkDropList #schList="cdkDropList" [cdkDropListData]="userConfig.scheduledScreen"
                 [cdkDropListConnectedTo]="allList" (cdkDropListDropped)="onDrop($event)">
-                <li cdkDrag class="list-group-item" *ngFor="let field of scheduledFields;">{{field.desc}}</li>
+                <li cdkDrag class="list-group-item" *ngFor="let field of userConfig.scheduledScreen;">{{field.desc}}</li>
               </ul>
             </div>
           </div>

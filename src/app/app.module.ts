@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { Ng2CompleterModule } from 'ng2-completer';
@@ -21,7 +21,6 @@ import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { UnscheduledComponent } from './pages/unscheduled/unscheduled.component';
 import { SearchComponent } from './pages/search/search.component';
 import { OrderdetailComponent } from './pages/orderdetail/orderdetail.component';
-import { WorkTableComponent } from './work/work-table/work-table.component';
 import { LoadingComponent } from './common/loading/loading.component';
 import { WorkFilterComponent } from './common/work-filter/work-filter.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
@@ -31,8 +30,11 @@ import { GroupComponent } from './pages/group/group.component';
 import { PaginationComponent } from './common/pagination/pagination.component';
 import { TestComponent } from './pages/test/test.component';
 import { OrderTableComponent } from './common/order-table/order-table.component';
+import { SetupUserService } from './common/services/setup-user.service';
 
-
+export function SetupUser(setup: SetupUserService) {
+  return () => setup.initialise();
+}
 
 @NgModule({
   declarations: [
@@ -45,7 +47,6 @@ import { OrderTableComponent } from './common/order-table/order-table.component'
     UnscheduledComponent,
     SearchComponent,
     OrderdetailComponent,
-    WorkTableComponent,
     LoadingComponent,
     WorkFilterComponent,
     UserProfileComponent,
@@ -69,6 +70,13 @@ import { OrderTableComponent } from './common/order-table/order-table.component'
     DragDropModule
   ],
   providers: [
+    SetupUserService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: SetupUser,
+      deps: [SetupUserService],
+      multi: true
+    },
     ActiveUserService,
     ApiDataService
   ],

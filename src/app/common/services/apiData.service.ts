@@ -57,13 +57,15 @@ export class ApiDataService {
     if (term.length === 8 && parseInt(term.substring(1, 5), 10) > 0) {workParams.INVOICE = term; } else {
       workParams.NAME = '%' + term + '%'; }
     const apiURL = `${this.apiRoot}Order`;
-    return this.http.post<IOrderList>(apiURL, workParams, { withCredentials: true });
+    return this.http.post<OrderList>(apiURL, workParams, { withCredentials: true }).pipe(
+      map(response => new OrderList().deserialise(response))
+    );
   }
 
-  getOrderFiltered(workParams: IWorkParams) {
-    const apiURL = `${this.apiRoot}Order`;
-    return this.http.post<IOrderList>(apiURL, workParams, { withCredentials: true });
-  }
+  //getOrderFiltered(workParams: IWorkParams) {
+  //  const apiURL = `${this.apiRoot}Order`;
+  //  return this.http.post<IOrderList>(apiURL, workParams, { withCredentials: true });
+  //}
 
   getOrderFilteredType(workParams: IWorkParams) {
     const apiURL = `${this.apiRoot}Order`;
@@ -88,21 +90,5 @@ export class ApiDataService {
     const apiURL = `${this.apiRoot}Order/` + order.id;
     return this.http.put<IOrder>(apiURL, order, {withCredentials: true});
   }
-
-  getUserSetting(setting: string) {
-    const apiURL = `${this.apiRoot}UserSetting/` + setting;
-    return this.http.get<IUserSetting>(apiURL, { withCredentials: true });
-  }
-
-  insertUserSetting(setting: string, data: string) {
-    const newSetting: IUserSetting = {
-      username: '',
-      settingKey: setting,
-      settingData: data
-    };
-    const apiURL = `${this.apiRoot}UserSetting`;
-    return this.http.post<IUserSetting>(apiURL, newSetting, { withCredentials: true });
-  }
-
 
 }
