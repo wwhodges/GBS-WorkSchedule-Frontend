@@ -1,54 +1,156 @@
-<mdb-card  *ngIf="isFilterVisible">
+<mdb-card *ngIf="isFilterVisible">
     <!--Card content-->
     <mdb-card-body>
-    <!--Title-->
-    <mdb-card-title>
-        <h5>Filters</h5>
-    </mdb-card-title>
+        <!--Title-->
+        <mdb-card-title>
+            <h5>Filters</h5>
+        </mdb-card-title>
 
-    <!--Text-->
+        <!--Text-->
         <mdb-card-text>
             <form #filterForm="ngForm">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <mdb-checkbox [(ngModel)]="filters.scheduled" name="scheduled">Scheduled</mdb-checkbox>
-                            <mdb-checkbox [(ngModel)]="filters.unscheduled" name="unscheduled">Unscheduled</mdb-checkbox>
-                        </div>
-                        <div class="col">
-                            <mdb-checkbox [(ngModel)]="filters.unstarted" name="unstarted">Unstarted</mdb-checkbox>
-                            <mdb-checkbox [(ngModel)]="filters.despatched" name="despatched">Despatched</mdb-checkbox>
-                            <mdb-checkbox [(ngModel)]="filters.partDespatched" name="partDespatched">Part Despatched</mdb-checkbox>
-                            <mdb-checkbox [(ngModel)]="filters.partPacked" name="partPacked">Part Packed</mdb-checkbox>
-                            <mdb-checkbox [(ngModel)]="filters.partPicked" name="partPicked">Part Picked</mdb-checkbox>
-                        </div>
-                        <div class="col">
-                            <input mdbInput type="date" [(ngModel)]="filters.dateRange.from" name="dateFrom" />
-                            <input mdbInput type="date" [(ngModel)]="filters.dateRange.to" name="dateTo" />
-                            <div class="custom-control custom-radio">
-                                <input mdbInput type="radio" class="custom-control-input" id="invoice" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="invoice" />
-                                <label class="custom-control-label" for="invoice">Invoice</label>
+                <div class="row">
+                    <div class="col col-sm-3">
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-sm-12 col-form-label-sm">Work Schedule</legend>
+                                <div class="col-sm-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="scheduled"
+                                            [(ngModel)]="filters.scheduled" name="scheduled">
+                                        <label class="custom-control-label" for="scheduled">Scheduled</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="unscheduled"
+                                            [(ngModel)]="filters.unscheduled" name="unscheduled">
+                                        <label class="custom-control-label" for="unscheduled">Unscheduled</label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-radio">
-                                <input mdbInput type="radio" class="custom-control-input" id="work" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="work" />
-                                <label class="custom-control-label" for="work">Work</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input mdbInput type="radio" class="custom-control-input" id="delivery" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="delivery"/>
-                                <label class="custom-control-label" for="delivery">Delivery</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input mdbInput type="radio" class="custom-control-input" id="despatch" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="despatch"/>
-                                <label class="custom-control-label" for="despatch">Despatch</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input mdbInput type="radio" class="custom-control-input" id="actualDesp" name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="actualDesp"/>
-                                <label class="custom-control-label" for="actualDesp">Actual Despatch</label>
-                            </div>            
-                        </div>
+                        </fieldset>
                     </div>
+                    <div class="col col-sm-3">
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-sm-12 col-form-label-sm">Vista Status</legend>
+                                <div class="col-sm-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="vista_despatched"
+                                            [(ngModel)]="filters.vista_despatched" name="vista_despatched">
+                                        <label class="custom-control-label" for="vista_despatched">Despatched</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="vista_partDespatched"
+                                            [(ngModel)]="filters.vista_partDespatched" name="vista_partDespatched">
+                                        <label class="custom-control-label" for="vista_partDespatched">Part
+                                            Despatched</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="vista_partPacked"
+                                            [(ngModel)]="filters.vista_partPacked" name="vista_partPacked">
+                                        <label class="custom-control-label" for="vista_partPacked">Part
+                                            Packed</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="vista_partPicked"
+                                            [(ngModel)]="filters.vista_partPicked" name="vista_partPicked">
+                                        <label class="custom-control-label" for="vista_partPicked">Part
+                                            Picked</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="vista_unstarted"
+                                            [(ngModel)]="filters.vista_unstarted" name="vista_unstarted">
+                                        <label class="custom-control-label" for="vista_unstarted">Unstarted</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col col-sm-3">
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-sm-12 col-form-label-sm">Schedule Status</legend>
+                                <div class="col-sm-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="despatched"
+                                            [(ngModel)]="filters.despatched" name="despatched">
+                                        <label class="custom-control-label" for="despatched">Despatched</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="complete"
+                                            [(ngModel)]="filters.complete" name="complete">
+                                        <label class="custom-control-label" for="complete">Complete</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="inprogress"
+                                            [(ngModel)]="filters.inProgress" name="inprogress">
+                                        <label class="custom-control-label" for="inprogress">In Progress</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="prepared"
+                                            [(ngModel)]="filters.prepared" name="prepared">
+                                        <label class="custom-control-label" for="prepared">Prepared</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="onhold"
+                                            [(ngModel)]="filters.onhold" name="onhold">
+                                        <label class="custom-control-label" for="onhold">On Hold</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="unstarted"
+                                            [(ngModel)]="filters.unstarted" name="unstarted">
+                                        <label class="custom-control-label" for="unstarted">Unstarted</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="other"
+                                            [(ngModel)]="filters.other" name="other">
+                                        <label class="custom-control-label" for="other">Other</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="col col-sm-3">
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-sm-12 col-form-label-sm">Date Range</legend>
+                                <div class="col-sm-12">
+                                    From <input type="date" [(ngModel)]="filters.dateRange.from" class="form-control"
+                                        name="dateFrom" />
+                                    To <input type="date" [(ngModel)]="filters.dateRange.to" class="form-control"
+                                        name="dateTo" />
+                                    <div class="custom-control custom-radio">
+                                        <input mdbInput type="radio" class="custom-control-input" id="invoice"
+                                            name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="invoice" />
+                                        <label class="custom-control-label" for="invoice">Invoice</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input mdbInput type="radio" class="custom-control-input" id="work"
+                                            name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="work" />
+                                        <label class="custom-control-label" for="work">Work</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input mdbInput type="radio" class="custom-control-input" id="delivery"
+                                            name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="delivery" />
+                                        <label class="custom-control-label" for="delivery">Delivery</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input mdbInput type="radio" class="custom-control-input" id="despatch"
+                                            name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="despatch" />
+                                        <label class="custom-control-label" for="despatch">Despatch</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input mdbInput type="radio" class="custom-control-input" id="actualDesp"
+                                            name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="actualDesp" />
+                                        <label class="custom-control-label" for="actualDesp">Actual Despatch</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <button type="button" mdbBtn color="primary" size="sm" class="waves-effect"
+                        (click)="updateFilter()">Update Results</button>
                 </div>
-                <button type="button" mdbBtn color="primary" size="sm" class="waves-effect" (click)="updateFilter()">Update Results</button>
             </form>
         </mdb-card-text>
     </mdb-card-body>

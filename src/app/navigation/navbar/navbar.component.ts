@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
   `
 })
 export class NavbarComponent implements OnInit {
-  user$: Observable<IActiveUser>;
+  public user$: Observable<IActiveUser>;
 
   menuData: INavbarData = {
     applicationName: 'Work Schedule',
@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
     searchPlaceholder: 'search'
   };
 
-  constructor(private user: ActiveUserService, private router: Router) {}
+  constructor(public user: ActiveUserService, private router: Router) {}
 
   ngOnInit() {
     this.user$ = this.user.getUser();

@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class GroupsComponent implements OnInit {
 
-  private groups$: Observable<ICustomerGroup[]>;
+  public groups$: Observable<ICustomerGroup[]>;
 
   constructor(private apiData: ApiDataService) { }
 

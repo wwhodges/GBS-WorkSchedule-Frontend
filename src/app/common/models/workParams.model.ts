@@ -2,11 +2,19 @@ export interface IWorkParams {
     INCLUDE_UNSCHEDULED: boolean;
     INCLUDE_SCHEDULED: boolean;
 
+    INCLUDE_V_DESPATCHED: boolean;
+    INCLUDE_V_UNSTARTED: boolean;
+    INCLUDE_V_PARTPICKED: boolean;
+    INCLUDE_V_PARTPACKED: boolean;
+    INCLUDE_V_PARTDESPATCHED: boolean;
+
     INCLUDE_DESPATCHED: boolean;
+    INCLUDE_INPROGRESS: boolean;
     INCLUDE_UNSTARTED: boolean;
-    INCLUDE_PARTPICKED: boolean;
-    INCLUDE_PARTPACKED: boolean;
-    INCLUDE_PARTDESPATCHED: boolean;
+    INCLUDE_COMPLETE: boolean;
+    INCLUDE_PREPARED: boolean;
+    INCLUDE_ONHOLD: boolean;
+    INCLUDE_OTHER: boolean;
 
     DATE_RANGE: string;
     DATE_FROM: Date;

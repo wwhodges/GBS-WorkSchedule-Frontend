@@ -28,7 +28,6 @@ import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { GroupComponent } from './pages/group/group.component';
 import { PaginationComponent } from './common/pagination/pagination.component';
-import { TestComponent } from './pages/test/test.component';
 import { OrderTableComponent } from './common/order-table/order-table.component';
 import { SetupUserService } from './common/services/setup-user.service';
 
@@ -54,7 +53,6 @@ export function SetupUser(setup: SetupUserService) {
     GroupsComponent,
     GroupComponent,
     PaginationComponent,
-    TestComponent,
     OrderTableComponent
   ],
   imports: [

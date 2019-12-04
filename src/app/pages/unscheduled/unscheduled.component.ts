@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ApiDataService, ActiveUserService } from 'src/app/common/services';
 import { IWorkParams, ICustomerGroup } from 'src/app/common/models';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { OrderList } from 'src/app/common/models/orderList.model';
 import { FormGroup, FormArray } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -14,15 +14,15 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UnscheduledComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
-  private orders: OrderList;
-  private ordersForm: FormGroup;
-  private currentPage = 0;
-  private maxPages = 0;
-  private isFilterVisible = false;
-  private isLoading = true;
-  private customerGroups: ICustomerGroup[];
+  public orders: OrderList;
+  public ordersForm: FormGroup;
+  public currentPage = 0;
+  public maxPages = 0;
+  public isFilterVisible = false;
+  public isLoading = true;
+  public customerGroups: ICustomerGroup[];
 
-  private listedFields = [
+  public listedFields = [
     { name: 'batch', edit: false, type: 'text', desc: 'Batch', size: '5', style: '' },
     { name: 'vistaStatus', edit: true, type: 'text', desc: 'Status', size: '15', style: '' },
     { name: 'account', edit: false, type: 'text', desc: 'Account', size: '10', style: '' },
@@ -36,14 +36,24 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     { name: 'despDate', edit: true, type: 'date', desc: 'Despatch', size: '10', style: 'width: 130px;' },
   ];
 
-  private orderParams: IWorkParams = {
-    INCLUDE_DESPATCHED: false,
-    INCLUDE_PARTDESPATCHED: true,
-    INCLUDE_PARTPACKED: true,
-    INCLUDE_PARTPICKED: true,
+  public orderParams: IWorkParams = {
     INCLUDE_SCHEDULED: false,
     INCLUDE_UNSCHEDULED: true,
+
+    INCLUDE_V_DESPATCHED: false,
+    INCLUDE_V_PARTDESPATCHED: true,
+    INCLUDE_V_PARTPACKED: true,
+    INCLUDE_V_PARTPICKED: true,
+    INCLUDE_V_UNSTARTED: true,
+
+    INCLUDE_DESPATCHED: true,
+    INCLUDE_INPROGRESS: true,
     INCLUDE_UNSTARTED: true,
+    INCLUDE_COMPLETE: true,
+    INCLUDE_PREPARED: true,
+    INCLUDE_ONHOLD: true,
+    INCLUDE_OTHER: true,
+
     DATE_FROM: new Date(),
     DATE_RANGE: '',
     DATE_TO: new Date(),
@@ -125,19 +135,25 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
 
   formAction($event) {
     if ($event === 'save') {
-      let savecount = 0;
+      const saveObservableBatch = [];
       const ordArray = this.ordersForm.controls.orders as FormArray;
       for (let i = 0; i < ordArray.length; i++) {
         const ordForm = ordArray.controls[i] as FormGroup;
         const order = this.orders.orders[i];
         if (order.CheckForChanges(ordForm)) {
           // save order
-          console.log('saving order' + order.invoice);
-          savecount++;
-          this.apiData.updateOrder(order).subscribe( response => console.log(response));
+          order.SaveFormValues(ordForm);
+          saveObservableBatch.push(
+            this.apiData.updateOrder(order)
+          );
         }
       }
-      this.toastr.success('Saved ' + savecount + ' orders', 'Success');
+      forkJoin(saveObservableBatch).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.success('Saved ' + saveObservableBatch.length + ' orders', 'Success');
+        }
+      );
     }
     if ($event === 'cancel') {
       this.ordersForm = this.orders.CreateFormGroup();

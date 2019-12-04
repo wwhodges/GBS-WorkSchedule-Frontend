@@ -12,9 +12,7 @@ export class PieChartComponent implements OnInit, OnChanges {
   @Input() chartLabels: Array<any>;
   @Input() chartOptions: Array<any>;
 
-  //public chartType: string = 'pie';
-
-  public pchartDatasets: Array<any> = [
+  public pchartDatasets = [
     { data: [23, 312, 1, 0, 37, 0], label: 'Orders' }
   ];
 
@@ -37,11 +35,6 @@ export class PieChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.pchartDatasets);
-    //console.log(this.pchartLabels);
-    console.log(this.chartDatasets);
-    //console.log(this.chartLabels);
-    //console.log(this.chartOptions);
   }
 
 }

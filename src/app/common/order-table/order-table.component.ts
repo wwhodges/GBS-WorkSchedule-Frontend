@@ -15,13 +15,13 @@ export class OrderTableComponent implements OnChanges, OnInit {
 
   @Output() formAction = new EventEmitter<string>();
 
-  private isFilterVisible = false;
+  public isFilterVisible = false;
 
 
   // Group control variables
   @Input() groups: ICustomerGroup[] = [];
   @Output() updatedGroup = new EventEmitter<string>();
-  private currentGroup = '*';
+  public currentGroup = '*';
 
   // Variables for checkbox multiselect
   private lastCheckedId: number;

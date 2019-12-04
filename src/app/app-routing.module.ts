@@ -8,7 +8,6 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { GroupComponent } from './pages/group/group.component';
-import { TestComponent } from './pages/test/test.component';
 
 
 const routes: Routes = [
@@ -19,7 +18,6 @@ const routes: Routes = [
   {path: 'schedule', component: ScheduleComponent},
   {path: 'search/:terms', component: SearchComponent },
   {path: 'order/:id', component: OrderdetailComponent },
-  {path: 'test', component: TestComponent },
   {path: '**', component: DashboardComponent }
 ];
 

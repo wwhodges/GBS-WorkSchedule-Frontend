@@ -12,12 +12,12 @@ import { takeUntil } from 'rxjs/operators';
 export class DashboardComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
 
-  private releaseSummary$: Observable<IOrderSummary[]>;
+  public releaseSummary$: Observable<IOrderSummary[]>;
 
-  private isLoadingDespatch = true;
-  private despatchData: IOrderSummary[];
-  private isLoadingStatus = true;
-  private workStatusData: IOrderSummary[];
+  public isLoadingDespatch = true;
+  public despatchData: IOrderSummary[];
+  public isLoadingStatus = true;
+  public workStatusData: IOrderSummary[];
 
   public despChartType = 'bar';
   public despData;

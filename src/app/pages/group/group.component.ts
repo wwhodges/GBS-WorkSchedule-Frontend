@@ -18,15 +18,15 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   private groupId: number;
   private queryParam = 'id';
-  private group: ICustomerGroup;
-  private isLoading = true;
-  private groupForm: FormGroup = new FormGroup({});
+  public group: ICustomerGroup;
+  public isLoading = true;
+  public groupForm: FormGroup = new FormGroup({});
 
   private unsubscribe$: Subject<void> = new Subject();
   private unsubscribeParams$: Subject<void> = new Subject();
 
-  private searchStr: string;
-  private dataService: RemoteData;
+  public searchStr: string;
+  public dataService: RemoteData;
 
   constructor(private apiData: ApiDataService,
               private route: ActivatedRoute,

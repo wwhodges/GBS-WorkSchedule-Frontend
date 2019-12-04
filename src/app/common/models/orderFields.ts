@@ -16,20 +16,10 @@ export const fieldSettings: IFieldSettings[] = [
     { name: 'account', edit: false, type: 'text', desc: 'Account', size: '10', style: '', options: [] },
     { name: 'vistaStatus', edit: true, type: 'text', desc: 'Status (V)', size: '15', style: '', options: [
             'Despatched',
-            'Despatched 48Hr',
-            'In Progress',
-            'In Progress 48Hr',
+            'Part Despatched',
+            'Part Packed',
+            'Part Picked',
             'Unstarted',
-            'Unstarted 48Hr',
-            'Complete',
-            'Complete 48Hr',
-            'Prepared',
-            'Prepared 48Hr',
-            'Cancelled',
-            'Credit',
-            'Pulp',
-            'Collection',
-            'On Hold'
         ]
     },
     { name: 'dateInvoiced', edit: false, type: 'date', desc: 'Inv Date', size: '10', style: 'width: 130px;', options: [] },

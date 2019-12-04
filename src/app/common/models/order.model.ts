@@ -57,8 +57,8 @@ export class Order implements IOrder {
     vistaPacked: boolean;
     destination: string;
     vistaStatus: string;
-    dateDespatchedActual: Date;
-    dateInvoiced: Date;
+    dateDespatchedActual: Date = new Date();
+    dateInvoiced: Date = new Date();
     scheduled: boolean;
     alp: string;
     bench: string;
@@ -70,9 +70,9 @@ export class Order implements IOrder {
     palconPacked: number;
     status: string;
     comments: string;
-    workDate: Date;
-    delDate: Date;
-    despDate: Date;
+    workDate: Date = new Date();
+    delDate: Date = new Date();
+    despDate: Date = new Date();
     palletIds: string;
     palletCount: number;
     palletNumbers: string;
@@ -166,5 +166,9 @@ export class Order implements IOrder {
             prime: new FormControl(this.prime)
         });
         return OrderForm;
+    }
+
+    public SaveFormValues(orderForm: FormGroup) {
+        Object.assign(this, orderForm.value);
     }
 }

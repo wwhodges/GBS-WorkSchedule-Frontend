@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr formArrayName="orders" *ngFor="let order of ordersForm.controls.orders.controls; let i = index;">
+                <tr formArrayName="orders" *ngFor="let order of ordersForm.get('orders')['controls']; let i = index;">
                     <ng-container [formGroupName]="i">
                         <ng-container *ngFor="let field of listedFields">
                             <ng-container *ngIf="field.edit; else notEdit">

@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IOrder, Order } from 'src/app/common/models';
+import { Order } from 'src/app/common/models';
 import { ApiDataService } from 'src/app/common/services';
 import { Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-orderdetail',
@@ -16,28 +17,35 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
   private unsubscribeParams$: Subject<void> = new Subject();
 
   private orderId: string;
-  private order: Order;
+  public order: Order;
 
   private queryParam = 'id';
-  private isLoading = true;
+  public isLoading = true;
 
-  private orderForm: FormGroup;
+  public orderForm: FormGroup;
 
-  constructor(private apiData: ApiDataService, private route: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private apiData: ApiDataService,
+              private route: ActivatedRoute,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
       this.unsubscribe$.next();
       this.isLoading = true;
       this.orderId = params.get(this.queryParam);
-      this.apiData.getOrderById(this.orderId).pipe(takeUntil(this.unsubscribe$)).subscribe(
-        apiResult => {
-          this.order = apiResult;
-          this.orderForm = this.order.CreateFormGroup();
-          this.isLoading = false;
-          console.log(this.order);
-        }
-      );
+      if (this.orderId === 'new') {
+        this.order = new Order();
+        this.orderForm = this.order.CreateFormGroup();
+        this.isLoading = false;
+      } else {
+        this.apiData.getOrderById(this.orderId).pipe(takeUntil(this.unsubscribe$)).subscribe(
+          apiResult => {
+            this.order = apiResult;
+            this.orderForm = this.order.CreateFormGroup();
+            this.isLoading = false;
+          }
+        );
+      }
     });
   }
   ngOnDestroy() {
@@ -46,10 +54,22 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
   }
 
   submitForm() {
-    // console.log(this.orderForm);
-    const sched = new Order().deserialise(this.orderForm.value);
-    // console.log(sched);
-    this.apiData.insertOrder(sched).subscribe( response => { console.log(response); }, errormsg => {console.log(errormsg); });
+    this.order.SaveFormValues(this.orderForm);
+    if (this.order.id === 0) {
+      this.apiData.insertOrder(this.order).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.success('Order has been created', 'Success');
+        }
+      );
+    } else {
+      this.apiData.updateOrder(this.order).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastr.success('Order has been updated', 'Success');
+        }
+      );
+    }
   }
 
 }

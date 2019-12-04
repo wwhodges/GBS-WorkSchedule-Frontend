@@ -15,17 +15,17 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '
 export class UserProfileComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
 
-  private isLoading = true;
-  private user: IActiveUser;
-  private userImage: string;
+  public isLoading = true;
+  public user: IActiveUser;
+  public userImage: string;
 
-  private allFields = fieldSettings;
+  public allFields = fieldSettings;
 
-  private userConfig: IUserConfig = { screenRows: 200, scheduledScreen: [], unscheduledScreen: []};
+  public userConfig: IUserConfig = { screenRows: 200, scheduledScreen: [], unscheduledScreen: []};
   // private scheduledFields: IFieldSettings[];
   // private unscheduledFields: IFieldSettings[];
 
-  constructor(private userService: ActiveUserService, private apiData: ApiDataService) { }
+  constructor(public userService: ActiveUserService, private apiData: ApiDataService) { }
 
   ngOnInit() {
     this.userImage = this.userService.getUserImageLink();
