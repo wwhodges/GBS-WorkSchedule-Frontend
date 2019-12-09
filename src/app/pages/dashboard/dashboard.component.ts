@@ -12,12 +12,26 @@ import { takeUntil } from 'rxjs/operators';
 export class DashboardComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
 
-  public releaseSummary$: Observable<IOrderSummary[]>;
-
+  public isLoadingRelease = true;
+  public releaseData: IOrderSummary[];
   public isLoadingDespatch = true;
   public despatchData: IOrderSummary[];
   public isLoadingStatus = true;
   public workStatusData: IOrderSummary[];
+  public isLoadingScheduleStatus = true;
+  public scheduleStatusData: IOrderSummary[];
+
+  public relChartType = 'bar';
+  public relData;
+  public relLabels;
+  public relOptions = {
+    responsive: true,
+    legend: { position: 'right'},
+    scales: {
+      xAxes: [{gridLines: {display: false}}],
+      yAxes: [{gridLines: {display: false}}]
+      }
+  };
 
   public despChartType = 'bar';
   public despData;
@@ -32,8 +46,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   };
 
   public orderChartType = 'pie';
-  public orderChartData: Array<any> = [ {data: [], label: ''}];
-  public orderChartLabels = ['Awaiting', 'Despatched', 'Despatching', 'On Hold', 'Packing', 'Picking'];
+  public orderChartData = [];
+  public orderChartLabels = [];
+  public schChartData = [];
+  public schChartLabels = [];
   public orderChartColors: Array<any> = [
     {
       backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360', '#4D5360'],
@@ -49,8 +65,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private apiData: ApiDataService) { }
 
   ngOnInit() {
-    this.releaseSummary$ = this.apiData.getOrderSummary('Released');
+    this.isLoadingRelease = true;
+    this.apiData.getOrderSummary('Released').pipe(takeUntil(this.unsubscribe$)).subscribe(
+      apiResult => {
+        this.releaseData = apiResult;
 
+        this.relLabels = this.releaseData.map(x => new Date(x.key).toDateString().slice(4, 10));
+        this.relData = [
+          { data: this.releaseData.map(x => x.invoices), label: 'Orders' },
+          { data: this.releaseData.map(x => x.lines), label: 'Lines' },
+          { data: this.releaseData.map(x => x.units), label: 'Units' }
+        ];
+        this.isLoadingRelease = false;
+      }
+    );
     this.isLoadingDespatch = true;
     this.apiData.getOrderSummary('Despatched').pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
@@ -75,6 +103,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.orderChartData = [ { data: this.workStatusData.map(x => x.invoices)} ];
 
         this.isLoadingStatus = false;
+      }
+    );
+
+    this.isLoadingScheduleStatus = true;
+    this.apiData.getOrderSummary('Status').pipe(takeUntil(this.unsubscribe$)).subscribe(
+      apiResult => {
+        this.scheduleStatusData = apiResult;
+
+        this.schChartLabels = this.scheduleStatusData.map(x => x.key);
+        this.schChartData = [ { data: this.scheduleStatusData.map(x => x.invoices)} ];
+
+        this.isLoadingScheduleStatus = false;
       }
     );
 

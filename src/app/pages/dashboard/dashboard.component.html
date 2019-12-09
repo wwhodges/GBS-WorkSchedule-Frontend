@@ -1,89 +1,112 @@
 <div class="row ">
     <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
-        <ng-container *ngIf="isLoadingDespatch">
-            <app-loading></app-loading>
-        </ng-container>
-        <ng-container *ngIf="!isLoadingDespatch">
-        <mdb-card>
-            <mdb-card-body>
-                <mdb-card-title>
-                    <div class="text-center">Despatch History</div>
-                </mdb-card-title>
-                <div style="display: block">
-                    <canvas mdbChart
-                        [chartType]="despChartType"
-                        [datasets]="despData"
-                        [labels]="despLabels"
-                        [options]="despOptions"
-                        [legend]="true">
-                    </canvas>
-                </div>
-            </mdb-card-body>
-        </mdb-card>
+        <app-loading *ngIf="isLoadingStatus"></app-loading>
+        <ng-container *ngIf="!isLoadingStatus">
+            <mdb-card>
+                <mdb-card-body>
+                    <mdb-card-title>
+                        <div class="text-center">All Orders</div>
+                    </mdb-card-title>
+                    <div style="display: block">
+                        <canvas mdbChart [chartType]="orderChartType" [datasets]="orderChartData"
+                            [labels]="orderChartLabels" [colors]="orderChartColors" [options]="orderChartOptions"
+                            [legend]="true">
+                        </canvas>
+                    </div>
+                </mdb-card-body>
+            </mdb-card>
         </ng-container>
     </div>
 
-<div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
-    <ng-container *ngIf="isLoadingStatus">
-        <app-loading></app-loading>
-    </ng-container>
-    <ng-container *ngIf="!isLoadingStatus">
-    <mdb-card>
-        <mdb-card-body>
-            <mdb-card-title>
-                <div class="text-center">Order Stats</div>
-            </mdb-card-title>
-            <div style="display: block">
-                    <canvas mdbChart
-                        [chartType]="orderChartType"
-                        [datasets]="orderChartData"
-                        [labels]="orderChartLabels"
-                        [colors]="orderChartColors"
-                        [options]="orderChartOptions"
-                        [legend]="true">
-                    </canvas>
+    <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
+        <app-loading *ngIf="isLoadingScheduleStatus"></app-loading>
+        <ng-container *ngIf="!isLoadingScheduleStatus">
+            <mdb-card>
+                <mdb-card-body>
+                    <mdb-card-title>
+                        <div class="text-center">Scheduled Orders</div>
+                    </mdb-card-title>
+                    <div style="display: block">
+                        <canvas mdbChart [chartType]="orderChartType" [datasets]="schChartData"
+                            [labels]="schChartLabels" [colors]="orderChartColors" [options]="orderChartOptions"
+                            [legend]="true">
+                        </canvas>
+                    </div>
+                </mdb-card-body>
+            </mdb-card>
+        </ng-container>
+    </div>
+    <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
+            <app-loading *ngIf="isLoadingDespatch"></app-loading>
+            <ng-container *ngIf="!isLoadingDespatch">
+                <mdb-card>
+                    <mdb-card-body>
+                        <mdb-card-title>
+                            <div class="text-center">Despatch History</div>
+                        </mdb-card-title>
+                        <div style="display: block">
+                            <canvas mdbChart [chartType]="despChartType" [datasets]="despData" [labels]="despLabels"
+                                [options]="despOptions" [legend]="true">
+                            </canvas>
+                        </div>
+                    </mdb-card-body>
+                </mdb-card>
+            </ng-container>
+        </div>
+        <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
+                <app-loading *ngIf="isLoadingRelease"></app-loading>
+                <ng-container *ngIf="!isLoadingRelease">
+                    <mdb-card>
+                        <mdb-card-body>
+                            <mdb-card-title>
+                                <div class="text-center">Release History</div>
+                            </mdb-card-title>
+                            <div style="display: block">
+                                <canvas mdbChart [chartType]="relChartType" [datasets]="relData" [labels]="relLabels"
+                                    [options]="relOptions" [legend]="true">
+                                </canvas>
+                            </div>
+                        </mdb-card-body>
+                    </mdb-card>
+                </ng-container>
             </div>
-        </mdb-card-body>
-    </mdb-card>
-    </ng-container>
-</div>
-
+            
     <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
-        <ng-container *ngIf="isLoadingDespatch">
-            <app-loading></app-loading>
-        </ng-container>
+        <app-loading *ngIf="isLoadingDespatch"></app-loading>
         <ng-container *ngIf="!isLoadingDespatch">
-        <mdb-card>
-            <mdb-card-body>
-                <mdb-card-title>
-                    <div class="text-center">Despatch Summary</div>
-                </mdb-card-title>
-                <div style="display: block">
-                    <table mdbTable>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Invoices</th>
-                                <th>Lines</th>
-                                <th>Units</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let day of despatchData">
-                                <td>{{day.key | date: 'dd/MM/yyyy'}}</td>
-                                <td>{{day.invoices}}</td>
-                                <td>{{day.lines}}</td>
-                                <td>{{day.units}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </mdb-card-body>
-        </mdb-card>
+            <mdb-card>
+                <mdb-card-body>
+                    <mdb-card-title>
+                        <div class="text-center">Despatch Summary</div>
+                    </mdb-card-title>
+                    <div style="display: block">
+                        <table mdbTable>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Invoices</th>
+                                    <th>Lines</th>
+                                    <th>Units</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let day of despatchData">
+                                    <td>{{day.key | date: 'dd/MM/yyyy'}}</td>
+                                    <td>{{day.invoices}}</td>
+                                    <td>{{day.lines}}</td>
+                                    <td>{{day.units}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </mdb-card-body>
+            </mdb-card>
         </ng-container>
     </div>
 
     <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
+        <app-loading *ngIf="isLoadingRelease"></app-loading>
+        <ng-container *ngIf="!isLoadingRelease">
             <mdb-card>
                 <mdb-card-body>
                     <mdb-card-title>
@@ -100,7 +123,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let day of releaseSummary$ | async">
+                                <tr *ngFor="let day of releaseData">
                                     <td>{{day.key | date: 'dd/MM/yyyy'}}</td>
                                     <td>{{day.invoices}}</td>
                                     <td>{{day.lines}}</td>
@@ -111,5 +134,6 @@
                     </div>
                 </mdb-card-body>
             </mdb-card>
-        </div>
+        </ng-container>
+    </div>
 </div>
