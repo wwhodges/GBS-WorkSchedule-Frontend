@@ -57,9 +57,9 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     INCLUDE_ONHOLD: true,
     INCLUDE_OTHER: false,
 
-    DATE_FROM: new Date(),
+    DATE_FROM: '',
     DATE_RANGE: '',
-    DATE_TO: new Date(),
+    DATE_TO: '',
     INVOICE: '',
     SITE: '',
     BATCH: '',

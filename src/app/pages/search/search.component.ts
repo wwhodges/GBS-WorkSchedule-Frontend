@@ -40,41 +40,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     { name: 'despDate', edit: true, type: 'date', desc: 'Despatch', size: '10', style: 'width: 130px;' },
   ];
 
-  public orderParams: IWorkParams = {
-    INCLUDE_SCHEDULED: true,
-    INCLUDE_UNSCHEDULED: true,
-
-    INCLUDE_V_DESPATCHED: false,
-    INCLUDE_V_PARTDESPATCHED: true,
-    INCLUDE_V_PARTPACKED: true,
-    INCLUDE_V_PARTPICKED: true,
-    INCLUDE_V_UNSTARTED: true,
-
-    INCLUDE_DESPATCHED: true,
-    INCLUDE_INPROGRESS: true,
-    INCLUDE_UNSTARTED: true,
-    INCLUDE_COMPLETE: true,
-    INCLUDE_PREPARED: true,
-    INCLUDE_ONHOLD: true,
-    INCLUDE_OTHER: true,
-
-    DATE_FROM: new Date(),
-    DATE_RANGE: '',
-    DATE_TO: new Date(),
-    INVOICE: '',
-    SITE: '',
-    BATCH: '',
-    ACCOUNT: '',
-    NAME: '',
-    GROUPID: 0,
-    WORKID: 0,
-    MIN_WEIGHT: 0,
-    MAX_WEIGHT: 0,
-    SORT: 0,
-    PAGESIZE: 50,
-    PAGE: 0,
-    PRIME: ''
-  };
+  public orderParams: IWorkParams;
 
   constructor(private route: ActivatedRoute,
               private apiData: ApiDataService,
@@ -84,10 +50,46 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.listedFields = this.userService.config.unscheduledScreen;
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
+      this.initialiseParams();
       this.searchString = params.get(this.queryParam);
       this.isLoading = true;
       this.loadData();
     });
+  }
+
+  initialiseParams() {
+    this.orderParams = {
+      INCLUDE_SCHEDULED: true,
+      INCLUDE_UNSCHEDULED: true,
+      INCLUDE_V_DESPATCHED: false,
+      INCLUDE_V_PARTDESPATCHED: true,
+      INCLUDE_V_PARTPACKED: true,
+      INCLUDE_V_PARTPICKED: true,
+      INCLUDE_V_UNSTARTED: true,
+      INCLUDE_DESPATCHED: true,
+      INCLUDE_INPROGRESS: true,
+      INCLUDE_UNSTARTED: true,
+      INCLUDE_COMPLETE: true,
+      INCLUDE_PREPARED: true,
+      INCLUDE_ONHOLD: true,
+      INCLUDE_OTHER: true,
+      DATE_FROM: '',
+      DATE_RANGE: '',
+      DATE_TO: '',
+      INVOICE: '',
+      SITE: '',
+      BATCH: '',
+      ACCOUNT: '',
+      NAME: '',
+      GROUPID: 0,
+      WORKID: 0,
+      MIN_WEIGHT: 0,
+      MAX_WEIGHT: 0,
+      SORT: 0,
+      PAGESIZE: 50,
+      PAGE: 0,
+      PRIME: ''
+    };
   }
 
   groupSelected(group: string) {

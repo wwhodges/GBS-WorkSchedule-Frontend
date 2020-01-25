@@ -35,8 +35,8 @@ export class WorkFilterComponent implements OnInit, OnChanges {
       max: 0
     },
     dateRange: {
-      from: new Date(),
-      to: new Date(),
+      from: '',
+      to: '',
       by: 'invoice'
     }
   };
