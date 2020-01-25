@@ -1,12 +1,9 @@
-<app-loading *ngIf="isLoading"></app-loading>
-<ng-container *ngIf="!isLoading">
     <div class="row justify-content-center">
         <div class="col col-auto">
             <app-pagination [currentPage]="currentPage" [maxPages]="maxPages" (pageSelected)="pageChange($event)">
             </app-pagination>
         </div>
     </div>
-    <app-order-table [filters]="orderParams" [orders]="orders.orders" [ordersForm]="ordersForm" [groups]="customerGroups"
-        [listedFields]="listedFields" (updatedGroup)="groupSelected($event)" (formAction)="formAction($event)">
+    <app-order-table *ngIf="orders" [filters]="orderParams" [orders]="orders.orders" [ordersForm]="ordersForm" [groups]="customerGroups"
+        [listedFields]="listedFields" [dataLoading]="isLoading" (updatedGroup)="groupSelected($event)" (formAction)="formAction($event)">
     </app-order-table>
-</ng-container>

@@ -54,9 +54,9 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     INCLUDE_ONHOLD: true,
     INCLUDE_OTHER: true,
 
-    DATE_FROM: new Date(),
+    DATE_FROM: '',
     DATE_RANGE: '',
-    DATE_TO: new Date(),
+    DATE_TO: '',
     INVOICE: '',
     SITE: '',
     BATCH: '',
@@ -77,7 +77,7 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
               private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.orders = new OrderList();
     this.loadData();
     this.listedFields = this.userService.config.unscheduledScreen;
   }
@@ -104,6 +104,7 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
+    this.isLoading = true;
     this.unsubscribe$.next();
     this.apiData.getCustomerGroups().pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
@@ -131,7 +132,6 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     this.currentPage = $event;
     this.loadData();
   }
-
 
   formAction($event) {
     if ($event === 'save') {
