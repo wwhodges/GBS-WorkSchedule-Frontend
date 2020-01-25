@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
+import { ChartsModule } from 'ng2-charts';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { ToastrModule } from 'ngx-toastr';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -16,8 +19,6 @@ import { NavbarUIComponent } from './navigation/navbar/navbarUI.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
-import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { UnscheduledComponent } from './pages/unscheduled/unscheduled.component';
 import { SearchComponent } from './pages/search/search.component';
 import { OrderdetailComponent } from './pages/orderdetail/orderdetail.component';
@@ -30,6 +31,8 @@ import { GroupComponent } from './pages/group/group.component';
 import { PaginationComponent } from './common/pagination/pagination.component';
 import { OrderTableComponent } from './common/order-table/order-table.component';
 import { SetupUserService } from './common/services/setup-user.service';
+import { LoaderComponent } from './common/loader/loader.component';
+import { LoaderWrapperComponent } from './common/loader-wrapper/loader-wrapper.component';
 
 export function SetupUser(setup: SetupUserService) {
   return () => setup.initialise();
@@ -41,8 +44,6 @@ export function SetupUser(setup: SetupUserService) {
     NavbarComponent,
     NavbarUIComponent,
     DashboardComponent,
-    PieChartComponent,
-    BarChartComponent,
     UnscheduledComponent,
     SearchComponent,
     OrderdetailComponent,
@@ -53,16 +54,21 @@ export function SetupUser(setup: SetupUserService) {
     GroupsComponent,
     GroupComponent,
     PaginationComponent,
-    OrderTableComponent
+    OrderTableComponent,
+    LoaderComponent,
+    LoaderWrapperComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MDBBootstrapModule.forRoot(),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    ChartsModule,
+    BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    CollapseModule.forRoot(),
     Ng2CompleterModule,
     ToastrModule.forRoot(),
     DragDropModule
