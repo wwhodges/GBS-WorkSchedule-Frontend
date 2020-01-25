@@ -12,7 +12,7 @@ import { IUserSetting } from '../models/userSetting.model';
 
 @Injectable()
 export class ApiDataService {
-  apiRoot = 'https://ukwwhdappdi001/api/GBSWorkSchedule/';
+  apiRoot = 'https://warehouseapidev.penguinrandomhouse.co.uk/api/GBSWorkSchedule/';
 
   constructor(private http: HttpClient) { }
 
@@ -46,26 +46,16 @@ export class ApiDataService {
     return this.http.delete(apiURL, { withCredentials: true });
   }
 
-  /*getWorkGroupUnscheduled() {
-    const apiURL = `${this.apiRoot}ScheduledWork/Groups`;
-    return this.http.get<IWorkScheduleGroupWork[]>(apiURL, { withCredentials: true });
-  }*/
-
   getOrderBySearch(term: string, workParams: IWorkParams) {
     if (term.length === 5 && parseInt(term, 10) > 0) { workParams.BATCH = term; } else
     if (term.length === 10 && parseInt(term, 10) > 0) { workParams.ACCOUNT = term; } else
-    if (term.length === 8 && parseInt(term.substring(1, 5), 10) > 0) {workParams.INVOICE = term; } else {
+    if (term.length === 8 && parseInt(term.substring(2, 4), 10) > 0) {workParams.INVOICE = term; } else {
       workParams.NAME = '%' + term + '%'; }
     const apiURL = `${this.apiRoot}Order`;
     return this.http.post<OrderList>(apiURL, workParams, { withCredentials: true }).pipe(
       map(response => new OrderList().deserialise(response))
     );
   }
-
-  //getOrderFiltered(workParams: IWorkParams) {
-  //  const apiURL = `${this.apiRoot}Order`;
-  //  return this.http.post<IOrderList>(apiURL, workParams, { withCredentials: true });
-  //}
 
   getOrderFilteredType(workParams: IWorkParams) {
     const apiURL = `${this.apiRoot}Order`;
