@@ -14,7 +14,7 @@ export const fieldSettings: IFieldSettings[] = [
     { name: 'batch', edit: false, type: 'text', desc: 'Batch', size: '5', style: '', options: [] },
     { name: 'doc', edit: false, type: 'text', desc: 'Doc', size: '3', style: '', options: [] },
     { name: 'account', edit: false, type: 'text', desc: 'Account', size: '10', style: '', options: [] },
-    { name: 'vistaStatus', edit: true, type: 'text', desc: 'Status (V)', size: '15', style: '', options: [
+    { name: 'vistaStatus', edit: true, type: 'select', desc: 'Status (V)', size: '15', style: '', options: [
             'Despatched',
             'Part Despatched',
             'Part Packed',
@@ -77,7 +77,7 @@ export const defaultUnscheduledFields: IFieldSettings[] = [
     { name: 'batch', edit: false, type: 'text', desc: 'Batch', size: '5', style: '', options: [] },
     { name: 'account', edit: false, type: 'text', desc: 'Account', size: '10', style: '', options: [] },
     { name: 'name', edit: false, type: 'text', desc: 'Name', size: '34', style: '', options: [] },
-    { name: 'vistaStatus', edit: false, type: 'text', desc: 'Status (V)', size: '15', style: '', options: [
+    { name: 'vistaStatus', edit: false, type: 'select', desc: 'Status (V)', size: '15', style: '', options: [
             'Despatched',
             'Despatched 48Hr',
             'In Progress',
