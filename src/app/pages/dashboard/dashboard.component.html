@@ -1,86 +1,86 @@
 <div class="row ">
-    <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
+    <div class="col col-12 col-lg-6 mt-3">
         <app-loading *ngIf="isLoadingStatus"></app-loading>
         <ng-container *ngIf="!isLoadingStatus">
-            <mdb-card>
-                <mdb-card-body>
-                    <mdb-card-title>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">
                         <div class="text-center">All Orders</div>
-                    </mdb-card-title>
+                    </h6>
                     <div style="display: block">
-                        <canvas mdbChart [chartType]="orderChartType" [datasets]="orderChartData"
+                        <canvas baseChart [chartType]="orderChartType" [datasets]="orderChartData"
                             [labels]="orderChartLabels" [colors]="orderChartColors" [options]="orderChartOptions"
                             [legend]="true">
                         </canvas>
                     </div>
-                </mdb-card-body>
-            </mdb-card>
+                </div>
+            </div>
         </ng-container>
     </div>
 
-    <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
+    <div class="col col-12 col-lg-6 mt-3">
         <app-loading *ngIf="isLoadingScheduleStatus"></app-loading>
         <ng-container *ngIf="!isLoadingScheduleStatus">
-            <mdb-card>
-                <mdb-card-body>
-                    <mdb-card-title>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">
                         <div class="text-center">Scheduled Orders</div>
-                    </mdb-card-title>
+                    </h6>
                     <div style="display: block">
-                        <canvas mdbChart [chartType]="orderChartType" [datasets]="schChartData"
+                        <canvas baseChart [chartType]="orderChartType" [datasets]="schChartData"
                             [labels]="schChartLabels" [colors]="orderChartColors" [options]="orderChartOptions"
                             [legend]="true">
                         </canvas>
                     </div>
-                </mdb-card-body>
-            </mdb-card>
+                </div>
+            </div>
         </ng-container>
     </div>
-    <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
-            <app-loading *ngIf="isLoadingDespatch"></app-loading>
-            <ng-container *ngIf="!isLoadingDespatch">
-                <mdb-card>
-                    <mdb-card-body>
-                        <mdb-card-title>
-                            <div class="text-center">Despatch History</div>
-                        </mdb-card-title>
-                        <div style="display: block">
-                            <canvas mdbChart [chartType]="despChartType" [datasets]="despData" [labels]="despLabels"
-                                [options]="despOptions" [legend]="true">
-                            </canvas>
-                        </div>
-                    </mdb-card-body>
-                </mdb-card>
-            </ng-container>
-        </div>
-        <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
-                <app-loading *ngIf="isLoadingRelease"></app-loading>
-                <ng-container *ngIf="!isLoadingRelease">
-                    <mdb-card>
-                        <mdb-card-body>
-                            <mdb-card-title>
-                                <div class="text-center">Release History</div>
-                            </mdb-card-title>
-                            <div style="display: block">
-                                <canvas mdbChart [chartType]="relChartType" [datasets]="relData" [labels]="relLabels"
-                                    [options]="relOptions" [legend]="true">
-                                </canvas>
-                            </div>
-                        </mdb-card-body>
-                    </mdb-card>
-                </ng-container>
-            </div>
-            
-    <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
+    <div class="col col-12 col-lg-6 mt-3">
         <app-loading *ngIf="isLoadingDespatch"></app-loading>
         <ng-container *ngIf="!isLoadingDespatch">
-            <mdb-card>
-                <mdb-card-body>
-                    <mdb-card-title>
-                        <div class="text-center">Despatch Summary</div>
-                    </mdb-card-title>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <div class="text-center">Despatch History</div>
+                    </h6>
                     <div style="display: block">
-                        <table mdbTable>
+                        <canvas baseChart [chartType]="despChartType" [datasets]="despData" [labels]="despLabels"
+                            [options]="despOptions" [legend]="true">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="col col-12 col-lg-6 mt-3">
+        <app-loading *ngIf="isLoadingRelease"></app-loading>
+        <ng-container *ngIf="!isLoadingRelease">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <div class="text-center">Release History</div>
+                    </h6>
+                    <div style="display: block">
+                        <canvas baseChart [chartType]="relChartType" [datasets]="relData" [labels]="relLabels"
+                            [options]="relOptions" [legend]="true">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="col col-12 col-lg-6 mt-3">
+        <app-loading *ngIf="isLoadingDespatch"></app-loading>
+        <ng-container *ngIf="!isLoadingDespatch">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <div class="text-center">Despatch Summary</div>
+                    </h6>
+                    <div style="display: block">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Date</th>
@@ -99,21 +99,21 @@
                             </tbody>
                         </table>
                     </div>
-                </mdb-card-body>
-            </mdb-card>
+                </div>
+            </div>
         </ng-container>
     </div>
 
-    <div class="col col-sm-12 col-md-12 col-lg-6 mt-3">
+    <div class="col col-12 col-lg-6 mt-3">
         <app-loading *ngIf="isLoadingRelease"></app-loading>
         <ng-container *ngIf="!isLoadingRelease">
-            <mdb-card>
-                <mdb-card-body>
-                    <mdb-card-title>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">
                         <div class="text-center">Release Summary</div>
-                    </mdb-card-title>
+                    </h6>
                     <div style="display: block">
-                        <table mdbTable>
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Date</th>
@@ -132,8 +132,8 @@
                             </tbody>
                         </table>
                     </div>
-                </mdb-card-body>
-            </mdb-card>
+                </div>
+            </div>
         </ng-container>
     </div>
 </div>

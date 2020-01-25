@@ -70,11 +70,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       apiResult => {
         this.releaseData = apiResult;
 
-        this.relLabels = this.releaseData.map(x => new Date(x.key).toDateString().slice(4, 10));
+        this.relLabels = this.releaseData.reverse().map(x => new Date(x.key).toDateString().slice(4, 10));
         this.relData = [
-          { data: this.releaseData.map(x => x.invoices), label: 'Orders' },
-          { data: this.releaseData.map(x => x.lines), label: 'Lines' },
-          { data: this.releaseData.map(x => x.units), label: 'Units' }
+          { data: this.releaseData.reverse().map(x => x.invoices), label: 'Orders' },
+          { data: this.releaseData.reverse().map(x => x.lines), label: 'Lines' },
+          { data: this.releaseData.reverse().map(x => x.units), label: 'Units' }
         ];
         this.isLoadingRelease = false;
       }
@@ -84,11 +84,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       apiResult => {
         this.despatchData = apiResult;
 
-        this.despLabels = this.despatchData.map(x => new Date(x.key).toDateString().slice(4, 10));
+        this.despLabels = this.despatchData.reverse().map(x => new Date(x.key).toDateString().slice(4, 10));
         this.despData = [
-          { data: this.despatchData.map(x => x.invoices), label: 'Orders' },
-          { data: this.despatchData.map(x => x.lines), label: 'Lines' },
-          { data: this.despatchData.map(x => x.units), label: 'Units' }
+          { data: this.despatchData.reverse().map(x => x.invoices), label: 'Orders' },
+          { data: this.despatchData.reverse().map(x => x.lines), label: 'Lines' },
+          { data: this.despatchData.reverse().map(x => x.units), label: 'Units' }
         ];
         this.isLoadingDespatch = false;
       }
