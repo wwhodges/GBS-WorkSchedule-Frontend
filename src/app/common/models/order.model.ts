@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 export interface IOrder {
     id: number;
@@ -20,6 +20,7 @@ export interface IOrder {
     dateDespatchedActual: Date;
     dateInvoiced: Date;
     scheduled: boolean;
+    manualOrder: boolean;
     alp: string;
     bench: string;
     priority: string;
@@ -41,46 +42,52 @@ export interface IOrder {
 }
 
 export class Order implements IOrder {
-    id: number;
-    site: string;
-    invoice: string;
-    batch: string;
-    doc: string;
+    id = 0;
+    site = 'G';
+    invoice = 'MANORDER';
+    batch = '00000';
+    doc = '000';
     account: string;
-    invWeight: number;
-    units: number;
-    lines: number;
-    pickedQty: number;
-    pickedBulk: number;
-    pickedLoose: number;
-    vistaPicked: boolean;
-    vistaPacked: boolean;
-    destination: string;
-    vistaStatus: string;
-    dateDespatchedActual: Date = new Date();
-    dateInvoiced: Date = new Date();
-    scheduled: boolean;
-    alp: string;
-    bench: string;
-    priority: string;
-    picked: boolean;
-    packed: boolean;
-    holdLoc: string;
-    palDest: string;
-    palconPacked: number;
-    status: string;
-    comments: string;
-    workDate: Date = new Date();
-    delDate: Date = new Date();
-    despDate: Date = new Date();
-    palletIds: string;
-    palletCount: number;
-    palletNumbers: string;
-    name: string;
-    prime: string;
+    invWeight = 0.000;
+    units = 0;
+    lines = 0;
+    pickedQty = 0;
+    pickedBulk = 0;
+    pickedLoose = 0;
+    vistaPicked = false;
+    vistaPacked = false;
+    destination = '';
+    vistaStatus = 'Unstarted';
+    dateDespatchedActual = null;
+    dateInvoiced = new Date();
+    scheduled = false;
+    manualOrder = true;
+    alp = '';
+    bench = '';
+    priority = '';
+    picked = false;
+    packed = false;
+    holdLoc = '';
+    palDest = '';
+    palconPacked = 0;
+    status = 'Unstarted';
+    comments = '';
+    workDate = new Date();
+    delDate = new Date();
+    despDate = new Date();
+    palletIds = '';
+    palletCount = 0;
+    palletNumbers = '';
+    name = '';
+    prime = '';
 
     public deserialise(input: any) {
         Object.assign(this, input);
+        this.dateInvoiced = new Date(this.dateInvoiced);
+        this.workDate = new Date(this.workDate);
+        this.delDate = new Date(this.delDate);
+        this.despDate = new Date(this.despDate);
+        this.dateDespatchedActual = new Date(this.dateDespatchedActual);
         return this;
     }
 
@@ -101,11 +108,12 @@ export class Order implements IOrder {
         if (form.controls.vistaPacked.value !== this.vistaPacked) { return true; }
         if (form.controls.destination.value !== this.destination) { return true; }
         if (form.controls.vistaStatus.value !== this.vistaStatus) { return true; }
-        if (form.controls.dateDespatchedActual.value !== new Date(this.dateDespatchedActual).toISOString().substring(0, 10)) {
+        if (form.controls.dateDespatchedActual.value !== this.dateDespatchedActual) {
             return true; }
-        if (form.controls.dateInvoiced.value !== new Date(this.dateInvoiced).toISOString().substring(0, 10)) {
+        if (form.controls.dateInvoiced.value !== this.dateInvoiced) {
             return true; }
         if (form.controls.scheduled.value !== this.scheduled) { return true; }
+        if (form.controls.manualOrder.value !== this.manualOrder) { return true; }
         if (form.controls.alp.value !== this.alp) { return true; }
         if (form.controls.bench.value !== this.bench) { return true; }
         if (form.controls.priority.value !== this.priority) { return true; }
@@ -116,9 +124,9 @@ export class Order implements IOrder {
         if (form.controls.palconPacked.value !== this.palconPacked) { return true; }
         if (form.controls.status.value !== this.status) { return true; }
         if (form.controls.comments.value !== this.comments) { return true; }
-        if (form.controls.workDate.value !== new Date(this.workDate).toISOString().substring(0, 10)) { return true; }
-        if (form.controls.delDate.value !== new Date(this.delDate).toISOString().substring(0, 10)) { return true; }
-        if (form.controls.despDate.value !== new Date(this.despDate).toISOString().substring(0, 10)) { return true; }
+        if (form.controls.workDate.value !== this.workDate) { return true; }
+        if (form.controls.delDate.value !== this.delDate) { return true; }
+        if (form.controls.despDate.value !== this.despDate) { return true; }
         if (form.controls.palletIds.value !== this.palletIds) { return true; }
         if (form.controls.palletCount.value !== this.palletCount) { return true; }
         if (form.controls.palletNumbers.value !== this.palletNumbers) { return true; }
@@ -127,25 +135,29 @@ export class Order implements IOrder {
 
     public CreateFormGroup(): FormGroup {
         const OrderForm = new FormGroup({
-            id: new FormControl(this.id),
-            site: new FormControl(this.site),
-            invoice: new FormControl(this.invoice),
-            batch: new FormControl(this.batch),
-            doc: new FormControl(this.doc),
-            account: new FormControl(this.account),
-            invWeight: new FormControl(this.invWeight),
-            units: new FormControl(this.units),
-            lines: new FormControl(this.lines),
-            pickedQty: new FormControl(this.pickedQty),
-            pickedBulk: new FormControl(this.pickedBulk),
-            pickedLoose: new FormControl(this.pickedLoose),
-            vistaPicked: new FormControl(this.vistaPicked),
-            vistaPacked: new FormControl(this.vistaPacked),
-            destination: new FormControl(this.destination),
-            vistaStatus: new FormControl(this.vistaStatus),
-            dateDespatchedActual: new FormControl(new Date(this.dateDespatchedActual).toISOString().substring(0, 10)),
-            dateInvoiced: new FormControl(new Date(this.dateInvoiced).toISOString().substring(0, 10)),
+            id: new FormControl({ value: this.id, disabled: true}),
+            site: new FormControl({value: this.site, disabled: !this.manualOrder}, [Validators.minLength(1), Validators.maxLength(1)]),
+            invoice: new FormControl({ value: this.invoice, disabled: !this.manualOrder}, [Validators.required, Validators.maxLength(8)]),
+            batch: new FormControl({value: this.batch, disabled: !this.manualOrder}, [Validators.minLength(5), Validators.maxLength(5)]),
+            doc: new FormControl({value: this.doc, disabled: !this.manualOrder}, [Validators.minLength(3), Validators.maxLength(3)]),
+            account: new FormControl({value: this.account, disabled: !this.manualOrder}),
+            invWeight: new FormControl({value: this.invWeight, disabled: !this.manualOrder}, [Validators.pattern('^\\d+(\\.\\d{1,3})?$')]),
+            units: new FormControl({value: this.units, disabled: !this.manualOrder}, [Validators.min(0), Validators.max(99999)]),
+            lines: new FormControl({value: this.lines, disabled: !this.manualOrder}, [Validators.min(0), Validators.max(99999)]),
+            pickedQty: new FormControl({value: this.pickedQty, disabled: !this.manualOrder}, [Validators.min(0), Validators.max(99999)]),
+            pickedBulk: new FormControl({value: this.pickedBulk, disabled: !this.manualOrder}, [Validators.min(0), Validators.max(99999)]),
+            pickedLoose: new FormControl({value: this.pickedLoose, disabled: !this.manualOrder},
+                [Validators.min(0), Validators.max(99999)]),
+            vistaPicked: new FormControl({value: this.vistaPicked, disabled: !this.manualOrder}),
+            vistaPacked: new FormControl({value: this.vistaPacked, disabled: !this.manualOrder}),
+            destination: new FormControl({value: this.destination, disabled: !this.manualOrder}),
+            vistaStatus: new FormControl({value: this.vistaStatus, disabled: !this.manualOrder}),
+            dateDespatchedActual: new FormControl(
+                {value: this.dateDespatchedActual, disabled: !this.manualOrder}),
+            dateInvoiced: new FormControl(
+                {value: this.dateInvoiced, disabled: !this.manualOrder}),
             scheduled: new FormControl(this.scheduled),
+            manualOrder: new FormControl({value: this.manualOrder, disabled: true}),
             alp: new FormControl(this.alp),
             bench: new FormControl(this.bench),
             priority: new FormControl(this.priority),
@@ -156,14 +168,14 @@ export class Order implements IOrder {
             palconPacked: new FormControl(this.palconPacked),
             status: new FormControl(this.status),
             comments: new FormControl(this.comments),
-            workDate: new FormControl(new Date(this.workDate).toISOString().substring(0, 10)),
-            delDate: new FormControl(new Date(this.delDate).toISOString().substring(0, 10)),
-            despDate: new FormControl(new Date(this.despDate).toISOString().substring(0, 10)),
+            workDate: new FormControl(this.workDate),
+            delDate: new FormControl(this.delDate),
+            despDate: new FormControl(this.despDate),
             palletIds: new FormControl(this.palletIds),
             palletCount: new FormControl(this.palletCount),
             palletNumbers: new FormControl(this.palletNumbers),
-            name: new FormControl(this.name),
-            prime: new FormControl(this.prime)
+            name: new FormControl({value: this.name, disabled: true}),
+            prime: new FormControl({value: this.prime, disabled: true})
         });
         return OrderForm;
     }

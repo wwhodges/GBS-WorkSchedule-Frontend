@@ -4,167 +4,159 @@
 <ng-container *ngIf="!isLoading">
   <form [formGroup]="orderForm">
     <div class="row">
-      <div class="col col-12 col-lg-6 mt-2 mb-2">
-        <mdb-card>
+      <div class="col col-12 mt-2 mb-2">
+        <div class="card">
           <!--Card content-->
-          <mdb-card-body>
+          <div class="card-body">
 
             <!--Title-->
-            <mdb-card-title>
+            <h5 class="card-title">
               <h4>{{orderForm.controls.invoice.value}}</h4>
-            </mdb-card-title>
+            </h5>
 
             <!--Text-->
-            <mdb-card-text>
-              <div class="row">
-                <div class="col">
-                  <div class="form-group row">
-                    <label for="invoice" class="col-sm-4 col-form-label col-form-label-sm">Invoice</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="invoice" formControlName="invoice">
-                    </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <label for="invoice" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Invoice</label>
+                  <div class="col-8 col-md-4">
+                    <input type="text" class="form-control form-control-sm" id="invoice" formControlName="invoice">
                   </div>
-                  <div class="form-group row">
-                    <label for="account" class="col-sm-4 col-form-label col-form-label-sm">Account</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="account" formControlName="account">
-                    </div>
+                  <label for="account" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Account</label>
+                  <div class="col-8 col-md-4">
+                    <input type="text" class="form-control form-control-sm" id="account" formControlName="account">
                   </div>
-                  <div class="form-group row">
-                    <label for="name" class="col-sm-4 col-form-label col-form-label-sm">Name</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="name" formControlName="name">
-                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="batch" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Batch</label>
+                  <div class="col-8 col-md-4">
+                    <input type="text" class="form-control form-control-sm" id="batch" formControlName="batch">
                   </div>
-                  <div class="form-group row">
-                    <label for="dateInvoiced" class="col-sm-4 col-form-label col-form-label-sm">Invoice Date</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="dateInvoiced"
-                        formControlName="dateInvoiced">
-                    </div>
+                  <label for="name" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Name</label>
+                  <div class="col-8 col-md-4">
+                    <input type="text" class="form-control form-control-sm" id="name" formControlName="name">
                   </div>
-                  <div class="form-group row">
-                    <label for="batch" class="col-sm-4 col-form-label col-form-label-sm">Batch</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="batch" formControlName="batch">
-                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="dateInvoiced" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Invoice
+                    Date</label>
+                  <div class="col-8 col-md-4">
+                    <input type="text" class="form-control form-control-sm" id="dateInvoiced"
+                      formControlName="dateInvoiced" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" />
                   </div>
-                  <div class="form-group row">
-                    <label for="dateDespatchedActual" class="col-sm-4 col-form-label col-form-label-sm">Actual Despatch
-                      Date</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="dateDespatchedActual"
-                        formControlName="dateDespatchedActual">
-                    </div>
+                  <label for="dateDespatchedActual" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Actual
+                    Despatch
+                    Date</label>
+                  <div class="col-8 col-md-4">
+                    <input type="text" class="form-control form-control-sm" id="dateDespatchedActual"
+                      formControlName="dateDespatchedActual" bsDatepicker
+                      [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" />
                   </div>
-
                 </div>
               </div>
-            </mdb-card-text>
-          </mdb-card-body>
-        </mdb-card>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col col-12 col-lg-6 mt-2 mb-2">
-        <mdb-card>
+        <div class="card">
           <!--Card content-->
-          <mdb-card-body>
+          <div class="card-body">
 
             <!--Title-->
-            <mdb-card-title>
+            <h5 class="card-title">
               <h4>Vista Data</h4>
-            </mdb-card-title>
+            </h5>
 
             <!--Text-->
-            <mdb-card-text>
-              <div class="row">
-                <div class="col">
-                  <div class="form-group row">
-                    <label for="vistaStatus" class="col-sm-4 col-form-label col-form-label-sm">Status</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="vistaStatus"
-                        formControlName="vistaStatus">
-                    </div>
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <label for="vistaStatus" class="col-sm-4 col-form-label col-form-label-sm">Status</label>
+                  <div class="col-sm-8">
+                    <select formControlName="vistaStatus" class="form-control form-control-sm">
+                      <option *ngFor="let option of vistaStatusOptions" [value]="option">{{option}}
+                      </option>
+                    </select>
                   </div>
-                  <div class="form-group row">
-                    <label for="invWeight" class="col-sm-4 col-form-label col-form-label-sm">Weight</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="invWeight"
-                        formControlName="invWeight">
-                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="invWeight" class="col-sm-4 col-form-label col-form-label-sm">Weight</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="invWeight" formControlName="invWeight">
                   </div>
-                  <div class="form-group row">
-                    <label for="units" class="col-sm-4 col-form-label col-form-label-sm">Units</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="units" formControlName="units" />
-                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="units" class="col-sm-4 col-form-label col-form-label-sm">Units</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="units" formControlName="units" />
                   </div>
-                  <div class="form-group row">
-                    <label for="lines" class="col-sm-4 col-form-label col-form-label-sm">Lines</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="lines" formControlName="lines">
-                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="lines" class="col-sm-4 col-form-label col-form-label-sm">Lines</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="lines" formControlName="lines">
                   </div>
-                  <div class="form-group row">
-                    <label for="pickedQty" class="col-sm-4 col-form-label col-form-label-sm">Picked Qty</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="pickedQty"
-                        formControlName="pickedQty">
-                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="pickedQty" class="col-sm-4 col-form-label col-form-label-sm">Picked Qty</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="pickedQty" formControlName="pickedQty">
                   </div>
-                  <div class="form-group row">
-                    <label for="pickedBulk" class="col-sm-4 col-form-label col-form-label-sm">Picked Bulk</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="pickedBulk"
-                        formControlName="pickedBulk">
-                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="pickedBulk" class="col-sm-4 col-form-label col-form-label-sm">Picked Bulk</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="pickedBulk"
+                      formControlName="pickedBulk">
                   </div>
-                  <div class="form-group row">
-                    <label for="pickedLoose" class="col-sm-4 col-form-label col-form-label-sm">Picked
-                      Loose</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="pickedLoose"
-                        formControlName="pickedLoose">
-                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="pickedLoose" class="col-sm-4 col-form-label col-form-label-sm">Picked
+                    Loose</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="pickedLoose"
+                      formControlName="pickedLoose">
                   </div>
-                  <div class="form-group row">
-                    <div class="col-sm-4 col-form-label col-form-label-sm">Picked</div>
-                    <div class="col-sm-8">
-                      <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="vistaPicked"
-                          formControlName="vistaPicked">
-                        <label class="custom-control-label" for="vistaPicked"></label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-sm-4 col-form-label col-form-label-sm">Packed</div>
-                    <div class="col-sm-8">
-                      <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" id="vistaPacked"
-                          formControlName="vistaPacked">
-                        <label class="custom-control-label" for="vistaPacked"></label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label for="destination" class="col-sm-4 col-form-label col-form-label-sm">Destination</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control form-control-sm" id="destination"
-                        formControlName="destination">
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-4 col-form-label col-form-label-sm">Picked</div>
+                  <div class="col-sm-8">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="vistaPicked"
+                        formControlName="vistaPicked">
+                      <label class="custom-control-label" for="vistaPicked"></label>
                     </div>
                   </div>
                 </div>
+                <div class="form-group row">
+                  <div class="col-sm-4 col-form-label col-form-label-sm">Packed</div>
+                  <div class="col-sm-8">
+                    <div class="custom-control custom-checkbox">
+                      <input class="custom-control-input" type="checkbox" id="vistaPacked"
+                        formControlName="vistaPacked">
+                      <label class="custom-control-label" for="vistaPacked"></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="destination" class="col-sm-4 col-form-label col-form-label-sm">Destination</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="destination"
+                      formControlName="destination">
+                  </div>
+                </div>
               </div>
-            </mdb-card-text>
-          </mdb-card-body>
-        </mdb-card>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col col-12 col-lg-6 mt-2 mb-2">
-        <mdb-card>
-          <mdb-card-body>
-            <mdb-card-title>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
               <h4>Schedule Details</h4>
-            </mdb-card-title>
+            </h5>
             <div class="row">
               <div class="col">
                 <div class="form-group row">
@@ -235,7 +227,10 @@
                 <div class="form-group row">
                   <label for="status" class="col-sm-4 col-form-label col-form-label-sm">Status</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="status" formControlName="status">
+                    <select formControlName="status" class="form-control form-control-sm">
+                      <option *ngFor="let option of statusOptions" [value]="option">{{option}}
+                      </option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -244,7 +239,50 @@
                     <input type="text" class="form-control form-control-sm" id="comments" formControlName="comments">
                   </div>
                 </div>
-
+                <div class="form-group row">
+                  <label for="workDate" class="col col-4 col-form-label col-form-label-sm">Work Date
+                  </label>
+                  <div class="col col-8">
+                    <input type="text" class="form-control form-control-sm" id="workDate" formControlName="workDate"
+                      bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="despDate" class="col col-4 col-form-label col-form-label-sm">Desp Date
+                  </label>
+                  <div class="col col-8">
+                    <input type="text" class="form-control form-control-sm" id="despDate" formControlName="despDate"
+                      bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="delDate" class="col col-4 col-form-label col-form-label-sm">Del Date
+                  </label>
+                  <div class="col col-8">
+                    <input type="text" class="form-control form-control-sm" id="delDate" formControlName="delDate"
+                      bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="palletIds" class="col-sm-4 col-form-label col-form-label-sm">Pallet Ids</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="palletIds" formControlName="palletIds">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="palletCount" class="col-sm-4 col-form-label col-form-label-sm">Pallet Count</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="palletCount"
+                      formControlName="palletCount">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="palletNumbers" class="col-sm-4 col-form-label col-form-label-sm">Pallet Numbers</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="palletNumbers"
+                      formControlName="palletNumbers">
+                  </div>
+                </div>
                 <div class="form-group row">
                   <div class="col-sm-12">
                     <button type="submit" class="btn btn-primary" (click)="submitForm()">Save</button>
@@ -253,8 +291,8 @@
 
               </div>
             </div>
-          </mdb-card-body>
-        </mdb-card>
+          </div>
+        </div>
       </div>
     </div>
   </form>
