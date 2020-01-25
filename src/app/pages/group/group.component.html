@@ -2,9 +2,9 @@
 <ng-container *ngIf="!isLoading">
 <h2>{{groupForm.get('groupName').value}}</h2>
 <div class="row">
-    <div class="col">
-        <mdb-card>
-            <mdb-card-body>
+    <div class="col col-12 col-lg-6">
+        <div class="card">
+            <div class="card-body">
                 <form [formGroup]="groupForm">
                     <div class="form-group row">
                         <label for="groupName" class="col-sm-4 col-form-label col-form-label-sm">Group Name</label>
@@ -48,12 +48,12 @@
                         </div>
                     </div>
                 </form>
-            </mdb-card-body>
-        </mdb-card>
+            </div>
+        </div>
     </div>
-    <div class="col">
-        <mdb-card>
-            <mdb-card-body>
+    <div class="col col-12 col-lg-6">
+        <div class="card">
+            <div class="card-body">
                 Members
                 <div class="row mb-2">
                     <div class="col form-inline">
@@ -64,14 +64,14 @@
                 <div class="list-group">
                     <div class="list-group-item py-2" *ngFor="let member of group.members">
                         <div class="row">
-                            <div class="col col-sm-3">{{member.split(',')[0]}}</div>
-                            <div class="col col-sm-8">{{member.split(',')[1]}}</div>
-                            <div class="col col-sm-1"><button type="button" class="btn btn-danger btn-sm" (click)="removeMember(member)"><mdb-icon fas icon="trash-alt"></mdb-icon></button></div>
+                            <div class="col col-3">{{member.split(',')[0]}}</div>
+                            <div class="col col-8">{{member.split(',')[1]}}</div>
+                            <div class="col col-1"><button type="button" class="btn btn-danger btn-sm" (click)="removeMember(member)">X</button></div>
                         </div>
                     </div>
                 </div>
-            </mdb-card-body>
-        </mdb-card>
+            </div>
+        </div>
     </div>
 </div>
 </ng-container>
