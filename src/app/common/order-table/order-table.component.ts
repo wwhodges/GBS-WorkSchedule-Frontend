@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
-import { Order, ICustomerGroup, IWorkParams } from 'src/app/common/models';
+import { Order, ICustomerGroup, IWorkParams, sortFields } from 'src/app/common/models';
 
 @Component({
   selector: 'app-order-table',
@@ -12,10 +12,15 @@ export class OrderTableComponent implements OnChanges, OnInit {
   @Input() ordersForm: FormGroup;
   @Input() listedFields: any[];
   @Input() filters: IWorkParams;
+  @Input() dataLoading = false;
 
   @Output() formAction = new EventEmitter<string>();
 
   public isFilterVisible = false;
+
+  private sortArray = sortFields;
+  public sortAscending = true;
+  public currentSort = '';
 
 
   // Group control variables
@@ -30,6 +35,8 @@ export class OrderTableComponent implements OnChanges, OnInit {
   constructor() { }
 
   ngOnInit() {
+    const sortField = this.sortArray.find( item => item.value === this.filters.SORT);
+    this.currentSort = sortField.description;
   }
 
   ngOnChanges() {
@@ -43,7 +50,6 @@ export class OrderTableComponent implements OnChanges, OnInit {
   checkclicked(data: any) {
     const target = data.target || data.srcElement || data.currentTarget;
     const value = target.attributes.id.nodeValue;
-    //console.log(value);
     const currentCheckId = +value.substring(10);
     let currentCheck = target.checked;
     if (data.ctrlKey) {
@@ -99,5 +105,25 @@ export class OrderTableComponent implements OnChanges, OnInit {
 
   filterUpdated() {
     this.formAction.emit('updated');
+  }
+
+  setSort(sortField: string) {
+    console.log(sortField);
+    if (sortField === this.currentSort) {
+      this.sortAscending = !this.sortAscending;
+    } else {
+      this.sortAscending = true;
+      this.currentSort = sortField;
+    }
+    const sortItem = this.sortArray.find( field => field.description === sortField);
+    if (this.sortAscending) {
+      this.filters.SORT = sortItem.value;
+    } else {
+      this.filters.SORT = sortItem.value + 100;
+    }
+    // console.log(this.currentSort);
+    // console.log(this.sortAscending);
+    // console.log(this.filters.SORT);
+    this.filterUpdated();
   }
 }

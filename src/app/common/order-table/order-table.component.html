@@ -1,92 +1,103 @@
-<div>
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" [class.active]="currentGroup === '*'" (click)="selectedGroup('*')">All Orders</a>
-        </li>
-        <li class="nav-item" *ngFor="let group of groups">
-            <a class="nav-link" [class.active]="currentGroup === group.id"
-                (click)="selectedGroup(group.id)">{{group.groupName}}</a>
-        </li>
-    </ul>
-</div>
-<form [formGroup]="ordersForm">
+<app-loader-wrapper [showSpinner]="dataLoading">
     <div>
-        <table class="table table-borderless table-hover">
-            <thead>
-                <tr>
-                    <ng-container *ngFor="let field of listedFields">
-                        <th>{{field.desc}}</th>
-                    </ng-container>
-                </tr>
-            </thead>
-            <tbody>
-                <tr formArrayName="orders" *ngFor="let order of ordersForm.get('orders')['controls']; let i = index;">
-                    <ng-container [formGroupName]="i">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" [class.active]="currentGroup === '*'" (click)="selectedGroup('*')">All Orders</a>
+            </li>
+            <li class="nav-item" *ngFor="let group of groups">
+                <a class="nav-link" [class.active]="currentGroup === group.id"
+                    (click)="selectedGroup(group.id)">{{group.groupName}}</a>
+            </li>
+        </ul>
+    </div>
+    <form [formGroup]="ordersForm" *ngIf="orders">
+        <div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
                         <ng-container *ngFor="let field of listedFields">
-                            <ng-container *ngIf="field.edit; else notEdit">
-                                <ng-container [ngSwitch]="field.type">
-                                    <td *ngSwitchCase="'text'"><input type="{{field.type}}"
-                                            formControlName="{{field.name}}" size="{{field.size}}" /></td>
-                                    <td *ngSwitchCase="'date'"><input type="{{field.type}}"
-                                            formControlName="{{field.name}}" /></td>
-                                    <td *ngSwitchCase="'select'"><select formControlName="{{field.name}}">
-                                            <option *ngFor="let option of field.options" [value]="option">{{option}}
-                                            </option>
-                                        </select></td>
-                                    <td *ngSwitchCase="'checkbox'">
-                                        <div class="custom-control custom-checkbox ml-2">
-                                            <input (click)="checkclicked($event)" type="checkbox"
-                                                formControlName="{{field.name}}" class="custom-control-input"
-                                                id="{{field.name}}-{{i}}">
-                                            <label class="custom-control-label" for="{{field.name}}-{{i}}"></label>
-                                        </div>
-                                    </td>
-                                </ng-container>
-                            </ng-container>
-                            <ng-template #notEdit>
-                                <ng-container [ngSwitch]="field.type">
-                                    <td *ngSwitchCase="'date'">{{orders[i][field.name] | date:'dd-MM-yyyy'}}</td>
-                                    <td *ngSwitchCase="'checkbox'">
-                                        <div class="custom-control custom-checkbox ml-2">
-                                            <input (click)="checkclicked($event)" type="checkbox"
-                                                formControlName="{{field.name}}" class="custom-control-input"
-                                                id="{{field.name}}-{{i}}" disabled>
-                                            <label class="custom-control-label" for="{{field.name}}-{{i}}"></label>
-                                        </div>
-                                    </td>
-                                    <td *ngSwitchDefault>
-                                        <ng-container *ngIf="field.name === 'invoice'; else notInvoice">
-                                            <a [routerLink]="['/order', orders[i].id]" style="cursor: pointer;">{{orders[i][field.name]}}</a>
-                                        </ng-container>
-                                        <ng-template #notInvoice>
-                                            {{orders[i][field.name]}}
-                                        </ng-template>
-                                    </td>
-                                </ng-container>
-                            </ng-template>
+                            <th><a (click)="setSort(field.name)">{{field.desc}}
+                                    <i *ngIf="field.name === currentSort && sortAscending" class="fas fa-sort-up"></i>
+                                    <i *ngIf="field.name === currentSort && !sortAscending"
+                                        class="fas fa-sort-down"></i>
+                                </a></th>
                         </ng-container>
-                    </ng-container>
-                </tr>
-            </tbody>
-        </table>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr formArrayName="orders"
+                        *ngFor="let order of ordersForm.get('orders')['controls']; let i = index;">
+                        <ng-container [formGroupName]="i">
+                            <ng-container *ngFor="let field of listedFields">
+                                <ng-container *ngIf="field.edit; else notEdit">
+                                    <ng-container [ngSwitch]="field.type">
+                                        <td *ngSwitchCase="'text'"><input type="{{field.type}}"
+                                                formControlName="{{field.name}}" size="{{field.size}}" /></td>
+                                        <td *ngSwitchCase="'date'"><input type="text" formControlName="{{field.name}}"
+                                                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" /></td>
+                                        <td *ngSwitchCase="'select'"><select formControlName="{{field.name}}">
+                                                <option *ngFor="let option of field.options" [value]="option">{{option}}
+                                                </option>
+                                            </select></td>
+                                        <td *ngSwitchCase="'checkbox'">
+                                            <div class="custom-control custom-checkbox ml-2">
+                                                <input (click)="checkclicked($event)" type="checkbox"
+                                                    formControlName="{{field.name}}" class="custom-control-input"
+                                                    id="{{field.name}}-{{i}}">
+                                                <label class="custom-control-label" for="{{field.name}}-{{i}}"></label>
+                                            </div>
+                                        </td>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-template #notEdit>
+                                    <ng-container [ngSwitch]="field.type">
+                                        <td *ngSwitchCase="'checkbox'">
+                                            <div class="custom-control custom-checkbox ml-2">
+                                                <input (click)="checkclicked($event)" type="checkbox"
+                                                    formControlName="{{field.name}}" class="custom-control-input"
+                                                    id="{{field.name}}-{{i}}" disabled>
+                                                <label class="custom-control-label" for="{{field.name}}-{{i}}"></label>
+                                            </div>
+                                        </td>
+                                        <td *ngSwitchCase="'date'">
+                                            {{orders[i][field.name] | date: 'dd/MM/yyyy'}}
+                                        </td>
+                                        <td *ngSwitchDefault>
+                                            <ng-container *ngIf="field.name === 'invoice'; else notInvoice">
+                                                <a [routerLink]="['/order', orders[i].id]"
+                                                    style="cursor: pointer;">{{orders[i][field.name]}}</a>
+                                            </ng-container>
+                                            <ng-template #notInvoice>
+                                                {{orders[i][field.name]}}
+                                            </ng-template>
+                                        </td>
+                                    </ng-container>
+                                </ng-template>
+                            </ng-container>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="card fixed-bottom">
+        <app-work-filter [workParams]="filters" [isFilterVisible]="isFilterVisible" (updatedFilter)="filterUpdated()">
+        </app-work-filter>
+        <div class="row">
+            <div class="col text-center">
+                <button type="button" (click)="isFilterVisible = !isFilterVisible"
+                    class="btn btn-info btn-sm fw-btn mr-2 mb-1 mt-1">
+                    Filters
+                    <span class="ml-2" aria-hidden="true" *ngIf="!isFilterVisible">&gt;</span>
+                    <span class="ml-2" aria-hidden="true" *ngIf="isFilterVisible">&lt;</span>
+                </button>
+                <button type="button" (click)="this.allocateDest()"
+                    class="btn btn-primary btn-sm fw-btn mr-2 mb-1 mt-1">
+                    Set Destination</button>
+                <button type="button" (click)="this.saveChanges()" class="btn btn-primary btn-sm fw-btn mr-2 mb-1 mt-1">
+                    Save Changes</button>
+                <button type="button" (click)="this.cancelAll()" class="btn btn-danger btn-sm fw-btn mr-2 mb-1 mt-1">
+                    Cancel</button>
+            </div>
+        </div>
     </div>
-</form>
-<div class="card fixed-bottom">
-    <!-- <mdb-card>
-            <mdb-card-body> -->
-    <div class="row justify-content-center">
-        <button type="button" (click)="isFilterVisible = !isFilterVisible" class="btn btn-info btn-sm fw-btn">
-            Filters
-            <mdb-icon fas icon="angle-double-down" class="ml-2" aria-hidden="true" *ngIf="!isFilterVisible"></mdb-icon>
-            <mdb-icon fas icon="angle-double-up" class="ml-2" aria-hidden="true" *ngIf="isFilterVisible"></mdb-icon>
-        </button>
-        <div class="col col-sm-auto"><button (click)="this.allocateDest()" class="btn btn-primary btn-sm fw-btn"
-                mdbWavesEffect>Set Destination</button></div>
-        <div class="col col-sm-auto"><button (click)="this.saveChanges()" class="btn btn-primary btn-sm fw-btn"
-                mdbWavesEffect>Save Changes</button></div>
-        <div class="col col-sm-auto"><button (click)="this.cancelAll()" class="btn btn-danger btn-sm fw-btn"
-                mdbWavesEffect>Cancel</button></div>
-    </div>
-    <app-work-filter [workParams]="filters" [isFilterVisible]="isFilterVisible" (updatedFilter)="filterUpdated()">
-    </app-work-filter>
-</div>
