@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { fieldSettings, defaultScheduledFields, defaultUnscheduledFields, IFieldSettings } from 'src/app/common/models/orderFields';
 import { IUserSetting, IUserConfig } from 'src/app/common/models/userSetting.model';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-profile',
@@ -25,7 +26,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   // private scheduledFields: IFieldSettings[];
   // private unscheduledFields: IFieldSettings[];
 
-  constructor(public userService: ActiveUserService, private apiData: ApiDataService) { }
+  constructor(public userService: ActiveUserService,
+              private apiData: ApiDataService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.userImage = this.userService.getUserImageLink();
@@ -62,7 +65,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   saveData() {
     this.userService.saveUserConfig(this.userConfig).subscribe(
-      response => { console.log(response); }
+      response => { this.toastr.success('User settings Saved', 'Saved'); }
     );
   }
 
