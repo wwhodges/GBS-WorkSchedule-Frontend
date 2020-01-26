@@ -64,6 +64,11 @@ export class ApiDataService {
     );
   }
 
+  getOrderExcelFilteredType(workParams: IWorkParams) {
+    const apiURL = `${this.apiRoot}OrderExcel`;
+    return this.http.post(apiURL, workParams, { withCredentials: true, responseType: 'arraybuffer' as 'json' });
+  }
+
   getOrderById(id: string) {
     const apiURL = `${this.apiRoot}Order/` + id;
     return this.http.get<Order>(apiURL, { withCredentials: true }).pipe(
