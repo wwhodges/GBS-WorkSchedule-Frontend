@@ -105,6 +105,7 @@ export class OrderTableComponent implements OnChanges, OnInit {
 
   filterUpdated() {
     this.formAction.emit('updated');
+    this.isFilterVisible = false;
   }
 
   setSort(sortField: string) {

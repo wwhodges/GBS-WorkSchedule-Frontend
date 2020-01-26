@@ -98,6 +98,10 @@ export class WorkFilterComponent implements OnInit, OnChanges {
     this.workParams.DATE_TO = this.filters.dateRange.to;
     this.workParams.DATE_RANGE = this.filters.dateRange.by;
 
+    if (this.workParams.DATE_FROM === null && this.workParams.DATE_TO === null) {
+      this.workParams.DATE_RANGE = '';
+    }
+
     this.updatedFilter.emit();
   }
 
