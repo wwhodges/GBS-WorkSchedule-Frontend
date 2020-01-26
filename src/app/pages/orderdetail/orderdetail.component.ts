@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Order } from 'src/app/common/models';
 import { ApiDataService } from 'src/app/common/services';
 import { Subject, of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil, delay } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -23,11 +23,13 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
   public statusOptions = fieldSettings.find(f => f.name === 'status').options;
   private queryParam = 'id';
   public isLoading = true;
+  public saveDisabled = false;
 
   public orderForm: FormGroup;
 
   constructor(private apiData: ApiDataService,
               private route: ActivatedRoute,
+              private router: Router,
               private toastr: ToastrService,
               private cdr: ChangeDetectorRef) { }
 
@@ -35,8 +37,9 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
       this.unsubscribe$.next();
       this.isLoading = true;
+      this.saveDisabled = false;
       this.orderId = params.get(this.queryParam);
-      console.log(this.orderId);
+      // console.log(this.orderId);
       if (this.orderId === 'new') {
         // delay the new form for a moment because otherwise the form controls aren't
         // disabled. Some kind of bug in Angular.
@@ -62,12 +65,14 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.unsubscribe();
   }
 
   submitForm() {
+    this.saveDisabled = true;
     /*console.log(this.orderForm);
 
     console.log(this.orderForm.valid);
@@ -88,6 +93,11 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
         (response) => {
           console.log(response);
           this.toastr.success('Order has been created', 'Success');
+          // redirect to created order
+          this.router.navigate(['/order', response.id]);
+        }, error => {
+          this.toastr.warning('Insert failed: ' + error);
+          this.saveDisabled = false;
         }
       );
     } else {
@@ -95,6 +105,10 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
         (response) => {
           console.log(response);
           this.toastr.success('Order has been updated', 'Success');
+          this.saveDisabled = false;
+        }, error => {
+          this.toastr.warning('Update failed: ' + error);
+          this.saveDisabled = false;
         }
       );
     }
