@@ -21,10 +21,16 @@
                   <label for="invoice" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Invoice</label>
                   <div class="col-8 col-md-4">
                     <input type="text" class="form-control form-control-sm" id="invoice" formControlName="invoice">
+                    <span *ngIf="orderForm.controls.invoice.invalid" class="text-danger">
+                      Invoice must be 8 characters
+                    </span>
                   </div>
                   <label for="account" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Account</label>
                   <div class="col-8 col-md-4">
                     <input type="text" class="form-control form-control-sm" id="account" formControlName="account">
+                    <span *ngIf="orderForm.controls.account.invalid" class="text-danger">
+                      Account number must be 10 digits
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -285,7 +291,7 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary" (click)="submitForm()" [disabled]="saveDisabled">Save</button>
+                    <button type="submit" class="btn btn-primary" (click)="submitForm()" [disabled]="saveDisabled || !orderForm.valid">Save</button>
                   </div>
                 </div>
 

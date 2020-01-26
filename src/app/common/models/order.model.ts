@@ -137,7 +137,8 @@ export class Order implements IOrder {
         const OrderForm = new FormGroup({
             id: new FormControl({ value: this.id, disabled: true}),
             site: new FormControl({value: this.site, disabled: !this.manualOrder}, [Validators.minLength(1), Validators.maxLength(1)]),
-            invoice: new FormControl({ value: this.invoice, disabled: !this.manualOrder}, [Validators.required, Validators.maxLength(8)]),
+            invoice: new FormControl({ value: this.invoice, disabled: !this.manualOrder},
+                [Validators.required, Validators.maxLength(8), Validators.minLength(8)]),
             batch: new FormControl({value: this.batch, disabled: !this.manualOrder}, [Validators.minLength(5), Validators.maxLength(5)]),
             doc: new FormControl({value: this.doc, disabled: !this.manualOrder}, [Validators.minLength(3), Validators.maxLength(3)]),
             account: new FormControl({value: this.account, disabled: !this.manualOrder}),
