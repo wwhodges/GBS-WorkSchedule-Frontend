@@ -80,8 +80,8 @@ export class ScheduleComponent implements OnInit, OnDestroy {
               private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.orders = new OrderList();
     this.listedFields = this.userService.config.scheduledScreen;
-    this.isLoading = true;
     this.loadData();
   }
 
@@ -91,6 +91,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   loadData() {
     this.unsubscribe$.next();
     this.orderParams.PAGE = this.currentPage;
+    this.isLoading = true;
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         apiResult => {
@@ -100,6 +101,22 @@ export class ScheduleComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }, (error) => { console.log(error); }
       );
+  }
+
+  getExcel() {
+    this.apiData.getOrderExcelFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        respData => { this.downLoadFile(respData, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); }
+      );
+  }
+
+  downLoadFile(data: any, type: string) {
+      const blob = new Blob([data], { type: type.toString() });
+      const url = window.URL.createObjectURL(blob);
+      const pwa = window.open(url);
+      if (!pwa || pwa.closed || typeof pwa.closed === 'undefined') {
+          alert('Please disable your Pop-up blocker and try again.');
+      }
   }
 
   ngOnDestroy() {
