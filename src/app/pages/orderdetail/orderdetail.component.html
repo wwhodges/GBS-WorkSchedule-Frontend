@@ -21,14 +21,14 @@
                   <label for="invoice" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Invoice</label>
                   <div class="col-8 col-md-4">
                     <input type="text" class="form-control form-control-sm" id="invoice" formControlName="invoice">
-                    <span *ngIf="orderForm.controls.invoice.invalid" class="text-danger">
+                    <span *ngIf="orderForm.controls.invoice.invalid" class="small text-danger">
                       Invoice must be 8 characters
                     </span>
                   </div>
                   <label for="account" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Account</label>
                   <div class="col-8 col-md-4">
                     <input type="text" class="form-control form-control-sm" id="account" formControlName="account">
-                    <span *ngIf="orderForm.controls.account.invalid" class="text-danger">
+                    <span *ngIf="orderForm.controls.account.invalid" class="small text-danger">
                       Account number must be 10 digits
                     </span>
                   </div>
@@ -37,6 +37,9 @@
                   <label for="batch" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Batch</label>
                   <div class="col-8 col-md-4">
                     <input type="text" class="form-control form-control-sm" id="batch" formControlName="batch">
+                    <span *ngIf="orderForm.controls.batch.invalid" class="small text-danger">
+                      Batch No. should be 5 digits
+                    </span>
                   </div>
                   <label for="name" class="col-4 col-md-2 col-form-label col-form-label-sm my-1">Name</label>
                   <div class="col-8 col-md-4">
@@ -89,40 +92,58 @@
                 <div class="form-group row">
                   <label for="invWeight" class="col-sm-4 col-form-label col-form-label-sm">Weight</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="invWeight" formControlName="invWeight">
+                    <input type="number" class="form-control form-control-sm" id="invWeight" formControlName="invWeight">
+                    <span *ngIf="orderForm.controls.invWeight.invalid" class="small text-danger">
+                      Invoice weight should be a numeric to 3 decimal places
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="units" class="col-sm-4 col-form-label col-form-label-sm">Units</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="units" formControlName="units" />
+                    <input type="number" class="form-control form-control-sm" id="units" formControlName="units" />
+                    <span *ngIf="orderForm.controls.units.invalid" class="small text-danger">
+                      Units should be a number
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="lines" class="col-sm-4 col-form-label col-form-label-sm">Lines</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="lines" formControlName="lines">
+                    <input type="number" class="form-control form-control-sm" id="lines" formControlName="lines">
+                    <span *ngIf="orderForm.controls.lines.invalid" class="small text-danger">
+                      Lines should be a number
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="pickedQty" class="col-sm-4 col-form-label col-form-label-sm">Picked Qty</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="pickedQty" formControlName="pickedQty">
+                    <input type="number" class="form-control form-control-sm" id="pickedQty" formControlName="pickedQty">
+                    <span *ngIf="orderForm.controls.pickedQty.invalid" class="small text-danger">
+                      Picked quantity should be a number
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="pickedBulk" class="col-sm-4 col-form-label col-form-label-sm">Picked Bulk</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="pickedBulk"
+                    <input type="number" class="form-control form-control-sm" id="pickedBulk"
                       formControlName="pickedBulk">
+                      <span *ngIf="orderForm.controls.pickedBulk.invalid" class="small text-danger">
+                        Picked bulk should be a number
+                      </span>  
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="pickedLoose" class="col-sm-4 col-form-label col-form-label-sm">Picked
                     Loose</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="pickedLoose"
+                    <input type="number" class="form-control form-control-sm" id="pickedLoose"
                       formControlName="pickedLoose">
+                      <span *ngIf="orderForm.controls.pickedLoose.invalid" class="small text-danger">
+                        Picked loose should be a number
+                      </span>  
                   </div>
                 </div>
                 <div class="form-group row">
@@ -150,6 +171,9 @@
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="destination"
                       formControlName="destination">
+                      <span *ngIf="orderForm.controls.destination.invalid" class="small text-danger">
+                        Destination should be 10 characters or less
+                      </span>  
                   </div>
                 </div>
               </div>
@@ -179,24 +203,36 @@
                   <label for="palDest" class="col-sm-4 col-form-label col-form-label-sm">Destination</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="palDest" formControlName="palDest">
+                    <span *ngIf="orderForm.controls.palDest.invalid" class="small text-danger">
+                      Pal Dest should be 10 characters or less
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="alp" class="col-sm-4 col-form-label col-form-label-sm">ALP</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="alp" formControlName="alp">
+                    <span *ngIf="orderForm.controls.alp.invalid" class="small text-danger">
+                      ALP should be 3 characters or less
+                    </span>  
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="bench" class="col-sm-4 col-form-label col-form-label-sm">Bench</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="bench" formControlName="bench">
+                    <span *ngIf="orderForm.controls.bench.invalid" class="small text-danger">
+                      Bench should be 3 characters or less
+                    </span>  
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="priority" class="col-sm-4 col-form-label col-form-label-sm">Priority</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="priority" formControlName="priority">
+                    <span *ngIf="orderForm.controls.priority.invalid" class="small text-danger">
+                      Priority should be 50 characters or less
+                    </span>  
                   </div>
                 </div>
                 <div class="form-group row">
@@ -221,13 +257,19 @@
                   <label for="holdLoc" class="col-sm-4 col-form-label col-form-label-sm">Hold Loc</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="holdLoc" formControlName="holdLoc">
+                    <span *ngIf="orderForm.controls.holdLoc.invalid" class="small text-danger">
+                      Hold loc should be 80 characters or less
+                    </span>  
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="palconPakced" class="col-sm-4 col-form-label col-form-label-sm">Palcon Packed</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="palconPacked"
+                    <input type="number" class="form-control form-control-sm" id="palconPacked"
                       formControlName="palconPacked">
+                      <span *ngIf="orderForm.controls.palconPacked.invalid" class="small text-danger">
+                        Palcon packed should be a number
+                      </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -243,6 +285,9 @@
                   <label for="comments" class="col-sm-4 col-form-label col-form-label-sm">Comments</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="comments" formControlName="comments">
+                    <span *ngIf="orderForm.controls.comments.invalid" class="small text-danger">
+                      Comments should be 255 characters or less
+                    </span>  
                   </div>
                 </div>
                 <div class="form-group row">
@@ -273,13 +318,19 @@
                   <label for="palletIds" class="col-sm-4 col-form-label col-form-label-sm">Pallet Ids</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="palletIds" formControlName="palletIds">
+                    <span *ngIf="orderForm.controls.palletIds.invalid" class="small text-danger">
+                      Pallet Ids should be 100 characters or less
+                    </span>  
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="palletCount" class="col-sm-4 col-form-label col-form-label-sm">Pallet Count</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="palletCount"
+                    <input type="number" class="form-control form-control-sm" id="palletCount"
                       formControlName="palletCount">
+                      <span *ngIf="orderForm.controls.palletCount.invalid" class="small text-danger">
+                        Pallet count should be a number
+                      </span>    
                   </div>
                 </div>
                 <div class="form-group row">
@@ -287,6 +338,9 @@
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="palletNumbers"
                       formControlName="palletNumbers">
+                      <span *ngIf="orderForm.controls.palletNumbers.invalid" class="small text-danger">
+                        Pallet numbers should be 255 characters or less
+                      </span>
                   </div>
                 </div>
                 <div class="form-group row">
