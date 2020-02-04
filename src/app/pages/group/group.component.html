@@ -47,10 +47,10 @@
                         </div>
                         <div class="list-group" formArrayName="accounts">
                             <div class="list-group-item py-2"
-                                *ngFor="let account of accounts; let accountIndex=index; trackBy:trackByFn">
-                                <div class="row">
-                                    <div class="col col-3">{{accounts[index].split(',')[0]}}</div>
-                                    <div class="col col-8"><input type="text" formControl="account"/> {{accounts[index].split(',')[1]}}</div>
+                                *ngFor="let account of groupForm.get('accounts').controls; let accountIndex=index;">
+                                <div class="row" [formGroup]>
+                                    <div class="col col-3">{{account.value.split(',')[0]}}</div>
+                                    <div class="col col-8">{{account.value.split(',')[1]}}</div>
                                     <div class="col col-1"><button type="button" class="btn btn-danger btn-sm"
                                             (click)="removeAccount(accountIndex)">X</button></div>
                                 </div>

@@ -35,7 +35,8 @@ export class GroupComponent implements OnInit, OnDestroy {
               private completerService: CompleterService,
               private toastr: ToastrService) {
     this.dataService =
-      this.completerService.remote('https://ukwwhdappdi001/api/GBSWorkSchedule/Customer/Search/', 'account,name', 'account');
+      this.completerService.remote('http://warehouseapidev.penguinrandomhouse.co.uk/api/GBSWorkSchedule/Customer/Search/',
+       'account,name', 'account');
 
     this.dataService.descriptionField('name');
     this.dataService.requestOptions({withCredentials: true});
@@ -95,8 +96,12 @@ export class GroupComponent implements OnInit, OnDestroy {
   }
 
   addAccount() {
-    this.groupAccounts.push(new FormControl(this.searchStr));
-    console.log(this.groupForm);
+    this.apiData.getCustomer(this.searchStr).subscribe(
+      response => {
+        this.groupAccounts.push(new FormControl(response.account + ',' + response.name));
+        console.log(this.groupForm);
+      }
+    );
   }
 
   removeAccount(index: number) {

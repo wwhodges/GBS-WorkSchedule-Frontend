@@ -10,6 +10,7 @@ import { IOrderList, OrderList } from '../models/orderList.model';
 import { map } from 'rxjs/operators';
 import { IUserSetting } from '../models/userSetting.model';
 import { IOrderParams, OrderParams } from '../models/orderParams.model';
+import { ICustomer } from '../models/customer.model';
 
 
 @Injectable()
@@ -17,6 +18,11 @@ export class ApiDataService {
   apiRoot = 'https://warehouseapidev.penguinrandomhouse.co.uk/api/GBSWorkSchedule/';
 
   constructor(private http: HttpClient) { }
+
+  getCustomer(customerNumber: string) {
+    const apiURL = `${this.apiRoot}Customer/` + customerNumber;
+    return this.http.get<ICustomer>(apiURL, { withCredentials: true });
+  }
 
   getOrderSummary(summaryType: string) {
     const apiURL = `${this.apiRoot}OrderSummary/` + summaryType;
