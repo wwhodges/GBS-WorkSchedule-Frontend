@@ -81,8 +81,8 @@
         </div>
     </form>
     <div class="card fixed-bottom">
-        <app-work-filter [workParams]="filters" [isFilterVisible]="isFilterVisible" (updatedFilter)="filterUpdated()">
-        </app-work-filter>
+        <app-order-filter *ngIf="isFilterVisible" [orderFilterForm]="filterForm" [updateButton]="true" (updatedFilter)="filterUpdated()">
+        </app-order-filter>
         <div class="row">
             <div class="col text-center">
                 <button type="button" (click)="isFilterVisible = !isFilterVisible"

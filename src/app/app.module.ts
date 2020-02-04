@@ -6,6 +6,7 @@ import { ChartsModule } from 'ng2-charts';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { ToastrModule } from 'ngx-toastr';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -33,6 +34,8 @@ import { OrderTableComponent } from './common/order-table/order-table.component'
 import { SetupUserService } from './common/services/setup-user.service';
 import { LoaderComponent } from './common/loader/loader.component';
 import { LoaderWrapperComponent } from './common/loader-wrapper/loader-wrapper.component';
+import { MultiSelectComponent } from './common/multiselect/multiselect.component';
+import { OrderFilterComponent } from './common/order-filter/order-filter.component';
 
 export function SetupUser(setup: SetupUserService) {
   return () => setup.initialise();
@@ -56,7 +59,9 @@ export function SetupUser(setup: SetupUserService) {
     PaginationComponent,
     OrderTableComponent,
     LoaderComponent,
-    LoaderWrapperComponent
+    LoaderWrapperComponent,
+    MultiSelectComponent,
+    OrderFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +74,7 @@ export function SetupUser(setup: SetupUserService) {
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     CollapseModule.forRoot(),
+    AccordionModule.forRoot(),
     Ng2CompleterModule,
     ToastrModule.forRoot(),
     DragDropModule

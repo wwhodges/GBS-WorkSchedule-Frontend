@@ -4,10 +4,12 @@ import { IWorkParams,
          IOrder,
          Order,
          IOrderSummary,
-         ICustomerGroup} from '../models/index';
+         ICustomerGroup,
+         CustomerGroup} from '../models/index';
 import { IOrderList, OrderList } from '../models/orderList.model';
 import { map } from 'rxjs/operators';
 import { IUserSetting } from '../models/userSetting.model';
+import { IOrderParams, OrderParams } from '../models/orderParams.model';
 
 
 @Injectable()
@@ -23,21 +25,36 @@ export class ApiDataService {
 
   getCustomerGroups() {
     const apiURL = `${this.apiRoot}CustomerGroup`;
-    return this.http.get<ICustomerGroup[]>(apiURL, { withCredentials: true });
+    return this.http.get<CustomerGroup[]>(apiURL, { withCredentials: true }).pipe(
+      map(response => response.map( grp => new CustomerGroup().deserialise(grp)))
+    );
   }
 
   getCustomerGroup(groupId: number) {
     const apiURL = `${this.apiRoot}CustomerGroup/` + groupId;
-    return this.http.get<ICustomerGroup>(apiURL, { withCredentials: true });
+    return this.http.get<CustomerGroup>(apiURL, { withCredentials: true }).pipe(
+      map(response => new CustomerGroup().deserialise(response))
+    );
   }
 
   saveCustomerGroup(group: ICustomerGroup) {
+    const serialGroup = {
+      id: group.id,
+      groupName: group.groupName,
+	  groupType: group.groupType,
+      destinationBase: group.destinationBase,
+      dayOffset: group.dayOffset,
+      accounts: group.accounts,
+      filterParams: JSON.stringify(group.filterParams),
+	  fieldList: JSON.stringify(group.fieldList)
+    };
+
     if (group.id === 0) {
       const apiURL = `${this.apiRoot}CustomerGroup`;
-      return this.http.post(apiURL, group, { withCredentials: true });
+      return this.http.post(apiURL, serialGroup, { withCredentials: true });
     } else {
       const apiURL = `${this.apiRoot}CustomerGroup/` + group.id;
-      return this.http.put(apiURL, group, { withCredentials: true });
+      return this.http.put(apiURL, serialGroup, { withCredentials: true });
     }
   }
 
@@ -57,14 +74,14 @@ export class ApiDataService {
     );
   }
 
-  getOrderFilteredType(workParams: IWorkParams) {
+  getOrderFilteredType(workParams: OrderParams) {
     const apiURL = `${this.apiRoot}Order`;
     return this.http.post<OrderList>(apiURL, workParams, { withCredentials: true }).pipe(
       map(response => new OrderList().deserialise(response))
     );
   }
 
-  getOrderExcelFilteredType(workParams: IWorkParams) {
+  getOrderExcelFilteredType(workParams: OrderParams) {
     const apiURL = `${this.apiRoot}OrderExcel`;
     return this.http.post(apiURL, workParams, { withCredentials: true, responseType: 'arraybuffer' as 'json' });
   }

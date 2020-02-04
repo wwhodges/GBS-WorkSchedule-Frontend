@@ -5,7 +5,7 @@
         <h5 class="card-title">Filters</h5>
 
         <!--Text-->
-        <form #filterForm="ngForm">
+        <form [formGroup]="workParamsForm">
             <div class="row">
                 <div class="col col-3">
                     <fieldset class="form-group">
@@ -14,12 +14,12 @@
                             <div class="col-12">
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="scheduled"
-                                        [(ngModel)]="filters.scheduled" name="scheduled">
+                                        formControl="INCLUDE_SCHEDULED" name="scheduled">
                                     <label class="custom-control-label" for="scheduled">Scheduled</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="unscheduled"
-                                        [(ngModel)]="filters.unscheduled" name="unscheduled">
+                                        formControl="INCLUDE_UNSCHEDULED" name="unscheduled">
                                     <label class="custom-control-label" for="unscheduled">Unscheduled</label>
                                 </div>
                             </div>
@@ -33,30 +33,30 @@
                             <div class="col-sm-12">
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="vista_despatched"
-                                        [(ngModel)]="filters.vista_despatched" name="vista_despatched">
+                                        formControl="INCLUDE_V_DESPATCHED" name="vista_despatched">
                                     <label class="custom-control-label" for="vista_despatched">Despatched</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="vista_partDespatched"
-                                        [(ngModel)]="filters.vista_partDespatched" name="vista_partDespatched">
+                                        formControl="INCLUDE_V_PARTDESPATCHED" name="vista_partDespatched">
                                     <label class="custom-control-label" for="vista_partDespatched">Part
                                         Despatched</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="vista_partPacked"
-                                        [(ngModel)]="filters.vista_partPacked" name="vista_partPacked">
+                                        formControl="INCLUDE_V_PARTPACKED" name="vista_partPacked">
                                     <label class="custom-control-label" for="vista_partPacked">Part
                                         Packed</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="vista_partPicked"
-                                        [(ngModel)]="filters.vista_partPicked" name="vista_partPicked">
+                                        formControl="INCLUDE_V_PARTPICKED" name="vista_partPicked">
                                     <label class="custom-control-label" for="vista_partPicked">Part
                                         Picked</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="vista_unstarted"
-                                        [(ngModel)]="filters.vista_unstarted" name="vista_unstarted">
+                                        formControl="INCLUDE_V_UNSTARTED" name="vista_unstarted">
                                     <label class="custom-control-label" for="vista_unstarted">Unstarted</label>
                                 </div>
                             </div>
@@ -70,37 +70,37 @@
                             <div class="col-sm-12">
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="despatched"
-                                        [(ngModel)]="filters.despatched" name="despatched">
+                                        formControl="INCLUDE_DESPATCHED" name="despatched">
                                     <label class="custom-control-label" for="despatched">Despatched</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="complete"
-                                        [(ngModel)]="filters.complete" name="complete">
+                                        formControl="INCLUDE_COMPLETE" name="complete">
                                     <label class="custom-control-label" for="complete">Complete</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="inprogress"
-                                        [(ngModel)]="filters.inProgress" name="inprogress">
+                                        formControl="INCLUDE_INPROGRESS" name="inprogress">
                                     <label class="custom-control-label" for="inprogress">In Progress</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="prepared"
-                                        [(ngModel)]="filters.prepared" name="prepared">
+                                        formControl="INCLUDE_PREPARED" name="prepared">
                                     <label class="custom-control-label" for="prepared">Prepared</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="onhold"
-                                        [(ngModel)]="filters.onhold" name="onhold">
+                                        formControl="INCLUDE_ONHOLD" name="onhold">
                                     <label class="custom-control-label" for="onhold">On Hold</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="unstarted"
-                                        [(ngModel)]="filters.unstarted" name="unstarted">
+                                        formControl="INCLUDE_UNSTARTED" name="unstarted">
                                     <label class="custom-control-label" for="unstarted">Unstarted</label>
                                 </div>
                                 <div class="custom-control custom-checkbox">
                                     <input class="custom-control-input" type="checkbox" id="other"
-                                        [(ngModel)]="filters.other" name="other">
+                                        formControl="INCLUDE_OTHER" name="other">
                                     <label class="custom-control-label" for="other">Other</label>
                                 </div>
                             </div>
@@ -113,36 +113,36 @@
                             <legend class="col col-12 col-form-label col-form-label-sm">Date Range</legend>
                             <div class="col col-3">From</div>
                             <div class="col col-9">
-                                <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="filters.dateRange.from" class="form-control form-control-sm" name="dateFrom" />
+                                <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" formControl="DATERANGE_FROM" class="form-control form-control-sm" name="dateFrom" />
                             </div>
                             <div class="col col-3">To</div>
                             <div class="col col-9">
-                                <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" [(ngModel)]="filters.dateRange.to" class="form-control form-control-sm" name="dateTo" />
+                                <input type="text" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" formControl="DATERANGE_TO" class="form-control form-control-sm" name="dateTo" />
                             </div>
                             <div class="col col-12">
                                 <div class="custom-control custom-radio">
                                     <input type="radio" class="custom-control-input" id="invoice"
-                                        name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="invoice" />
+                                        name="filterDateBy" formControl="DATERANGE_BY" value="invoice" />
                                     <label class="custom-control-label" for="invoice">Invoice</label>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input type="radio" class="custom-control-input" id="work"
-                                        name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="work" />
+                                        name="filterDateBy" formControl="DATERANGE_BY" value="work" />
                                     <label class="custom-control-label" for="work">Work</label>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input type="radio" class="custom-control-input" id="delivery"
-                                        name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="delivery" />
+                                        name="filterDateBy" formControl="DATERANGE_BY" value="delivery" />
                                     <label class="custom-control-label" for="delivery">Delivery</label>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input type="radio" class="custom-control-input" id="despatch"
-                                        name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="despatch" />
+                                        name="filterDateBy" formControl="DATERANGE_BY" value="despatch" />
                                     <label class="custom-control-label" for="despatch">Despatch</label>
                                 </div>
                                 <div class="custom-control custom-radio">
                                     <input type="radio" class="custom-control-input" id="actualDesp"
-                                        name="filterDateBy" [(ngModel)]="filters.dateRange.by" value="actualDesp" />
+                                        name="filterDateBy" formControl="DATERANGE_BY" value="actualDesp" />
                                     <label class="custom-control-label" for="actualDesp">Actual Despatch</label>
                                 </div>
                             </div>

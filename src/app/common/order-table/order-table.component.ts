@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 import { Order, ICustomerGroup, IWorkParams, sortFields } from 'src/app/common/models';
+import { OrderParams } from '../models/orderParams.model';
 
 @Component({
   selector: 'app-order-table',
@@ -11,17 +12,17 @@ export class OrderTableComponent implements OnChanges, OnInit {
   @Input() orders: Order[] = [];
   @Input() ordersForm: FormGroup;
   @Input() listedFields: any[];
-  @Input() filters: IWorkParams;
+  @Input() filters: OrderParams;
   @Input() dataLoading = false;
 
   @Output() formAction = new EventEmitter<string>();
 
+  public filterForm: FormGroup;
   public isFilterVisible = false;
 
   private sortArray = sortFields;
   public sortAscending = true;
   public currentSort = '';
-
 
   // Group control variables
   @Input() groups: ICustomerGroup[] = [];
@@ -35,11 +36,13 @@ export class OrderTableComponent implements OnChanges, OnInit {
   constructor() { }
 
   ngOnInit() {
-    const sortField = this.sortArray.find( item => item.value === this.filters.SORT);
+    this.filterForm = this.filters.CreateFormGroup();
+    const sortField = this.sortArray.find( item => item.value === this.filters.sort);
     this.currentSort = sortField.description;
   }
 
   ngOnChanges() {
+    this.filterForm = this.filters.CreateFormGroup();
   }
 
   selectedGroup(group: any) {
@@ -104,11 +107,16 @@ export class OrderTableComponent implements OnChanges, OnInit {
   }
 
   filterUpdated() {
+    this.filters.SaveFormValues(this.filterForm);
+    console.log(this.filterForm);
+    console.log(this.filters);
     this.formAction.emit('updated');
+
     this.isFilterVisible = false;
   }
 
   setSort(sortField: string) {
+    const sortfieldname = 'sort';
     console.log(sortField);
     if (sortField === this.currentSort) {
       this.sortAscending = !this.sortAscending;
@@ -118,10 +126,11 @@ export class OrderTableComponent implements OnChanges, OnInit {
     }
     const sortItem = this.sortArray.find( field => field.description === sortField);
     if (this.sortAscending) {
-      this.filters.SORT = sortItem.value;
+      this.filters.sort = sortItem.value;
     } else {
-      this.filters.SORT = sortItem.value + 100;
+      this.filters.sort = sortItem.value + 100;
     }
+    this.filterForm.controls[sortfieldname].setValue(this.filters.sort);
     // console.log(this.currentSort);
     // console.log(this.sortAscending);
     // console.log(this.filters.SORT);

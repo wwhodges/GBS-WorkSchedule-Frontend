@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ICustomerGroup } from 'src/app/common/models';
+import { ICustomerGroup, CustomerGroup } from 'src/app/common/models';
 import { Subject } from 'rxjs';
 import { ApiDataService } from 'src/app/common/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControlName, FormControl } from '@angular/forms';
 import { CompleterService, CompleterData, RemoteData } from 'ng2-completer';
 import { HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -18,7 +18,7 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   private groupId: number;
   private queryParam = 'id';
-  public group: ICustomerGroup;
+  public group: CustomerGroup;
   public isLoading = true;
   public groupForm: FormGroup = new FormGroup({});
 
@@ -50,24 +50,15 @@ export class GroupComponent implements OnInit, OnDestroy {
       this.unsubscribe$.next();
       this.isLoading = true;
       if (params.get(this.queryParam) === 'new') {
-        this.group = {
-          id: 0,
-          groupName: 'New Group',
-          minWeight: 0,
-          groupByAcct: false,
-          prime: '',
-          destinationBase: 0,
-          unscheduledOrder: 0,
-          members: []
-        };
-        this.CreateFormGroup();
+        this.group = new CustomerGroup();
+        this.groupForm = this.group.CreateFormGroup();
         this.isLoading = false;
       } else {
         this.groupId = +params.get(this.queryParam);
         this.apiData.getCustomerGroup(this.groupId).pipe(takeUntil(this.unsubscribe$)).subscribe(
           apiResult => {
             this.group = apiResult;
-            this.CreateFormGroup();
+            this.groupForm = this.group.CreateFormGroup();
             this.isLoading = false;
             console.log(this.group);
           }
@@ -76,27 +67,10 @@ export class GroupComponent implements OnInit, OnDestroy {
     });
   }
 
-  CreateFormGroup() {
-    this.groupForm = this.fb.group({
-      id: [this.group.id],
-      groupName: [this.group.groupName],
-      groupByAcct: [this.group.groupByAcct],
-      minWeight: [this.group.minWeight],
-      destinationBase: [this.group.destinationBase],
-      prime: [this.group.prime]
-    });
-  }
-
-  UpdateFromForm() {
-    this.group.groupName = this.groupForm.get('groupName').value;
-    this.group.groupByAcct = this.groupForm.get('groupByAcct').value;
-    this.group.minWeight = this.groupForm.get('minWeight').value;
-    this.group.destinationBase = this.groupForm.get('destinationBase').value;
-    this.group.prime = this.groupForm.get('prime').value;
-  }
-
   saveGroup() {
-      this.UpdateFromForm();
+      this.group.SaveFormValues(this.groupForm);
+      console.log(this.groupForm);
+      console.log(this.group);
       this.apiData.saveCustomerGroup(this.group).subscribe(response => {
         // console.log(response);
         if (this.group.id === 0) {this.group.id = +response; }
@@ -116,15 +90,21 @@ export class GroupComponent implements OnInit, OnDestroy {
     );
   }
 
-  addAccount() {
-    this.group.members.push(this.searchStr);
+  get groupAccounts() {
+    return this.groupForm.get('accounts') as FormArray;
   }
 
-  removeMember(member: string) {
-    const index = this.group.members.indexOf(member);
-    if (index > -1) {
-      this.group.members.splice(index, 1);
-    }
+  addAccount() {
+    this.groupAccounts.push(new FormControl(this.searchStr));
+    console.log(this.groupForm);
+  }
+
+  removeAccount(index: number) {
+    this.groupAccounts.removeAt(index);
+  }
+
+  trackByFn(index: any, item: any) {
+    return index;
   }
 
   ngOnDestroy() {

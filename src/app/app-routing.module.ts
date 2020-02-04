@@ -8,9 +8,11 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { GroupComponent } from './pages/group/group.component';
+import { OrderFilterComponent } from './common/order-filter/order-filter.component';
 
 
 const routes: Routes = [
+  {path: 'filtertest', component: OrderFilterComponent},
   {path: 'groups', component: GroupsComponent},
   {path: 'group/:id', component: GroupComponent},
   {path: 'profile', component: UserProfileComponent },

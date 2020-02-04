@@ -1,77 +1,65 @@
 <app-loading *ngIf="isLoading"></app-loading>
 <ng-container *ngIf="!isLoading">
-<h2>{{groupForm.get('groupName').value}}</h2>
-<div class="row">
-    <div class="col col-12 col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <form [formGroup]="groupForm">
-                    <div class="form-group row">
-                        <label for="groupName" class="col-sm-4 col-form-label col-form-label-sm">Group Name</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-sm" formControlName="groupName" id="groupName" placeholder="Name">
+    <h2>{{groupForm.get('groupName').value}}</h2>
+    <form [formGroup]="groupForm">
+        <div class="row">
+            <div class="col col-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="groupName" class="col-sm-4 col-form-label col-form-label-sm">Group Name</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control form-control-sm" formControlName="groupName"
+                                    id="groupName" placeholder="Name">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="minWeight" class="col-sm-4 col-form-label col-form-label-sm">Min Weight</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-sm" formControlName="minWeight" id="minWeight" placeholder="0">
+                        <div class="form-group row">
+                            <label for="destBase" class="col-sm-4 col-form-label col-form-label-sm">Destination
+                                Base</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control form-control-sm"
+                                    formControlName="destinationBase" id="destBase" placeholder="000">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="destBase" class="col-sm-4 col-form-label col-form-label-sm">Destination Base</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-sm" formControlName="destinationBase" id="destBase" placeholder="000">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="prime" class="col-sm-4 col-form-label col-form-label-sm">Prime</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-sm" formControlName="prime" id="prime" >
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label col-form-label-sm">Group By Acct</label>
-                        <div class="col-sm-6">
-                            <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input form-control-sm" formControlName="groupByAcct" type="checkbox" id="groupByAcct">
-                                <label class="custom-control-label" for="groupByAcct"></label>
+                        <div class="form-group row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-primary btn-sm"
+                                    (click)="saveGroup()">{{ group.id === 0 ? 'Create Group' : 'Save Changes' }}</button>
+                                <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteGroup()">Delete
+                                    Group</button>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-6">
-                            <button type="button" class="btn btn-primary btn-sm" (click)="saveGroup()">{{ group.id === 0 ? 'Create Group' : 'Save Changes' }}</button>
-                            <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteGroup()">Delete Group</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="col col-12 col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                Members
-                <div class="row mb-2">
-                    <div class="col form-inline">
-                        <ng2-completer [(ngModel)]="searchStr" [datasource]="dataService" [minSearchLength]="3" [inputClass]="['form-control','form-control-sm']"></ng2-completer>
-                        <button type="button" class="btn btn-primary btn-sm ml-2" (click)="addAccount()">Add</button>
-                    </div>
                 </div>
-                <div class="list-group">
-                    <div class="list-group-item py-2" *ngFor="let member of group.members">
-                        <div class="row">
-                            <div class="col col-3">{{member.split(',')[0]}}</div>
-                            <div class="col col-8">{{member.split(',')[1]}}</div>
-                            <div class="col col-1"><button type="button" class="btn btn-danger btn-sm" (click)="removeMember(member)">X</button></div>
+            </div>
+            <div class="col col-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        Accounts
+                        <div class="row mb-2">
+                            <div class="col form-inline">
+                                <ng2-completer [(ngModel)]="searchStr" [ngModelOptions]="{standalone: true}" [datasource]="dataService" [minSearchLength]="3"
+                                    [inputClass]="['form-control','form-control-sm']"></ng2-completer>
+                                <button type="button" class="btn btn-primary btn-sm ml-2"
+                                    (click)="addAccount()">Add</button>
+                            </div>
+                        </div>
+                        <div class="list-group" formArrayName="accounts">
+                            <div class="list-group-item py-2"
+                                *ngFor="let account of accounts; let accountIndex=index; trackBy:trackByFn">
+                                <div class="row">
+                                    <div class="col col-3">{{accounts[index].split(',')[0]}}</div>
+                                    <div class="col col-8"><input type="text" formControl="account"/> {{accounts[index].split(',')[1]}}</div>
+                                    <div class="col col-1"><button type="button" class="btn btn-danger btn-sm"
+                                            (click)="removeAccount(accountIndex)">X</button></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        <app-order-filter [orderFilterForm]="groupForm.controls.filterParams" (updatedFilter)="filterUpdated()"></app-order-filter>
+    </form>
 </ng-container>

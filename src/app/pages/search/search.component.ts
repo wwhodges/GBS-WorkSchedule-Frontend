@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ApiDataService, ActiveUserService } from 'src/app/common/services';
-import { IWorkParams, ICustomerGroup } from 'src/app/common/models';
+import { ICustomerGroup } from 'src/app/common/models';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, forkJoin } from 'rxjs';
 import { OrderList } from 'src/app/common/models/orderList.model';
 import { FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { OrderParams } from 'src/app/common/models/orderParams.model';
 
 @Component({
   selector: 'app-search',
@@ -40,7 +41,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     { name: 'despDate', edit: true, type: 'date', desc: 'Despatch', size: '10', style: 'width: 130px;' },
   ];
 
-  public orderParams: IWorkParams;
+  public orderParams: OrderParams;
 
   constructor(private route: ActivatedRoute,
               private apiData: ApiDataService,
@@ -51,45 +52,10 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.orders = new OrderList();
     this.listedFields = this.userService.config.unscheduledScreen;
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
-      this.initialiseParams();
+      this.orderParams = new OrderParams();
       this.searchString = params.get(this.queryParam);
       this.loadData();
     });
-  }
-
-  initialiseParams() {
-    this.orderParams = {
-      INCLUDE_SCHEDULED: true,
-      INCLUDE_UNSCHEDULED: true,
-      INCLUDE_V_DESPATCHED: false,
-      INCLUDE_V_PARTDESPATCHED: true,
-      INCLUDE_V_PARTPACKED: true,
-      INCLUDE_V_PARTPICKED: true,
-      INCLUDE_V_UNSTARTED: true,
-      INCLUDE_DESPATCHED: true,
-      INCLUDE_INPROGRESS: true,
-      INCLUDE_UNSTARTED: true,
-      INCLUDE_COMPLETE: true,
-      INCLUDE_PREPARED: true,
-      INCLUDE_ONHOLD: true,
-      INCLUDE_OTHER: true,
-      DATE_FROM: '',
-      DATE_RANGE: '',
-      DATE_TO: '',
-      INVOICE: '',
-      SITE: '',
-      BATCH: '',
-      ACCOUNT: '',
-      NAME: '',
-      GROUPID: 0,
-      WORKID: 0,
-      MIN_WEIGHT: 0,
-      MAX_WEIGHT: 0,
-      SORT: 0,
-      PAGESIZE: 50,
-      PAGE: 0,
-      PRIME: ''
-    };
   }
 
   groupSelected(group: string) {
@@ -97,9 +63,15 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   loadData() {
     this.unsubscribe$.next();
-    this.orderParams.PAGE = this.currentPage;
+    this.orderParams.page = this.currentPage;
     this.isLoading = true;
-    this.apiData.getOrderBySearch(this.searchString, this.orderParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
+    if (this.searchString.length === 5 && parseInt(this.searchString, 10) > 0) { this.orderParams.batch = this.searchString; } else
+    if (this.searchString.length === 10 && parseInt(this.searchString, 10) > 0) { this.orderParams.account = this.searchString; } else
+    if (this.searchString.length === 8 && parseInt(this.searchString.substring(2, 4), 10) > 0)
+      {this.orderParams.invoice = this.searchString; } else {
+      this.orderParams.name = '%' + this.searchString + '%'; }
+
+    this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
         this.orders = apiResult;
         this.ordersForm = apiResult.CreateFormGroup();

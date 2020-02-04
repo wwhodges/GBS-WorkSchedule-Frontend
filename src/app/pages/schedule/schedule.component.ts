@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ApiDataService, ActiveUserService } from 'src/app/common/services';
-import { IWorkParams, ICustomerGroup } from 'src/app/common/models';
+import { ICustomerGroup } from 'src/app/common/models';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, forkJoin } from 'rxjs';
 import { OrderList } from 'src/app/common/models/orderList.model';
 import { FormGroup, FormArray } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { IOrderParams, OrderParams } from 'src/app/common/models/orderParams.model';
 
 @Component({
   selector: 'app-schedule',
@@ -39,47 +40,16 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     { name: 'despDate', edit: true, type: 'date', desc: 'Despatch Date', size: '10', style: 'width: 130px;' },
   ];
 
-  public orderParams: IWorkParams = {
-    INCLUDE_SCHEDULED: true,
-    INCLUDE_UNSCHEDULED: false,
-
-    INCLUDE_V_DESPATCHED: true,
-    INCLUDE_V_PARTDESPATCHED: true,
-    INCLUDE_V_PARTPACKED: true,
-    INCLUDE_V_PARTPICKED: true,
-    INCLUDE_V_UNSTARTED: true,
-
-    INCLUDE_DESPATCHED: false,
-    INCLUDE_INPROGRESS: true,
-    INCLUDE_UNSTARTED: true,
-    INCLUDE_COMPLETE: false,
-    INCLUDE_PREPARED: true,
-    INCLUDE_ONHOLD: true,
-    INCLUDE_OTHER: false,
-
-    DATE_FROM: '',
-    DATE_RANGE: '',
-    DATE_TO: '',
-    INVOICE: '',
-    SITE: '',
-    BATCH: '',
-    ACCOUNT: '',
-    NAME: '',
-    GROUPID: 0,
-    WORKID: 0,
-    MIN_WEIGHT: 0,
-    MAX_WEIGHT: 0,
-    SORT: 0,
-    PAGESIZE: 50,
-    PAGE: 0,
-    PRIME: ''
-  };
+  public orderParams: OrderParams;
 
   constructor(private apiData: ApiDataService,
               private userService: ActiveUserService,
               private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.orderParams = new OrderParams();
+    this.orderParams.includeScheduled = true;
+    this.orderParams.includeUnscheduled = false;
     this.orders = new OrderList();
     this.listedFields = this.userService.config.scheduledScreen;
     this.loadData();
@@ -90,7 +60,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   loadData() {
     this.unsubscribe$.next();
-    this.orderParams.PAGE = this.currentPage;
+    this.orderParams.page = this.currentPage;
     this.isLoading = true;
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe(

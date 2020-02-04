@@ -1,3 +1,5 @@
+import { FormGroup, FormControl } from '@angular/forms';
+
 export interface IWorkParams {
     INCLUDE_UNSCHEDULED: boolean;
     INCLUDE_SCHEDULED: boolean;
@@ -36,6 +38,87 @@ export interface IWorkParams {
 
     PAGESIZE: number;
     PAGE: number;
+}
+
+export class WorkParams implements IWorkParams {
+    INCLUDE_SCHEDULED = true;
+    INCLUDE_UNSCHEDULED = true;
+
+    INCLUDE_V_DESPATCHED = true;
+    INCLUDE_V_PARTDESPATCHED = true;
+    INCLUDE_V_PARTPACKED = true;
+    INCLUDE_V_PARTPICKED = true;
+    INCLUDE_V_UNSTARTED = true;
+
+    INCLUDE_DESPATCHED = true;
+    INCLUDE_INPROGRESS = true;
+    INCLUDE_UNSTARTED = true;
+    INCLUDE_COMPLETE = true;
+    INCLUDE_PREPARED = true;
+    INCLUDE_ONHOLD = true;
+    INCLUDE_OTHER = true;
+
+    DATE_FROM = '';
+    DATE_RANGE = '';
+    DATE_TO = '';
+    INVOICE = '';
+    SITE = '';
+    BATCH = '';
+    ACCOUNT = '';
+    NAME = '';
+    GROUPID = 0;
+    WORKID = 0;
+    MIN_WEIGHT = 0;
+    MAX_WEIGHT = 0;
+    SORT = 0;
+    PAGESIZE = 50;
+    PAGE = 0;
+    PRIME = '';
+
+    public deserialise(input: any) {
+        Object.assign(this, input);
+        return this;
+    }
+
+    public CreateFormGroup(): FormGroup {
+        const ParameterForm = new FormGroup({
+            INCLUDE_UNSCHEDULED: new FormControl(this.INCLUDE_UNSCHEDULED),
+            INCLUDE_SCHEDULED: new FormControl(this.INCLUDE_SCHEDULED),
+            INCLUDE_V_DESPATCHED: new FormControl(this.INCLUDE_V_DESPATCHED),
+            INCLUDE_V_UNSTARTED: new FormControl(this.INCLUDE_V_UNSTARTED),
+            INCLUDE_V_PARTPICKED: new FormControl(this.INCLUDE_V_PARTPICKED),
+            INCLUDE_V_PARTPACKED: new FormControl(this.INCLUDE_V_PARTPACKED),
+            INCLUDE_V_PARTDESPATCHED: new FormControl(this.INCLUDE_V_PARTDESPATCHED),
+            INCLUDE_DESPATCHED: new FormControl(this.INCLUDE_DESPATCHED),
+            INCLUDE_INPROGRESS: new FormControl(this.INCLUDE_INPROGRESS),
+            INCLUDE_UNSTARTED: new FormControl(this.INCLUDE_UNSTARTED),
+            INCLUDE_COMPLETE: new FormControl(this.INCLUDE_COMPLETE),
+            INCLUDE_PREPARED: new FormControl(this.INCLUDE_PREPARED),
+            INCLUDE_ONHOLD: new FormControl(this.INCLUDE_ONHOLD),
+            INCLUDE_OTHER: new FormControl(this.INCLUDE_OTHER),
+            DATE_RANGE: new FormControl(this.DATE_RANGE),
+            DATE_FROM: new FormControl(this.DATE_FROM),
+            DATE_TO: new FormControl(this.DATE_TO),
+            MIN_WEIGHT: new FormControl(this.MIN_WEIGHT),
+            MAX_WEIGHT: new FormControl(this.MAX_WEIGHT),
+            SITE: new FormControl(this.SITE),
+            WORKID: new FormControl(this.WORKID),
+            BATCH: new FormControl(this.BATCH),
+            ACCOUNT: new FormControl(this.ACCOUNT),
+            INVOICE: new FormControl(this.INVOICE),
+            NAME: new FormControl(this.NAME),
+            GROUPID: new FormControl(this.GROUPID),
+            PRIME: new FormControl(this.PRIME),
+            SORT: new FormControl(this.SORT),
+            PAGESIZE: new FormControl(this.PAGESIZE),
+            PAGE: new FormControl(this.PAGE)
+        });
+        return ParameterForm;
+    }
+
+    public SaveFormValues(paramsForm: FormGroup) {
+        Object.assign(this, paramsForm.value);
+    }
 }
 
 export const sortFields = [
