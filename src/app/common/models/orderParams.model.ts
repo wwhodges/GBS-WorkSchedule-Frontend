@@ -61,7 +61,7 @@ export interface IOrderParams {
 export class OrderParams implements IOrderParams {
     vistaStatus = '["Despatched","Part Despatched","Part Packed","Part Picked","Unstarted"]';
     // tslint:disable-next-line:max-line-length
-    status = '["Despatched","Despatched 48Hr","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Complete","Complete 48Hr","Prepared","Prepared 48Hr","Cancelled","Credit","Pulp","Collection","On Hold"]';
+    status = '["","Despatched","Despatched 48Hr","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Complete","Complete 48Hr","Prepared","Prepared 48Hr","Cancelled","Credit","Pulp","Collection","On Hold"]';
     site = '["G"]';
     prime = '["H","X"]';
     includeUnscheduled = true;

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IWorkParams,
-         IOrder,
-         Order,
-         IOrderSummary,
-         ICustomerGroup,
-         CustomerGroup} from '../models/index';
+import {
+  IWorkParams,
+  IOrder,
+  Order,
+  IOrderSummary,
+  ICustomerGroup,
+  CustomerGroup
+} from '../models/index';
 import { IOrderList, OrderList } from '../models/orderList.model';
 import { map } from 'rxjs/operators';
 import { IUserSetting } from '../models/userSetting.model';
@@ -15,7 +17,7 @@ import { ICustomer } from '../models/customer.model';
 
 @Injectable()
 export class ApiDataService {
-  apiRoot = 'https://warehouseapidev.penguinrandomhouse.co.uk/api/GBSWorkSchedule/';
+  apiRoot = 'http://warehouseapidev.penguinrandomhouse.co.uk/api/GBSWorkSchedule/';
 
   constructor(private http: HttpClient) { }
 
@@ -29,10 +31,10 @@ export class ApiDataService {
     return this.http.get<IOrderSummary[]>(apiURL, { withCredentials: true });
   }
 
-  getCustomerGroups() {
-    const apiURL = `${this.apiRoot}CustomerGroup`;
+  getCustomerGroups(groupType: string, getStats: boolean) {
+    const apiURL = `${this.apiRoot}CustomerGroup?groupType=` + groupType + `&getStats=` + getStats;
     return this.http.get<CustomerGroup[]>(apiURL, { withCredentials: true }).pipe(
-      map(response => response.map( grp => new CustomerGroup().deserialise(grp)))
+      map(response => response.map(grp => new CustomerGroup().deserialise(grp)))
     );
   }
 
@@ -47,12 +49,14 @@ export class ApiDataService {
     const serialGroup = {
       id: group.id,
       groupName: group.groupName,
-	  groupType: group.groupType,
+      groupType: group.groupType,
       destinationBase: group.destinationBase,
       dayOffset: group.dayOffset,
+      includeExcludeAccounts: group.includeExcludeAccounts,
+      matchAllBranches: group.matchAllBranches,
       accounts: group.accounts,
       filterParams: JSON.stringify(group.filterParams),
-	  fieldList: JSON.stringify(group.fieldList)
+      fieldList: JSON.stringify(group.fieldList)
     };
 
     if (group.id === 0) {
@@ -71,9 +75,10 @@ export class ApiDataService {
 
   getOrderBySearch(term: string, workParams: IWorkParams) {
     if (term.length === 5 && parseInt(term, 10) > 0) { workParams.BATCH = term; } else
-    if (term.length === 10 && parseInt(term, 10) > 0) { workParams.ACCOUNT = term; } else
-    if (term.length === 8 && parseInt(term.substring(2, 4), 10) > 0) {workParams.INVOICE = term; } else {
-      workParams.NAME = '%' + term + '%'; }
+      if (term.length === 10 && parseInt(term, 10) > 0) { workParams.ACCOUNT = term; } else
+        if (term.length === 8 && parseInt(term.substring(2, 4), 10) > 0) { workParams.INVOICE = term; } else {
+          workParams.NAME = '%' + term + '%';
+        }
     const apiURL = `${this.apiRoot}Order`;
     return this.http.post<OrderList>(apiURL, workParams, { withCredentials: true }).pipe(
       map(response => new OrderList().deserialise(response))
@@ -101,12 +106,12 @@ export class ApiDataService {
 
   insertOrder(order: IOrder) {
     const apiURL = `${this.apiRoot}Order`;
-    return this.http.put<IOrder>(apiURL, order, {withCredentials: true});
+    return this.http.put<IOrder>(apiURL, order, { withCredentials: true });
   }
 
   updateOrder(order: IOrder) {
     const apiURL = `${this.apiRoot}Order/` + order.id;
-    return this.http.put<IOrder>(apiURL, order, {withCredentials: true});
+    return this.http.put<IOrder>(apiURL, order, { withCredentials: true });
   }
 
 }

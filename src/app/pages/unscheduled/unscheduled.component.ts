@@ -44,6 +44,7 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.orderParams = new OrderParams();
+    this.orderParams.vistaStatus = '["Part Despatched","Part Packed","Part Picked","Unstarted"]';
     this.orders = new OrderList();
     this.loadData();
     this.listedFields = this.userService.config.unscheduledScreen;
@@ -55,6 +56,9 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     } else {
       const groupObj = this.customerGroups.find(grp => grp.id === +group);
       this.orderParams = groupObj.filterParams;
+      this.orderParams.groupId = groupObj.id;
+      this.orderParams.matchAllBranches = groupObj.matchAllBranches;
+      this.orderParams.includeExcludeAccounts = groupObj.includeExcludeAccounts;
     }
     this.currentPage = 0;
     this.loadData();
@@ -65,7 +69,7 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     this.orderParams.includeUnscheduled = true;
     this.isLoading = true;
     this.unsubscribe$.next();
-    this.apiData.getCustomerGroups().pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.apiData.getCustomerGroups('C', false).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
         this.customerGroups = apiResult;
       }

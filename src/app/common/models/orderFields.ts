@@ -24,6 +24,7 @@ export const vistaStatusField = { name: 'vistaStatus', edit: true, type: 'select
 export const dateInvoicedField = { name: 'dateInvoiced', edit: false, type: 'date', desc: 'Inv Date', size: '8', style: '', options: [] };
 export const nameField = { name: 'name', edit: false, type: 'text', desc: 'Name', size: '34', style: '', options: [] };
 export const statusField = { name: 'status', edit: true, type: 'select', desc: 'Status', size: '15', style: '', options: [
+            '',
             'Despatched',
             'Despatched 48Hr',
             'In Progress',

@@ -75,8 +75,11 @@ export class GroupComponent implements OnInit, OnDestroy {
       console.log(this.group);
       this.apiData.saveCustomerGroup(this.group).subscribe(response => {
         // console.log(response);
-        if (this.group.id === 0) {this.group.id = +response; }
         this.toastr.success('Group saved successfully', 'Saved');
+        if (this.group.id === 0) {
+          this.group.id = +response;
+          this.router.navigate(['group', this.group.id]);
+        }
       },
       error => {
         this.toastr.warning('A problem occurred saving the group', 'Not Saved');
@@ -107,10 +110,6 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   removeAccount(index: number) {
     this.groupAccounts.removeAt(index);
-  }
-
-  trackByFn(index: any, item: any) {
-    return index;
   }
 
   ngOnDestroy() {

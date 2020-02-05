@@ -5,6 +5,6 @@
     <div *ngFor="let selection of selections" class="col col-12 col-sm-4 col-md-3 col-lg-2 mb-2">
 
     <button type="button" class="btn btn-block" (click)="optionSelected(selection)" [class.btn-primary]="selection.selected" [class.btn-outline-secondary]="!selection.selected">
-                {{selection.description}}</button>
+                {{selection.description === '' ? 'Blank' : selection.description}}</button>
     </div>
 </div>
