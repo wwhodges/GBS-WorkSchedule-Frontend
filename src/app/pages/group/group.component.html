@@ -22,6 +22,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="dayOffset" class="col-sm-4 col-form-label col-form-label-sm">Day Offset</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control form-control-sm"
+                                    formControlName="dayOffset" id="dayOffset">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <div class="col-sm-4"></div>
                             <div class="col-sm-6">
                                 <button type="button" class="btn btn-primary btn-sm"
@@ -37,6 +44,15 @@
                 <div class="card">
                     <div class="card-body">
                         Accounts
+                        <div class="form-group row">
+                            <div class="col-sm-4 col-form-label col-form-label-sm">Match all branches</div>
+                            <div class="col-sm-8">
+                              <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="matchAllBranches" formControlName="matchAllBranches">
+                                <label class="custom-control-label" for="matchAllBranches"></label>
+                              </div>
+                            </div>
+                        </div>
                         <div class="row mb-2">
                             <div class="col form-inline">
                                 <ng2-completer [(ngModel)]="searchStr" [ngModelOptions]="{standalone: true}" [datasource]="dataService" [minSearchLength]="3"

@@ -34,6 +34,7 @@ export class CustomerGroup implements ICustomerGroup {
         Object.assign(this, input);
         this.filterParams = new OrderParams();
         Object.assign(this.filterParams, JSON.parse(input.filterParams));
+        this.fieldList = [];
         Object.assign(this.fieldList, JSON.parse(input.fieldList));
         console.log(this);
         return this;
@@ -50,9 +51,9 @@ export class CustomerGroup implements ICustomerGroup {
             scheduledOrders: new FormControl(this.scheduledOrders),
             includeExcludeAccounts: new FormControl(this.includeExcludeAccounts),
             matchAllBranches: new FormControl(this.matchAllBranches),
-            accounts: new FormArray(this.accounts),
+            accounts: new FormArray(this.accounts.map(a => new FormControl(a))),
             filterParams: this.filterParams.CreateFormGroup(),
-            fieldList: new FormArray(this.fieldList)
+            fieldList: new FormArray(this.fieldList.map(f => new FormControl(f)))
         });
         return groupForm;
     }

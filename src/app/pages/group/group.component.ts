@@ -62,6 +62,7 @@ export class GroupComponent implements OnInit, OnDestroy {
             this.groupForm = this.group.CreateFormGroup();
             this.isLoading = false;
             console.log(this.group);
+            console.log(this.groupForm);
           }
         );
       }
