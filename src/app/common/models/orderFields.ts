@@ -10,6 +10,7 @@ export interface IFieldSettings {
 
 export const siteField = { name: 'site', edit: false, type: 'text', desc: 'Site', size: '1', style: '', options: ['G', 'T'] };
 export const invoiceField = { name: 'invoice', edit: false, type: 'text', desc: 'Invoice', size: '8', style: '', options: [] };
+export const invRunField = { name: 'invRun', edit: false, type: 'text', desc: 'Inv Run', size: '10', style: '', options: [] };
 export const batchField = { name: 'batch', edit: false, type: 'text', desc: 'Batch', size: '5', style: '', options: [] };
 export const docField = { name: 'doc', edit: false, type: 'text', desc: 'Doc', size: '3', style: '', options: [] };
 export const accountField = { name: 'account', edit: false, type: 'text', desc: 'Account', size: '10', style: '', options: [] };
@@ -74,6 +75,7 @@ export const primeField = { name: 'prime', edit: false, type: 'text', desc: 'Pri
 export const fieldSettings: IFieldSettings[] = [
     siteField,
     invoiceField,
+    invRunField,
     batchField,
     docField,
     accountField,
