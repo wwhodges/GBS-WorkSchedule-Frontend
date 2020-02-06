@@ -75,7 +75,7 @@
                         </div>
                         <div class="list-group" formArrayName="accounts">
                             <div class="list-group-item py-2"
-                                *ngFor="let account of groupForm.get('accounts').controls; let accountIndex=index;">
+                                *ngFor="let account of groupForm.get('accounts')['controls']; let accountIndex=index;">
                                 <div class="row" [formGroup]>
                                     <div class="col col-3">{{account.value.split(',')[0]}}</div>
                                     <div class="col col-8">{{account.value.split(',')[1]}}</div>
@@ -88,6 +88,6 @@
                 </div>
             </div>
         </div>
-        <app-order-filter [orderFilterForm]="groupForm.controls.filterParams" (updatedFilter)="filterUpdated()"></app-order-filter>
+        <app-order-filter [orderFilterForm]="groupForm.controls.filterParams"></app-order-filter>
     </form>
 </ng-container>
