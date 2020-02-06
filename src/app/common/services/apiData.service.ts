@@ -13,11 +13,12 @@ import { map } from 'rxjs/operators';
 import { IUserSetting } from '../models/userSetting.model';
 import { IOrderParams, OrderParams } from '../models/orderParams.model';
 import { ICustomer } from '../models/customer.model';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable()
 export class ApiDataService {
-  apiRoot = 'http://warehouseapidev.penguinrandomhouse.co.uk/api/GBSWorkSchedule/';
+  apiRoot = environment.apiEndpoint + 'GBSWorkSchedule/';
 
   constructor(private http: HttpClient) { }
 

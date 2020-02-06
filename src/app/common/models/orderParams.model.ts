@@ -46,6 +46,8 @@ export interface IOrderParams {
     name: string;
 
     // Sorting
+    sortString: string;
+    sortDir: string; //ASC or DESC
     sort: number;
 
     // Group account join - Not part of filter screen
@@ -85,7 +87,7 @@ export class OrderParams implements IOrderParams {
     actualDespDateTo = null;
     actualDespDateToOffset = null;
     invoiceDateFrom = null;
-    invoiceDateFromOffset = null;
+    invoiceDateFromOffset = -182;
     invoiceDateTo = null;
     invoiceDateToOffset = null;
     workId = null;
@@ -93,6 +95,8 @@ export class OrderParams implements IOrderParams {
     account = '';
     invoice = '';
     name = '';
+    sortString = null;
+    sortDir = null;
     sort = 0;
     includeExcludeAccounts = 0;
     matchAllBranches = false;
@@ -140,6 +144,8 @@ export class OrderParams implements IOrderParams {
             account: new FormControl(this.account),
             invoice: new FormControl(this.invoice),
             name: new FormControl(this.name),
+            sortString: new FormControl(this.sortString),
+            sortDir: new FormControl(this.sortDir),
             sort: new FormControl(this.sort),
             includeExcludeAccounts: new FormControl(this.includeExcludeAccounts),
             matchAllBranches: new FormControl(this.matchAllBranches),

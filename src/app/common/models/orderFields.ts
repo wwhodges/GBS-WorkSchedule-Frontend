@@ -13,7 +13,7 @@ export const invoiceField = { name: 'invoice', edit: false, type: 'text', desc: 
 export const batchField = { name: 'batch', edit: false, type: 'text', desc: 'Batch', size: '5', style: '', options: [] };
 export const docField = { name: 'doc', edit: false, type: 'text', desc: 'Doc', size: '3', style: '', options: [] };
 export const accountField = { name: 'account', edit: false, type: 'text', desc: 'Account', size: '10', style: '', options: [] };
-export const vistaStatusField = { name: 'vistaStatus', edit: true, type: 'select', desc: 'Status (V)', size: '15', style: '', options: [
+export const vistaStatusField = { name: 'vistaStatus', edit: false, type: 'select', desc: 'Status (V)', size: '15', style: '', options: [
             'Despatched',
             'Part Despatched',
             'Part Packed',
@@ -21,7 +21,8 @@ export const vistaStatusField = { name: 'vistaStatus', edit: true, type: 'select
             'Unstarted',
         ]
     };
-export const dateInvoicedField = { name: 'dateInvoiced', edit: false, type: 'date', desc: 'Inv Date', size: '8', style: '', options: [] };
+export const dateDespatchedActualField = { name: 'dateDespatchedActual', edit: false, type: 'date', desc: 'Act Desp Date', size: '10', style: '', options: [] };
+export const dateInvoicedField = { name: 'dateInvoiced', edit: false, type: 'date', desc: 'Inv Date', size: '10', style: '', options: [] };
 export const nameField = { name: 'name', edit: false, type: 'text', desc: 'Name', size: '34', style: '', options: [] };
 export const statusField = { name: 'status', edit: true, type: 'select', desc: 'Status', size: '15', style: '', options: [
             '',
@@ -47,16 +48,16 @@ export const unitsField = { name: 'units', edit: false, type: 'text', desc: 'Uni
 export const linesField = { name: 'lines', edit: false, type: 'text', desc: 'Lines', size: '4', style: '', options: [] };
 export const holdLocField = { name: 'holdLoc', edit: true, type: 'text', desc: 'Holding', size: '10', style: '', options: [] };
 export const palDestField = { name: 'palDest', edit: true, type: 'text', desc: 'Destination', size: '8', style: '', options: [] };
-export const workDateField = { name: 'workDate', edit: true, type: 'date', desc: 'Work Date', size: '8', style: '', options: [] };
-export const delDateField = { name: 'delDate', edit: true, type: 'date', desc: 'Deliver Date', size: '8', style: '', options: [] };
-export const despDateField = { name: 'despDate', edit: true, type: 'date', desc: 'Despatch Date', size: '8', style: '', options: [] };
+export const workDateField = { name: 'workDate', edit: true, type: 'date', desc: 'Work Date', size: '10', style: '', options: [] };
+export const delDateField = { name: 'delDate', edit: true, type: 'date', desc: 'Deliver Date', size: '10', style: '', options: [] };
+export const despDateField = { name: 'despDate', edit: true, type: 'date', desc: 'Despatch Date', size: '10', style: '', options: [] };
 export const pickedQtyField = { name: 'pickedQty', edit: false, type: 'text', desc: 'Picked Qty', size: '8', style: '', options: [] };
 export const pickedBulkField = { name: 'pickedBulk', edit: false, type: 'text', desc: 'Picked Bulk', size: '8', style: '', options: [] };
 export const pickedLooseField = { name: 'pickedLoose', edit: false, type: 'text', desc: 'Picked Loose', size: '8', style: '', options: [] };
 export const vistaPickedField = { name: 'vistaPicked', edit: false, type: 'checkbox', desc: 'Picked (V)', size: '1', style: '', options: [] };
 export const vistaPackedField = { name: 'vistaPacked', edit: false, type: 'checkbox', desc: 'Packed (V)', size: '1', style: '', options: [] };
 export const destinationField = { name: 'destination', edit: false, type: 'text', desc: 'Destination', size: '8', style: '', options: [] };
-export const scheduledField = { name: 'scheduled', edit: false, type: 'checkbox', desc: 'Scheduled', size: '1', style: '', options: [] };
+export const scheduledField = { name: 'scheduled', edit: true, type: 'checkbox', desc: 'Scheduled', size: '1', style: '', options: [] };
 export const alpField = { name: 'alp', edit: false, type: 'text', desc: 'ALP', size: '5', style: '', options: [] };
 export const benchField = { name: 'bench', edit: false, type: 'text', desc: 'Bench', size: '5', style: '', options: [] };
 export const priorityField = { name: 'priority', edit: false, type: 'text', desc: 'Priority', size: '3', style: '', options: [] };
@@ -77,6 +78,7 @@ export const fieldSettings: IFieldSettings[] = [
     docField,
     accountField,
     vistaStatusField,
+    dateDespatchedActualField,
     dateInvoicedField,
     nameField,
     statusField,

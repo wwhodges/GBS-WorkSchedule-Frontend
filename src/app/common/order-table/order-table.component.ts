@@ -130,10 +130,9 @@ export class OrderTableComponent implements OnChanges, OnInit {
     } else {
       this.filters.sort = sortItem.value + 100;
     }
+    this.filterForm.controls[sortfieldname + 'String'].setValue(sortField);
+    this.filterForm.controls[sortfieldname + 'Dir'].setValue(this.sortAscending ? 'ASC' : 'DESC');
     this.filterForm.controls[sortfieldname].setValue(this.filters.sort);
-    // console.log(this.currentSort);
-    // console.log(this.sortAscending);
-    // console.log(this.filters.SORT);
     this.filterUpdated();
   }
 }

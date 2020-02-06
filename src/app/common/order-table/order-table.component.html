@@ -34,7 +34,7 @@
                                         <td *ngSwitchCase="'text'"><input type="{{field.type}}"
                                                 formControlName="{{field.name}}" size="{{field.size}}" /></td>
                                         <td *ngSwitchCase="'date'"><input type="text" formControlName="{{field.name}}"
-                                                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" /></td>
+                                                bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"  size="{{field.size}}" /></td>
                                         <td *ngSwitchCase="'select'"><select formControlName="{{field.name}}">
                                                 <option *ngFor="let option of field.options" [value]="option">{{option}}
                                                 </option>
