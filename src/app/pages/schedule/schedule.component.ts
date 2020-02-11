@@ -50,7 +50,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     this.orderParams = new OrderParams();
     this.orderParams.includeScheduled = true;
     this.orderParams.includeUnscheduled = false;
-    this.orderParams.status = '["","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Prepared","Prepared 48Hr"]';
+    this.orderParams.filterStatus = '["","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Prepared","Prepared 48Hr"]';
     this.orders = new OrderList();
     this.listedFields = this.userService.config.scheduledScreen;
     this.loadData();

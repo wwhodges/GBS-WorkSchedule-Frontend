@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiEndpoint: 'http://warehouseapidev.penguinrandomhouse.co.uk/api/'
+  apiEndpoint: 'http://localhost:49544/api/'
 };
 
 /*

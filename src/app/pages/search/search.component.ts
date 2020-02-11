@@ -65,11 +65,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.orderParams.page = this.currentPage;
     this.isLoading = true;
-    if (this.searchString.length === 5 && parseInt(this.searchString, 10) > 0) { this.orderParams.batch = this.searchString; } else
-    if (this.searchString.length === 10 && parseInt(this.searchString, 10) > 0) { this.orderParams.account = this.searchString; } else
+    if (this.searchString.length === 5 && parseInt(this.searchString, 10) > 0) { this.orderParams.filterBatch = this.searchString; } else
+    if (this.searchString.length === 10 && parseInt(this.searchString, 10) > 0) { this.orderParams.filterAccount = this.searchString; } else
     if (this.searchString.length === 8 && parseInt(this.searchString.substring(2, 4), 10) > 0)
-      {this.orderParams.invoice = this.searchString; } else {
-      this.orderParams.name = '%' + this.searchString + '%'; }
+      {this.orderParams.filterInvoice = this.searchString; } else {
+      this.orderParams.filterName = '%' + this.searchString + '%'; }
 
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {

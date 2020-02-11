@@ -1,10 +1,10 @@
 import { FormGroup, FormControl, FormControlName } from '@angular/forms';
 
 export interface IOrderParams {
-    vistaStatus: string; // Get vistaStatusField.options
-    status: string; // Get statusField.options
-    site: string; // Get siteField.options
-    prime: string; // Get primeField.options
+    filterVistaStatus: string; // Get vistaStatusField.options
+    filterStatus: string; // Get statusField.options
+    filterSite: string; // Get siteField.options
+    filterPrime: string; // Get primeField.options
 
     // scheduled status filters
     includeUnscheduled: boolean;
@@ -37,13 +37,13 @@ export interface IOrderParams {
     invoiceDateToOffset: number;
 
     // Get specific order
-    workId: number;
+    filterWorkId: number;
 
     // Search fields
-    batch: string;
-    account: string;
-    invoice: string;
-    name: string;
+    filterBatch: string;
+    filterAccount: string;
+    filterInvoice: string;
+    filterName: string;
 
     // Sorting
     sortString: string;
@@ -61,11 +61,11 @@ export interface IOrderParams {
 }
 
 export class OrderParams implements IOrderParams {
-    vistaStatus = '["Despatched","Part Despatched","Part Packed","Part Picked","Unstarted"]';
+    filterVistaStatus = '["Despatched","Part Despatched","Part Packed","Part Picked","Unstarted"]';
     // tslint:disable-next-line:max-line-length
-    status = '["","Despatched","Despatched 48Hr","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Complete","Complete 48Hr","Prepared","Prepared 48Hr","Cancelled","Credit","Pulp","Collection","On Hold"]';
-    site = '["G"]';
-    prime = '["H","X"]';
+    filterStatus = '["","Despatched","Despatched 48Hr","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Complete","Complete 48Hr","Prepared","Prepared 48Hr","Cancelled","Credit","Pulp","Collection","On Hold"]';
+    filterSite = '["G"]';
+    filterPrime = '["H","X"]';
     includeUnscheduled = true;
     includeScheduled = true;
     weightMin = null;
@@ -90,11 +90,11 @@ export class OrderParams implements IOrderParams {
     invoiceDateFromOffset = -182;
     invoiceDateTo = null;
     invoiceDateToOffset = null;
-    workId = null;
-    batch = '';
-    account = '';
-    invoice = '';
-    name = '';
+    filterWorkId = null;
+    filterBatch = '';
+    filterAccount = '';
+    filterInvoice = '';
+    filterName = '';
     sortString = null;
     sortDir = null;
     sort = 0;
@@ -111,10 +111,10 @@ export class OrderParams implements IOrderParams {
 
     public CreateFormGroup(): FormGroup {
         const ParameterForm = new FormGroup({
-            vistaStatus: new FormControl(this.vistaStatus),
-            status: new FormControl(this.status),
-            prime: new FormControl(this.prime),
-            site: new FormControl(this.site),
+            filterVistaStatus: new FormControl(this.filterVistaStatus),
+            filterStatus: new FormControl(this.filterStatus),
+            filterPrime: new FormControl(this.filterPrime),
+            filterSite: new FormControl(this.filterSite),
             includeScheduled: new FormControl(this.includeScheduled),
             includeUnscheduled: new FormControl(this.includeUnscheduled),
             workDateFrom: new FormControl(this.workDateFrom),
@@ -139,11 +139,11 @@ export class OrderParams implements IOrderParams {
             actualDespDateToOffset: new FormControl(this.actualDespDateToOffset),
             weightMin: new FormControl(this.weightMin),
             weightMax: new FormControl(this.weightMax),
-            workId: new FormControl(this.workId),
-            batch: new FormControl(this.batch),
-            account: new FormControl(this.account),
-            invoice: new FormControl(this.invoice),
-            name: new FormControl(this.name),
+            filterWorkId: new FormControl(this.filterWorkId),
+            filterBatch: new FormControl(this.filterBatch),
+            filterAccount: new FormControl(this.filterAccount),
+            filterInvoice: new FormControl(this.filterInvoice),
+            filterName: new FormControl(this.filterName),
             sortString: new FormControl(this.sortString),
             sortDir: new FormControl(this.sortDir),
             sort: new FormControl(this.sort),

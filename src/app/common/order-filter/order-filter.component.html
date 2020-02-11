@@ -5,94 +5,46 @@
         <h5 class="card-title">Filters</h5>
         <!--Text-->
         <form [formGroup]="orderFilterForm">
-            <accordion [closeOthers]="true" [isAnimated]="true">
-                <accordion-group *ngIf="">
-                    <button class="btn btn-link btn-block clearfix" accordion-heading type="button">
-                        <i class="fas fa-plus-square pull-left float-left mt-1"></i>
-                        <div class="pull-left float-left ml-2">Scheduled/Unscheduled</div>
-                    </button>
-                    <div class="col col-12">
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="scheduled"
-                                formControl="includeScheduled" name="scheduled">
-                            <label class="custom-control-label" for="scheduled">Scheduled</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input" type="checkbox" id="unscheduled"
-                                formControl="includeUnscheduled" name="unscheduled">
-                            <label class="custom-control-label" for="unscheduled">Unscheduled</label>
-                        </div>
-                    </div>
-                </accordion-group>
-                <accordion-group>
-                    <button class="btn btn-link btn-block clearfix" accordion-heading type="button">
-                        <i class="fas fa-plus-square pull-left float-left mt-1"></i>
-                        <div class="pull-left float-left ml-2">Include Vista Status</div>
-                    </button>
-                    <div class="col col-12">
+                    <div class="col col-12" *ngIf="orderFilterForm.get('filterStatus')">
                         <fieldset class="form-group">
                             <div class="row">
                                 <div class="col-12">
-                                    <app-multiselect-input [options]="vistaStatusOptions" formControlName="vistaStatus">
+                                    <app-multiselect-input formControlName="filterVistaStatus" [options]="vistaStatusOptions">
                                     </app-multiselect-input>
                                 </div>
                             </div>
                         </fieldset>
                     </div>
-                </accordion-group>
-                <accordion-group>
-                    <button class="btn btn-link btn-block clearfix" accordion-heading type="button">
-                        <i class="fas fa-plus-square pull-left float-left mt-1"></i>
-                        <div class="pull-left float-left ml-2">Include Schedule Status</div>
-                    </button>
-                    <div class="col col-12">
+                    <div class="col col-12" *ngIf="orderFilterForm.get('filterStatus')">
                         <fieldset class="form-group">
                             <div class="row">
                                 <div class="col-12">
-                                    <app-multiselect-input [options]="statusOptions" formControlName="status">
+                                    <app-multiselect-input formControlName="filterStatus" [options]="statusOptions">
                                     </app-multiselect-input>
                                 </div>
                             </div>
                         </fieldset>
                     </div>
-                </accordion-group>
-                <accordion-group>
-                    <button class="btn btn-link btn-block clearfix" accordion-heading type="button">
-                        <i class="fas fa-plus-square pull-left float-left mt-1"></i>
-                        <div class="pull-left float-left ml-2">Include Markets</div>
-                    </button>
-                    <div class="col col-12">
+                    <div class="col col-12" *ngIf="orderFilterForm.get('filterPrime')">
                         <fieldset class="form-group">
                             <div class="row">
                                 <div class="col-12">
-                                    <app-multiselect-input [options]="marketOptions" formControlName="prime">
+                                    <app-multiselect-input [options]="marketOptions" formControlName="filterPrime">
                                     </app-multiselect-input>
                                 </div>
                             </div>
                         </fieldset>
                     </div>
-                </accordion-group>
-                <accordion-group *ngIf="showSiteOptions">
-                    <button class="btn btn-link btn-block clearfix" accordion-heading type="button">
-                        <i class="fas fa-plus-square pull-left float-left mt-1"></i>
-                        <div class="pull-left float-left ml-2">Include Sites</div>
-                    </button>
-                    <div class="col col-12">
+                    <div class="col col-12" *ngIf="orderFilterForm.get('filterSite')">
                         <fieldset class="form-group">
                             <div class="row">
                                 <div class="col-12">
-                                    <app-multiselect-input [options]="siteOptions" formControlName="site">
+                                    <app-multiselect-input [options]="siteOptions" formControlName="filterSite">
                                     </app-multiselect-input>
                                 </div>
                             </div>
                         </fieldset>
                     </div>
-                </accordion-group>
-                <accordion-group>
-                    <button class="btn btn-link btn-block clearfix" accordion-heading type="button">
-                        <i class="fas fa-plus-square pull-left float-left mt-1"></i>
-                        <div class="pull-left float-left ml-2">Include Date Ranges</div>
-                    </button>
                     Work Date
                     <div class="form-group row">
                         <div class="col-12 col-md-6 col-lg-3">
@@ -188,32 +140,24 @@
                             <input type="number" class="form-control form-control-sm"  id="actualDespDateToOffset" formControlName="actualDespDateToOffset">
                         </div>
                     </div>
-                </accordion-group>
-                <accordion-group>
-                    <button class="btn btn-link btn-block clearfix" accordion-heading type="button">
-                        <i class="fas fa-plus-square pull-left float-left mt-1"></i>
-                        <div class="pull-left float-left ml-2">Text Search</div>
-                    </button>
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-3">
                             <label for="batch" class="col-form-label col-form-label-sm">Batch</label>
-                            <input type="text" class="form-control form-control-sm"  id="batch" formControlName="batch">
+                            <input type="text" class="form-control form-control-sm"  id="batch" formControlName="filterBatch">
                         </div>
                         <div class="col-12 col-md-6 col-lg-3">
                             <label for="account" class="col-form-label col-form-label-sm">Account</label>
-                            <input type="text" class="form-control form-control-sm"  id="account" formControlName="account">
+                            <input type="text" class="form-control form-control-sm"  id="account" formControlName="filterAccount">
                         </div>
                         <div class="col-12 col-md-6 col-lg-3">
                             <label for="invoice" class="col-form-label col-form-label-sm">Invoice</label>
-                            <input type="text" class="form-control form-control-sm"  id="invoice" formControlName="invoice">
+                            <input type="text" class="form-control form-control-sm"  id="invoice" formControlName="filterInvoice">
                         </div>
                         <div class="col-12 col-md-6 col-lg-3">
                             <label for="name" class="col-form-label col-form-label-sm">Name</label>
-                            <input type="text" class="form-control form-control-sm"  id="name" formControlName="name">
+                            <input type="text" class="form-control form-control-sm"  id="name" formControlName="filterName">
                         </div>
                     </div>
-                </accordion-group>
-            </accordion>
         </form>
         <div *ngIf="updateButton" class="row mt-2">
             <div class="col text-center">

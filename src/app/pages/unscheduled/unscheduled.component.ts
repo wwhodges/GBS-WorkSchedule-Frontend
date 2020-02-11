@@ -44,7 +44,7 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.orderParams = new OrderParams();
-    this.orderParams.vistaStatus = '["Part Despatched","Part Packed","Part Picked","Unstarted"]';
+    this.orderParams.filterVistaStatus = '["Part Despatched","Part Packed","Part Picked","Unstarted"]';
     this.orders = new OrderList();
     this.loadData();
     this.listedFields = this.userService.config.unscheduledScreen;
