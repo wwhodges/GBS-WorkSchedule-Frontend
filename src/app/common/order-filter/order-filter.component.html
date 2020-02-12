@@ -1,167 +1,265 @@
-<div class="card" *ngIf="isFilterVisible">
+<div class="card">
     <!--Card content-->
     <div class="card-body">
         <!--Title-->
         <h5 class="card-title">Filters</h5>
         <!--Text-->
         <form [formGroup]="orderFilterForm">
-                    <div class="col col-12" *ngIf="orderFilterForm.get('filterStatus')">
-                        <fieldset class="form-group">
-                            <div class="row">
-                                <div class="col-12">
-                                    <app-multiselect-input formControlName="filterVistaStatus" [options]="vistaStatusOptions">
-                                    </app-multiselect-input>
+            <div class="row">
+                <div class="col-3">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 0"
+                            (click)="changeParam(0)" id="list-search-list" data-toggle="list" role="tab"
+                            aria-controls="searchDate">Search</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 1"
+                            (click)="changeParam(1)" id="list-schedule-list" data-toggle="list" role="tab"
+                            aria-controls="schedule">(Un)scheduled</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 2"
+                            (click)="changeParam(2)" id="list-status-list" data-toggle="list" role="tab"
+                            aria-controls="status">Schedule Status</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 3"
+                            (click)="changeParam(3)" id="list-vistaStatus-list" data-toggle="list" role="tab"
+                            aria-controls="vistaStatus">Vista Status</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 4"
+                            (click)="changeParam(4)" id="list-prime-list" data-toggle="list" role="tab"
+                            aria-controls="prime">Prime</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 5"
+                            (click)="changeParam(5)" id="list-site-list" data-toggle="list" role="tab"
+                            aria-controls="site">Site</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 6"
+                            (click)="changeParam(6)" id="list-workDate-list" data-toggle="list" role="tab"
+                            aria-controls="workDate">Work Date</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 7"
+                            (click)="changeParam(7)" id="list-despDate-list" data-toggle="list" role="tab"
+                            aria-controls="despDate">Despatch Date</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 8"
+                            (click)="changeParam(8)" id="list-delDate-list" data-toggle="list" role="tab"
+                            aria-controls="delDate">Delivery Date</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 9"
+                            (click)="changeParam(9)" id="list-invoiceDate-list" data-toggle="list" role="tab"
+                            aria-controls="invoiceDate">Invoice Date</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 10"
+                            (click)="changeParam(10)" id="list-actualDespDate-list" data-toggle="list" role="tab"
+                            aria-controls="actualDespDate">Actual Desp Date</a>
+
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="tab-content" id="nav-tabContent">
+
+                        <div class="tab-pane fade active show" id="list-site" *ngIf="paramSection == 0" role="tabpanel"
+                            aria-labelledby="list-search-list">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="batch" class="col-form-label col-form-label-sm">Batch</label>
+                                <input type="text" class="form-control form-control-sm" id="batch"
+                                    formControlName="filterBatch">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="account" class="col-form-label col-form-label-sm">Account</label>
+                                <input type="text" class="form-control form-control-sm" id="account"
+                                    formControlName="filterAccount">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="invoice" class="col-form-label col-form-label-sm">Invoice</label>
+                                <input type="text" class="form-control form-control-sm" id="invoice"
+                                    formControlName="filterInvoice">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="name" class="col-form-label col-form-label-sm">Name</label>
+                                <input type="text" class="form-control form-control-sm" id="name"
+                                    formControlName="filterName">
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade active show" id="list-schedule" *ngIf="paramSection == 1"
+                            role="tabpanel" aria-labelledby="list-schedule-list">
+                            <div class="col-12">
+                                <div class="col col-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="includeScheduled"
+                                            formControlName="includeScheduled" name="includeScheduled">
+                                        <label class="custom-control-label" for="includeScheduled">Scheduled</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="includeUnscheduled"
+                                            formControlName="includeUnscheduled" name="includeUnscheduled">
+                                        <label class="custom-control-label" for="includeUnscheduled">Unscheduled</label>
+                                    </div>
                                 </div>
                             </div>
-                        </fieldset>
+                        </div>
                     </div>
-                    <div class="col col-12" *ngIf="orderFilterForm.get('filterStatus')">
-                        <fieldset class="form-group">
-                            <div class="row">
-                                <div class="col-12">
-                                    <app-multiselect-input formControlName="filterStatus" [options]="statusOptions">
-                                    </app-multiselect-input>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade active show" id="list-status" *ngIf="paramSection == 2"
+                            role="tabpanel" aria-labelledby="list-status-list">
+                            <div class="col-12">
+                                <app-multiselect-input formControlName="filterStatus" [options]="statusOptions">
+                                </app-multiselect-input>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade active show" id="list-vistaStatus" *ngIf="paramSection == 3"
+                            role="tabpanel" aria-labelledby="list-vistaStatus-list">
+                            <div class="col-12">
+                                <app-multiselect-input formControlName="filterVistaStatus"
+                                    [options]="vistaStatusOptions">
+                                </app-multiselect-input>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade active show" id="list-prime" *ngIf="paramSection == 4" role="tabpanel"
+                            aria-labelledby="list-prime-list">
+                            <div class="col-12">
+                                <app-multiselect-input [options]="marketOptions" formControlName="filterPrime">
+                                </app-multiselect-input>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade active show" id="list-site" *ngIf="paramSection == 5" role="tabpanel"
+                            aria-labelledby="list-site-list">
+                            <div class="col-12">
+                                <app-multiselect-input [options]="siteOptions" formControlName="filterSite">
+                                </app-multiselect-input>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade active show" id="list-workDate" *ngIf="paramSection == 6"
+                            role="tabpanel" aria-labelledby="list-workDate-list">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="workDateFrom" class="col-form-label col-form-label-sm">From</label>
+                                <input type="text" class="form-control form-control-sm" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="workDateFrom"
+                                    formControlName="workDateFrom">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="workDateFromOffset" class="col-form-label col-form-label-sm">From
+                                    Offset</label>
+                                <input type="number" class="form-control form-control-sm" id="workDateFromOffset"
+                                    formControlName="workDateFromOffset">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="workDateTo" class="col-form-label col-form-label-sm">To</label>
+                                <input type="text" class="form-control form-control-sm" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="workDateTo"
+                                    formControlName="workDateTo">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="workDateToOffset" class="col-form-label col-form-label-sm">To Offset</label>
+                                <input type="number" class="form-control form-control-sm" id="workDateToOffset"
+                                    formControlName="workDateToOffset">
+                            </div>
+                        </div>
+                        <div class="tab-pane fade active show" id="list-despDate" *ngIf="paramSection == 7"
+                            role="tabpanel" aria-labelledby="list-despDate-list">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="despDateFrom" class="col-form-label col-form-label-sm">From</label>
+                                <input type="text" class="form-control form-control-sm" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="despDateFrom"
+                                    formControlName="despDateFrom">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="despDateFromOffset" class="col-form-label col-form-label-sm">From
+                                    Offset</label>
+                                <input type="number" class="form-control form-control-sm" id="despDateFromOffset"
+                                    formControlName="despDateFromOffset">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="despDateTo" class="col-form-label col-form-label-sm">To</label>
+                                <input type="text" class="form-control form-control-sm" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="despDateTo"
+                                    formControlName="despDateTo">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="despDateToOffset" class="col-form-label col-form-label-sm">To Offset</label>
+                                <input type="number" class="form-control form-control-sm" id="despDateToOffset"
+                                    formControlName="despDateToOffset">
+                            </div>
+                        </div>
+                        <div class="tab-pane fade active show" id="list-delDate" *ngIf="paramSection == 8"
+                            role="tabpanel" aria-labelledby="list-site-list">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="delDateFrom" class="col-form-label col-form-label-sm">From</label>
+                                <input type="text" class="form-control form-control-sm" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="delDateFrom"
+                                    formControlName="delDateFrom">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="delDateFromOffset" class="col-form-label col-form-label-sm">From
+                                    Offset</label>
+                                <input type="number" class="form-control form-control-sm" id="delDateFromOffset"
+                                    formControlName="delDateFromOffset">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="delDateTo" class="col-form-label col-form-label-sm">To</label>
+                                <input type="text" class="form-control form-control-sm" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="delDateTo"
+                                    formControlName="delDateTo">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="delDateToOffset" class="col-form-label col-form-label-sm">To Offset</label>
+                                <input type="number" class="form-control form-control-sm" id="delDateToOffset"
+                                    formControlName="delDateToOffset">
+                            </div>
+                        </div>
+                        <div class="tab-pane fade active show" id="list-invoiceDate" *ngIf="paramSection == 9"
+                            role="tabpanel" aria-labelledby="list-site-list">
+                            <div class="col-12">
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="invoiceDateFrom" class="col-form-label col-form-label-sm">From</label>
+                                    <input type="text" class="form-control form-control-sm" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="invoiceDateFrom"
+                                        formControlName="invoiceDateFrom">
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="invoiceDateFromOffset" class="col-form-label col-form-label-sm">From
+                                        Offset</label>
+                                    <input type="number" class="form-control form-control-sm" id="invoiceDateFromOffset"
+                                        formControlName="invoiceDateFromOffset">
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="invoiceDateTo" class="col-form-label col-form-label-sm">To</label>
+                                    <input type="text" class="form-control form-control-sm" bsDatepicker
+                                        [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="invoiceDateTo"
+                                        formControlName="invoiceDateTo">
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="invoiceDateToOffset" class="col-form-label col-form-label-sm">To
+                                        Offset</label>
+                                    <input type="number" class="form-control form-control-sm" id="invoiceDateToOffset"
+                                        formControlName="invoiceDateToOffset">
                                 </div>
                             </div>
-                        </fieldset>
-                    </div>
-                    <div class="col col-12" *ngIf="orderFilterForm.get('filterPrime')">
-                        <fieldset class="form-group">
-                            <div class="row">
-                                <div class="col-12">
-                                    <app-multiselect-input [options]="marketOptions" formControlName="filterPrime">
-                                    </app-multiselect-input>
-                                </div>
+                        </div>
+                        <div class="tab-pane fade active show" id="list-actualDespDate" *ngIf="paramSection == 10"
+                            role="tabpanel" aria-labelledby="list-site-list">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="actualDespDateFrom" class="col-form-label col-form-label-sm">From</label>
+                                <input type="text" class="form-control form-control-sm" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="actualDespDateFrom"
+                                    formControlName="actualDespDateFrom">
                             </div>
-                        </fieldset>
-                    </div>
-                    <div class="col col-12" *ngIf="orderFilterForm.get('filterSite')">
-                        <fieldset class="form-group">
-                            <div class="row">
-                                <div class="col-12">
-                                    <app-multiselect-input [options]="siteOptions" formControlName="filterSite">
-                                    </app-multiselect-input>
-                                </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="actualDespDateFromOffset" class="col-form-label col-form-label-sm">From
+                                    Offset</label>
+                                <input type="number" class="form-control form-control-sm" id="actualDespDateFromOffset"
+                                    formControlName="actualDespDateFromOffset">
                             </div>
-                        </fieldset>
-                    </div>
-                    Work Date
-                    <div class="form-group row">
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="workDateFrom" class="col-form-label col-form-label-sm">From</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="workDateFrom" formControlName="workDateFrom">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="workDateFromOffset" class="col-form-label col-form-label-sm">From Offset</label>
-                            <input type="number" class="form-control form-control-sm" id="workDateFromOffset" formControlName="workDateFromOffset">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="workDateTo" class="col-form-label col-form-label-sm">To</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="workDateTo" formControlName="workDateTo">
-                        </div>                            
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="workDateToOffset" class="col-form-label col-form-label-sm">To Offset</label>
-                            <input type="number" class="form-control form-control-sm"  id="workDateToOffset" formControlName="workDateToOffset">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="actualDespDateTo" class="col-form-label col-form-label-sm">To</label>
+                                <input type="text" class="form-control form-control-sm" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="actualDespDateTo"
+                                    formControlName="actualDespDateTo">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="actualDespDateToOffset" class="col-form-label col-form-label-sm">To
+                                    Offset</label>
+                                <input type="number" class="form-control form-control-sm" id="actualDespDateToOffset"
+                                    formControlName="actualDespDateToOffset">
+                            </div>
                         </div>
                     </div>
-                    Despatch Date
-                    <div class="form-group row">
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="despDateFrom" class="col-form-label col-form-label-sm">From</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="despDateFrom" formControlName="despDateFrom">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="despDateFromOffset" class="col-form-label col-form-label-sm">From Offset</label>
-                            <input type="number" class="form-control form-control-sm" id="despDateFromOffset" formControlName="despDateFromOffset">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="despDateTo" class="col-form-label col-form-label-sm">To</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="despDateTo" formControlName="despDateTo">
-                        </div>                            
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="despDateToOffset" class="col-form-label col-form-label-sm">To Offset</label>
-                            <input type="number" class="form-control form-control-sm"  id="despDateToOffset" formControlName="despDateToOffset">
-                        </div>
-                    </div>
-                    Delivery Date
-                    <div class="form-group row">
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="delDateFrom" class="col-form-label col-form-label-sm">From</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="delDateFrom" formControlName="delDateFrom">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="delDateFromOffset" class="col-form-label col-form-label-sm">From Offset</label>
-                            <input type="number" class="form-control form-control-sm" id="delDateFromOffset" formControlName="delDateFromOffset">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="delDateTo" class="col-form-label col-form-label-sm">To</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="delDateTo" formControlName="delDateTo">
-                        </div>                            
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="delDateToOffset" class="col-form-label col-form-label-sm">To Offset</label>
-                            <input type="number" class="form-control form-control-sm"  id="delDateToOffset" formControlName="delDateToOffset">
-                        </div>
-                    </div>
-                    Invoice Date
-                    <div class="form-group row">
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="invoiceDateFrom" class="col-form-label col-form-label-sm">From</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="invoiceDateFrom" formControlName="invoiceDateFrom">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="invoiceDateFromOffset" class="col-form-label col-form-label-sm">From Offset</label>
-                            <input type="number" class="form-control form-control-sm" id="invoiceDateFromOffset" formControlName="invoiceDateFromOffset">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="invoiceDateTo" class="col-form-label col-form-label-sm">To</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="invoiceDateTo" formControlName="invoiceDateTo">
-                        </div>                            
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="invoiceDateToOffset" class="col-form-label col-form-label-sm">To Offset</label>
-                            <input type="number" class="form-control form-control-sm"  id="invoiceDateToOffset" formControlName="invoiceDateToOffset">
-                        </div>
-                    </div>
-                    Actual Despatch Date
-                    <div class="form-group row">
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="actualDespDateFrom" class="col-form-label col-form-label-sm">From</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="actualDespDateFrom" formControlName="actualDespDateFrom">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="actualDespDateFromOffset" class="col-form-label col-form-label-sm">From Offset</label>
-                            <input type="number" class="form-control form-control-sm" id="actualDespDateFromOffset" formControlName="actualDespDateFromOffset">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="actualDespDateTo" class="col-form-label col-form-label-sm">To</label>
-                            <input type="text" class="form-control form-control-sm"  bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }" id="actualDespDateTo" formControlName="actualDespDateTo">
-                        </div>                            
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="actualDespDateToOffset" class="col-form-label col-form-label-sm">To Offset</label>
-                            <input type="number" class="form-control form-control-sm"  id="actualDespDateToOffset" formControlName="actualDespDateToOffset">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="batch" class="col-form-label col-form-label-sm">Batch</label>
-                            <input type="text" class="form-control form-control-sm"  id="batch" formControlName="filterBatch">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="account" class="col-form-label col-form-label-sm">Account</label>
-                            <input type="text" class="form-control form-control-sm"  id="account" formControlName="filterAccount">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="invoice" class="col-form-label col-form-label-sm">Invoice</label>
-                            <input type="text" class="form-control form-control-sm"  id="invoice" formControlName="filterInvoice">
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <label for="name" class="col-form-label col-form-label-sm">Name</label>
-                            <input type="text" class="form-control form-control-sm"  id="name" formControlName="filterName">
-                        </div>
-                    </div>
+                </div>
+            </div>
         </form>
         <div *ngIf="updateButton" class="row mt-2">
             <div class="col text-center">
-                <button type="button" (click)="filterUpdated()" class="btn btn-primary btn-sm">Update Filter</button>
+                <button type="button" (click)="filterUpdated()" class="btn btn-primary">Update Filter</button>
             </div>
         </div>
     </div>

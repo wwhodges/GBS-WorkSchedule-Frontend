@@ -2,55 +2,58 @@ import { Component, OnInit, Input, OnChanges, Output, EventEmitter, AfterViewChe
 import { FormGroup } from '@angular/forms';
 import { OrderParams } from '../models/orderParams.model';
 import { vistaStatusField, statusField } from '../models/orderFields';
+import { OrderFilterStorage } from '../services/orderFilterStorage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-filter',
   templateUrl: './order-filter.component.html',
   styleUrls: ['./order-filter.component.scss']
 })
-export class OrderFilterComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked {
-  // @Input() orderFilter: OrderParams;
+export class OrderFilterComponent implements OnInit, OnChanges {
+  public orderFilter: OrderParams;
   @Input() orderFilterForm: FormGroup;
-  @Input() isFilterVisible = true;
-  @Input() updateButton = false;
-  @Output() updatedFilter = new EventEmitter();
 
-  @Input() showScheduleOptions = false;
-  @Input() showSiteOptions = false;
+  public updateButton = false;
 
   public vistaStatusOptions = vistaStatusField.options;
   public statusOptions = statusField.options;
   public marketOptions = ['H', 'X'];
   public siteOptions = ['G'];
 
-  constructor(private cdRef: ChangeDetectorRef) { }
+  public paramSection = 0;
+  public currentPage: string;
 
-  ngAfterViewInit() {
-    this.cdRef.detectChanges();
-  }
-  ngAfterViewChecked() {
-    this.cdRef.detectChanges();
+  constructor(private filterStore: OrderFilterStorage,
+              private router: Router) { }
+
+
+  changeParam(page: number) {
+        this.paramSection = page;
   }
 
   ngOnInit() {
-    console.log('ng init');
-    // this.orderFilter = new OrderParams();
-    // this.orderFilterForm = this.orderFilter.CreateFormGroup();
+    //this.orderFilter = new OrderParams();
+    //console.log(this.filterStore.currentFilter);
+    if (this.filterStore.currentFilter) {
+      //console.log(this.orderFilter);
+      this.orderFilter = new OrderParams();
+      Object.assign(this.orderFilter, JSON.parse(this.filterStore.currentFilter));
+      //console.log(this.orderFilter);
+      this.orderFilterForm = this.orderFilter.CreateFormGroup();
+      this.updateButton = true;
+      this.currentPage = this.filterStore.currentPage;
+    }
+    //console.log(this.orderFilterForm);
   }
 
   ngOnChanges() {
-    // this.workParamsForm = this.workParams.CreateFormGroup();
-    console.log('ng change');
-    console.log(this.orderFilterForm);
   }
 
   filterUpdated() {
-    console.log(this.orderFilterForm);
-    // this.isFilterVisible = false;
-    // this.workParams.SaveFormValues(this.workParamsForm);
-    // if (this.workParams.DATE_FROM === null && this.workParams.DATE_TO === null) {
-    //   this.workParams.DATE_RANGE = '';
-    // }
-    this.updatedFilter.emit();
+    Object.assign(this.orderFilter, this.orderFilterForm.value);
+    this.filterStore.currentFilter = JSON.stringify(this.orderFilter);
+    this.router.navigate([this.currentPage]);
   }
+
 }

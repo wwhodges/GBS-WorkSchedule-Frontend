@@ -36,6 +36,7 @@ import { LoaderComponent } from './common/loader/loader.component';
 import { LoaderWrapperComponent } from './common/loader-wrapper/loader-wrapper.component';
 import { MultiSelectComponent } from './common/multiselect/multiselect.component';
 import { OrderFilterComponent } from './common/order-filter/order-filter.component';
+import { OrderFilterStorage } from './common/services/orderFilterStorage.service';
 
 export function SetupUser(setup: SetupUserService) {
   return () => setup.initialise();
@@ -88,7 +89,8 @@ export function SetupUser(setup: SetupUserService) {
       multi: true
     },
     ActiveUserService,
-    ApiDataService
+    ApiDataService,
+    OrderFilterStorage
   ],
   bootstrap: [AppComponent]
 })

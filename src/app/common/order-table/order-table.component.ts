@@ -27,7 +27,7 @@ export class OrderTableComponent implements OnChanges, OnInit {
   // Group control variables
   @Input() groups: ICustomerGroup[] = [];
   @Output() updatedGroup = new EventEmitter<string>();
-  public currentGroup = '*';
+  public currentGroup: string;
 
   // Variables for checkbox multiselect
   private lastCheckedId: number;
@@ -36,6 +36,7 @@ export class OrderTableComponent implements OnChanges, OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.currentGroup = this.filters.groupId == 0 ? '*' : this.filters.groupId.toString();
     this.filterForm = this.filters.CreateFormGroup();
     const sortField = this.sortArray.find( item => item.value === this.filters.sort);
     this.currentSort = sortField.description;
@@ -97,19 +98,15 @@ export class OrderTableComponent implements OnChanges, OnInit {
   }
 
   saveChanges() {
-    console.log('emit to save');
     this.formAction.emit('save');
   }
 
   cancelAll() {
-    console.log('emit to cancel');
     this.formAction.emit('cancel');
   }
 
   filterUpdated() {
     this.filters.SaveFormValues(this.filterForm);
-    console.log(this.filterForm);
-    console.log(this.filters);
     this.formAction.emit('updated');
 
     this.isFilterVisible = false;
@@ -117,7 +114,6 @@ export class OrderTableComponent implements OnChanges, OnInit {
 
   setSort(sortField: string) {
     const sortfieldname = 'sort';
-    console.log(sortField);
     if (sortField === this.currentSort) {
       this.sortAscending = !this.sortAscending;
     } else {

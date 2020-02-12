@@ -5,7 +5,7 @@
                 <a class="nav-link" [class.active]="currentGroup === '*'" (click)="selectedGroup('*')">All Orders</a>
             </li>
             <li class="nav-item" *ngFor="let group of groups">
-                <a class="nav-link" [class.active]="currentGroup === group.id"
+                <a class="nav-link" [class.active]="currentGroup === group.id.toString()"
                     (click)="selectedGroup(group.id)">{{group.groupName}}</a>
             </li>
         </ul>
@@ -81,16 +81,17 @@
         </div>
     </form>
     <div class="card fixed-bottom">
-        <app-order-filter *ngIf="isFilterVisible" [orderFilterForm]="filterForm" [updateButton]="true" (updatedFilter)="filterUpdated()">
-        </app-order-filter>
+        <!--<app-order-filter *ngIf="isFilterVisible" [orderFilterForm]="filterForm" [updateButton]="true" (updatedFilter)="filterUpdated()">
+        </app-order-filter>-->
         <div class="row">
             <div class="col text-center">
-                <button type="button" (click)="isFilterVisible = !isFilterVisible"
+                <!--<button type="button" (click)="isFilterVisible = !isFilterVisible"
                     class="btn btn-info btn-sm fw-btn mr-2 mb-1 mt-1">
                     Filters
                     <span class="ml-2" aria-hidden="true" *ngIf="!isFilterVisible">&gt;</span>
                     <span class="ml-2" aria-hidden="true" *ngIf="isFilterVisible">&lt;</span>
-                </button>
+                </button>-->
+                <a [routerLink]="'/filtertest'" class="btn btn-primary btn-sm">Filter</a>
                 <button type="button" (click)="this.allocateDest()"
                     class="btn btn-primary btn-sm fw-btn mr-2 mb-1 mt-1">
                     Set Destination</button>

@@ -36,7 +36,6 @@ export class CustomerGroup implements ICustomerGroup {
         Object.assign(this.filterParams, JSON.parse(input.filterParams));
         this.fieldList = [];
         Object.assign(this.fieldList, JSON.parse(input.fieldList));
-        console.log(this);
         return this;
     }
 

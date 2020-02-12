@@ -7,6 +7,7 @@ import { OrderList } from 'src/app/common/models/orderList.model';
 import { FormGroup, FormArray } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { OrderParams } from 'src/app/common/models/orderParams.model';
+import { OrderFilterStorage } from 'src/app/common/services/orderFilterStorage.service';
 
 @Component({
   selector: 'app-unscheduled',
@@ -40,11 +41,17 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
   public orderParams: OrderParams;
   constructor(private apiData: ApiDataService,
               private userService: ActiveUserService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private filterStore: OrderFilterStorage) { }
 
   ngOnInit() {
     this.orderParams = new OrderParams();
-    this.orderParams.filterVistaStatus = '["Part Despatched","Part Packed","Part Picked","Unstarted"]';
+    if (this.filterStore.currentPage == 'unscheduled') {
+      Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
+    }
+    else {
+      this.orderParams.filterVistaStatus = '["Part Despatched","Part Packed","Part Picked","Unstarted"]';  
+    }
     this.orders = new OrderList();
     this.loadData();
     this.listedFields = this.userService.config.unscheduledScreen;
@@ -52,10 +59,10 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
 
   groupSelected(group: string) {
     if (group === '*') {
-      this.orderParams = new OrderParams();
+      this.orderParams = Object.assign(this.orderParams, new OrderParams());
     } else {
       const groupObj = this.customerGroups.find(grp => grp.id === +group);
-      this.orderParams = groupObj.filterParams;
+      this.orderParams = Object.assign(this.orderParams, groupObj.filterParams);
       this.orderParams.groupId = groupObj.id;
       this.orderParams.matchAllBranches = groupObj.matchAllBranches;
       this.orderParams.includeExcludeAccounts = groupObj.includeExcludeAccounts;
@@ -75,6 +82,8 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
       }
     );
     this.orderParams.page = this.currentPage;
+    this.filterStore.currentPage = 'unscheduled'
+    this.filterStore.currentFilter = JSON.stringify(this.orderParams);
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         apiResult => {

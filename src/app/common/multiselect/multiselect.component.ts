@@ -40,7 +40,6 @@ export class MultiSelectComponent implements ControlValueAccessor, OnChanges {
   }
 
   updateSelections() {
-    console.log(this.currentSelection);
     const selArray: string[] = this.currentSelection === '' ? [] : JSON.parse(this.currentSelection); // .split(';');
     this.selections.forEach(sel => sel.selected = selArray.includes(sel.description));
   }

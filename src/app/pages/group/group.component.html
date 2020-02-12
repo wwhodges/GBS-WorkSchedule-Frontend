@@ -2,7 +2,7 @@
 <ng-container *ngIf="!isLoading">
     <h2>{{groupForm.get('groupName').value}}</h2>
     <form [formGroup]="groupForm">
-        <div class="row">
+        <div class="row mb-2">
             <div class="col col-12 col-lg-6">
                 <div class="card">
                     <div class="card-body">
@@ -88,6 +88,6 @@
                 </div>
             </div>
         </div>
-        <app-order-filter [orderFilterForm]="groupForm.controls.filterParams"></app-order-filter>
+        <app-order-filter [orderFilterForm]="groupForm.get('filterParams')"></app-order-filter>
     </form>
 </ng-container>
