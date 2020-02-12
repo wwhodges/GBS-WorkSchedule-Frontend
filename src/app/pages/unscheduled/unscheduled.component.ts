@@ -59,10 +59,11 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
 
   groupSelected(group: string) {
     if (group === '*') {
-      this.orderParams = Object.assign(this.orderParams, new OrderParams());
+      Object.assign(this.orderParams, new OrderParams());
+      this.orderParams.filterVistaStatus = '["Part Despatched","Part Packed","Part Picked","Unstarted"]';
     } else {
       const groupObj = this.customerGroups.find(grp => grp.id === +group);
-      this.orderParams = Object.assign(this.orderParams, groupObj.filterParams);
+      Object.assign(this.orderParams, groupObj.filterParams);
       this.orderParams.groupId = groupObj.id;
       this.orderParams.matchAllBranches = groupObj.matchAllBranches;
       this.orderParams.includeExcludeAccounts = groupObj.includeExcludeAccounts;

@@ -7,6 +7,7 @@ import { OrderList } from 'src/app/common/models/orderList.model';
 import { FormGroup, FormArray } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { IOrderParams, OrderParams } from 'src/app/common/models/orderParams.model';
+import { OrderFilterStorage } from 'src/app/common/services/orderFilterStorage.service';
 
 @Component({
   selector: 'app-schedule',
@@ -44,13 +45,19 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   constructor(private apiData: ApiDataService,
               private userService: ActiveUserService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private filterStore: OrderFilterStorage) { }
 
   ngOnInit() {
     this.orderParams = new OrderParams();
-    this.orderParams.includeScheduled = true;
-    this.orderParams.includeUnscheduled = false;
-    this.orderParams.filterStatus = '["","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Prepared","Prepared 48Hr"]';
+    if (this.filterStore.currentPage == 'scheduled') {
+      Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
+    }
+    else {
+      this.orderParams.includeScheduled = true;
+      this.orderParams.includeUnscheduled = false;
+      this.orderParams.filterStatus = '["","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Prepared","Prepared 48Hr"]';
+    }
     this.orders = new OrderList();
     this.listedFields = this.userService.config.scheduledScreen;
     this.loadData();
@@ -62,6 +69,8 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   loadData() {
     this.unsubscribe$.next();
     this.orderParams.page = this.currentPage;
+    this.filterStore.currentPage = 'scheduled'
+    this.filterStore.currentFilter = JSON.stringify(this.orderParams);
     this.isLoading = true;
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe(

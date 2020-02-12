@@ -24,7 +24,6 @@ import { UnscheduledComponent } from './pages/unscheduled/unscheduled.component'
 import { SearchComponent } from './pages/search/search.component';
 import { OrderdetailComponent } from './pages/orderdetail/orderdetail.component';
 import { LoadingComponent } from './common/loading/loading.component';
-import { WorkFilterComponent } from './common/work-filter/work-filter.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { GroupsComponent } from './pages/groups/groups.component';
@@ -52,7 +51,6 @@ export function SetupUser(setup: SetupUserService) {
     SearchComponent,
     OrderdetailComponent,
     LoadingComponent,
-    WorkFilterComponent,
     UserProfileComponent,
     ScheduleComponent,
     GroupsComponent,

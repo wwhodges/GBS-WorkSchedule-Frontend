@@ -19,6 +19,7 @@ const routes: Routes = [
   {path: 'unscheduled', component: UnscheduledComponent},
   {path: 'schedule', component: ScheduleComponent},
   {path: 'search/:terms', component: SearchComponent },
+  {path: 'search', component: SearchComponent },
   {path: 'order/:id', component: OrderdetailComponent },
   {path: '**', component: DashboardComponent }
 ];

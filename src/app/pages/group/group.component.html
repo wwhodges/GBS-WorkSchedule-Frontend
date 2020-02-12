@@ -2,9 +2,9 @@
 <ng-container *ngIf="!isLoading">
     <h2>{{groupForm.get('groupName').value}}</h2>
     <form [formGroup]="groupForm">
-        <div class="row mb-2">
+        <div class="row">
             <div class="col col-12 col-lg-6">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="groupName" class="col-sm-4 col-form-label col-form-label-sm">Group Name</label>
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="col col-12 col-lg-6">
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-body">
                         Accounts
                         <div class="custom-control custom-radio">
@@ -65,7 +65,7 @@
                               </div>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row mb-3">
                             <div class="col form-inline">
                                 <ng2-completer [(ngModel)]="searchStr" [ngModelOptions]="{standalone: true}" [datasource]="dataService" [minSearchLength]="3"
                                     [inputClass]="['form-control','form-control-sm']"></ng2-completer>

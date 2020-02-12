@@ -6,7 +6,7 @@
             </li>
             <li class="nav-item" *ngFor="let group of groups">
                 <a class="nav-link" [class.active]="currentGroup === group.id.toString()"
-                    (click)="selectedGroup(group.id)">{{group.groupName}}</a>
+                    (click)="selectedGroup(group.id.toString())">{{group.groupName}}</a>
             </li>
         </ul>
     </div>

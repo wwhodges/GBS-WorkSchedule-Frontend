@@ -17,7 +17,7 @@ export class OrderTableComponent implements OnChanges, OnInit {
 
   @Output() formAction = new EventEmitter<string>();
 
-  public filterForm: FormGroup;
+  // public filterForm: FormGroup;
   public isFilterVisible = false;
 
   private sortArray = sortFields;
@@ -37,13 +37,13 @@ export class OrderTableComponent implements OnChanges, OnInit {
 
   ngOnInit() {
     this.currentGroup = this.filters.groupId == 0 ? '*' : this.filters.groupId.toString();
-    this.filterForm = this.filters.CreateFormGroup();
+    // this.filterForm = this.filters.CreateFormGroup();
     const sortField = this.sortArray.find( item => item.value === this.filters.sort);
     this.currentSort = sortField.description;
   }
 
   ngOnChanges() {
-    this.filterForm = this.filters.CreateFormGroup();
+    // this.filterForm = this.filters.CreateFormGroup();
   }
 
   selectedGroup(group: any) {
@@ -105,12 +105,12 @@ export class OrderTableComponent implements OnChanges, OnInit {
     this.formAction.emit('cancel');
   }
 
-  filterUpdated() {
-    this.filters.SaveFormValues(this.filterForm);
-    this.formAction.emit('updated');
+  // filterUpdated() {
+  //   this.filters.SaveFormValues(this.filterForm);
+  //   this.formAction.emit('updated');
 
-    this.isFilterVisible = false;
-  }
+  //   this.isFilterVisible = false;
+  // }
 
   setSort(sortField: string) {
     const sortfieldname = 'sort';
@@ -126,9 +126,13 @@ export class OrderTableComponent implements OnChanges, OnInit {
     } else {
       this.filters.sort = sortItem.value + 100;
     }
-    this.filterForm.controls[sortfieldname + 'String'].setValue(sortField);
-    this.filterForm.controls[sortfieldname + 'Dir'].setValue(this.sortAscending ? 'ASC' : 'DESC');
-    this.filterForm.controls[sortfieldname].setValue(this.filters.sort);
-    this.filterUpdated();
+    // this.filterForm.controls[sortfieldname + 'String'].setValue(sortField);
+    // this.filterForm.controls[sortfieldname + 'Dir'].setValue();
+    // this.filterForm.controls[sortfieldname].setValue(this.filters.sort);
+    // this.filterUpdated();
+
+    this.filters.sortString  = sortField;
+    this.filters.sortDir = this.sortAscending ? 'ASC' : 'DESC';
+    this.formAction.emit('updated');
   }
 }

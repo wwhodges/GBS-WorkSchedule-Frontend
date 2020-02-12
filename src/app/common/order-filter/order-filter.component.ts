@@ -44,6 +44,10 @@ export class OrderFilterComponent implements OnInit, OnChanges {
       this.updateButton = true;
       this.currentPage = this.filterStore.currentPage;
     }
+    if (!this.orderFilterForm) {
+      this.orderFilterForm = new OrderParams().CreateFormGroup();
+      this.router.navigate(['/']);
+    }
     //console.log(this.orderFilterForm);
   }
 

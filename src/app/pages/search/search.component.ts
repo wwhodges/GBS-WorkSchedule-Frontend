@@ -8,6 +8,7 @@ import { FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { OrderParams } from 'src/app/common/models/orderParams.model';
+import { OrderFilterStorage } from 'src/app/common/services/orderFilterStorage.service';
 
 @Component({
   selector: 'app-search',
@@ -44,18 +45,34 @@ export class SearchComponent implements OnInit, OnDestroy {
   public orderParams: OrderParams;
 
   constructor(private route: ActivatedRoute,
-              private apiData: ApiDataService,
-              private userService: ActiveUserService,
-              private toastr: ToastrService) { }
+    private apiData: ApiDataService,
+    private userService: ActiveUserService,
+    private toastr: ToastrService,
+    private filterStore: OrderFilterStorage) { }
 
   ngOnInit() {
     this.orders = new OrderList();
     this.listedFields = this.userService.config.unscheduledScreen;
+
+    this.orderParams = new OrderParams();
+    if (this.filterStore.currentPage == 'search') {
+      Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
+      this.loadData();
+    }
+
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
       this.orderParams = new OrderParams();
       this.searchString = params.get(this.queryParam);
-      this.loadData();
+      if (this.searchString) {
+        if (this.searchString.length === 5 && parseInt(this.searchString, 10) > 0) { this.orderParams.filterBatch = this.searchString; } else
+          if (this.searchString.length === 10 && parseInt(this.searchString, 10) > 0) { this.orderParams.filterAccount = this.searchString; } else
+            if (this.searchString.length === 8 && parseInt(this.searchString.substring(2, 4), 10) > 0) { this.orderParams.filterInvoice = this.searchString; } else {
+              this.orderParams.filterName = '%' + this.searchString + '%';
+            }
+        this.loadData();
+      }
     });
+
   }
 
   groupSelected(group: string) {
@@ -65,12 +82,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.orderParams.page = this.currentPage;
     this.isLoading = true;
-    if (this.searchString.length === 5 && parseInt(this.searchString, 10) > 0) { this.orderParams.filterBatch = this.searchString; } else
-    if (this.searchString.length === 10 && parseInt(this.searchString, 10) > 0) { this.orderParams.filterAccount = this.searchString; } else
-    if (this.searchString.length === 8 && parseInt(this.searchString.substring(2, 4), 10) > 0)
-      {this.orderParams.filterInvoice = this.searchString; } else {
-      this.orderParams.filterName = '%' + this.searchString + '%'; }
 
+    this.filterStore.currentPage = 'search'
+    this.filterStore.currentFilter = JSON.stringify(this.orderParams);
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
         this.orders = apiResult;
