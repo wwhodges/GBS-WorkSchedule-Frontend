@@ -2,19 +2,19 @@
   <app-loading></app-loading>
 </ng-container>
 <ng-container *ngIf="!isLoading">
-  <form [formGroup]="orderForm">
-    <div class="row">
-      <div class="col col-12 mt-2 mb-2">
-        <div class="card">
-          <!--Card content-->
-          <div class="card-body">
+  <div class="row">
+    <div class="col col-12 mt-2 mb-2">
+      <div class="card">
+        <!--Card content-->
+        <div class="card-body">
 
-            <!--Title-->
-            <h5 class="card-title">
-              <h4>{{orderForm.controls.invoice.value}}</h4>
-            </h5>
+          <!--Title-->
+          <h5 class="card-title">
+            <h4>{{orderForm.controls.invoice.value}}</h4>
+          </h5>
 
-            <!--Text-->
+          <!--Text-->
+          <form [formGroup]="orderForm">
             <div class="row">
               <div class="col">
                 <div class="form-group row">
@@ -64,20 +64,22 @@
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-      <div class="col col-12 col-lg-6 mt-2 mb-2">
-        <div class="card">
-          <!--Card content-->
-          <div class="card-body">
+    </div>
+    <div class="col col-12 col-lg-6 mt-2 mb-2">
+      <div class="card">
+        <!--Card content-->
+        <div class="card-body">
 
-            <!--Title-->
-            <h5 class="card-title">
-              <h4>Vista Data</h4>
-            </h5>
+          <!--Title-->
+          <h5 class="card-title">
+            <h4>Vista Data</h4>
+          </h5>
 
-            <!--Text-->
+          <!--Text-->
+          <form [formGroup]="orderForm">
             <div class="row">
               <div class="col">
                 <div class="form-group row">
@@ -92,7 +94,8 @@
                 <div class="form-group row">
                   <label for="invWeight" class="col-sm-4 col-form-label col-form-label-sm">Weight</label>
                   <div class="col-sm-8">
-                    <input type="number" class="form-control form-control-sm" id="invWeight" formControlName="invWeight">
+                    <input type="number" class="form-control form-control-sm" id="invWeight"
+                      formControlName="invWeight">
                     <span *ngIf="orderForm.controls.invWeight.invalid" class="small text-danger">
                       Invoice weight should be a numeric to 3 decimal places
                     </span>
@@ -119,7 +122,8 @@
                 <div class="form-group row">
                   <label for="pickedQty" class="col-sm-4 col-form-label col-form-label-sm">Picked Qty</label>
                   <div class="col-sm-8">
-                    <input type="number" class="form-control form-control-sm" id="pickedQty" formControlName="pickedQty">
+                    <input type="number" class="form-control form-control-sm" id="pickedQty"
+                      formControlName="pickedQty">
                     <span *ngIf="orderForm.controls.pickedQty.invalid" class="small text-danger">
                       Picked quantity should be a number
                     </span>
@@ -130,9 +134,9 @@
                   <div class="col-sm-8">
                     <input type="number" class="form-control form-control-sm" id="pickedBulk"
                       formControlName="pickedBulk">
-                      <span *ngIf="orderForm.controls.pickedBulk.invalid" class="small text-danger">
-                        Picked bulk should be a number
-                      </span>  
+                    <span *ngIf="orderForm.controls.pickedBulk.invalid" class="small text-danger">
+                      Picked bulk should be a number
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -141,9 +145,9 @@
                   <div class="col-sm-8">
                     <input type="number" class="form-control form-control-sm" id="pickedLoose"
                       formControlName="pickedLoose">
-                      <span *ngIf="orderForm.controls.pickedLoose.invalid" class="small text-danger">
-                        Picked loose should be a number
-                      </span>  
+                    <span *ngIf="orderForm.controls.pickedLoose.invalid" class="small text-danger">
+                      Picked loose should be a number
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -171,23 +175,104 @@
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="destination"
                       formControlName="destination">
-                      <span *ngIf="orderForm.controls.destination.invalid" class="small text-danger">
-                        Destination should be 10 characters or less
-                      </span>  
+                    <span *ngIf="orderForm.controls.destination.invalid" class="small text-danger">
+                      Destination should be 10 characters or less
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-      <div class="col col-12 col-lg-6 mt-2 mb-2">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">
-              <h4>Schedule Details</h4>
-            </h5>
+      <div class="card mt-2">
+        <!--Card content-->
+        <div class="card-body">
+          <!--Title-->
+          <h5 class="card-title">
+            <h4>Customer</h4>
+          </h5>
+          <!--Text-->
+          <form [formGroup]="custForm">
             <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <label for="vistaName" class="col-sm-4 col-form-label col-form-label-sm">Vista Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="vistaName" formControlName="name">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="friendlyName" class="col-sm-4 col-form-label col-form-label-sm">Friendly Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="friendlyName"
+                      formControlName="friendlyName">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="accountGroup" class="col-sm-4 col-form-label col-form-label-sm">Account Group</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="accountGroup"
+                      formControlName="accountGroup" />
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="address1" class="col-sm-4 col-form-label col-form-label-sm">Address</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm mb-1" id="address1" formControlName="address1">
+                  </div>
+                  <label for="address2" class="col-sm-4 col-form-label col-form-label-sm"></label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm mb-1" id="address2" formControlName="address2">
+                  </div>
+                  <label for="address3" class="col-sm-4 col-form-label col-form-label-sm"></label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm mb-1" id="address3" formControlName="address3">
+                  </div>
+                  <label for="address4" class="col-sm-4 col-form-label col-form-label-sm"></label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="address4" formControlName="address4">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="town" class="col-sm-4 col-form-label col-form-label-sm">Town</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="town" formControlName="town">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="postCode" class="col-sm-4 col-form-label col-form-label-sm">Post Code</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="postCode" formControlName="postCode">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="prime" class="col-sm-4 col-form-label col-form-label-sm">Prime</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="prime" formControlName="prime">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="brick" class="col-sm-4 col-form-label col-form-label-sm">Brick</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" id="brick" formControlName="brick">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col col-12 col-lg-6 mt-2 mb-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <h4>Schedule Details</h4>
+          </h5>
+          <form [formGroup]="orderForm">
+            <div class="row">
+
               <div class="col">
                 <div class="form-group row">
                   <div class="col-sm-4 col-form-label col-form-label-sm">Scheduled</div>
@@ -214,7 +299,7 @@
                     <input type="text" class="form-control form-control-sm" id="alp" formControlName="alp">
                     <span *ngIf="orderForm.controls.alp.invalid" class="small text-danger">
                       ALP should be 3 characters or less
-                    </span>  
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -223,7 +308,7 @@
                     <input type="text" class="form-control form-control-sm" id="bench" formControlName="bench">
                     <span *ngIf="orderForm.controls.bench.invalid" class="small text-danger">
                       Bench should be 3 characters or less
-                    </span>  
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -232,7 +317,7 @@
                     <input type="text" class="form-control form-control-sm" id="priority" formControlName="priority">
                     <span *ngIf="orderForm.controls.priority.invalid" class="small text-danger">
                       Priority should be 50 characters or less
-                    </span>  
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -259,7 +344,7 @@
                     <input type="text" class="form-control form-control-sm" id="holdLoc" formControlName="holdLoc">
                     <span *ngIf="orderForm.controls.holdLoc.invalid" class="small text-danger">
                       Hold loc should be 80 characters or less
-                    </span>  
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -267,9 +352,9 @@
                   <div class="col-sm-8">
                     <input type="number" class="form-control form-control-sm" id="palconPacked"
                       formControlName="palconPacked">
-                      <span *ngIf="orderForm.controls.palconPacked.invalid" class="small text-danger">
-                        Palcon packed should be a number
-                      </span>
+                    <span *ngIf="orderForm.controls.palconPacked.invalid" class="small text-danger">
+                      Palcon packed should be a number
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -287,7 +372,7 @@
                     <input type="text" class="form-control form-control-sm" id="comments" formControlName="comments">
                     <span *ngIf="orderForm.controls.comments.invalid" class="small text-danger">
                       Comments should be 255 characters or less
-                    </span>  
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -320,7 +405,7 @@
                     <input type="text" class="form-control form-control-sm" id="palletIds" formControlName="palletIds">
                     <span *ngIf="orderForm.controls.palletIds.invalid" class="small text-danger">
                       Pallet Ids should be 100 characters or less
-                    </span>  
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -328,9 +413,9 @@
                   <div class="col-sm-8">
                     <input type="number" class="form-control form-control-sm" id="palletCount"
                       formControlName="palletCount">
-                      <span *ngIf="orderForm.controls.palletCount.invalid" class="small text-danger">
-                        Pallet count should be a number
-                      </span>    
+                    <span *ngIf="orderForm.controls.palletCount.invalid" class="small text-danger">
+                      Pallet count should be a number
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -338,22 +423,24 @@
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="palletNumbers"
                       formControlName="palletNumbers">
-                      <span *ngIf="orderForm.controls.palletNumbers.invalid" class="small text-danger">
-                        Pallet numbers should be 255 characters or less
-                      </span>
+                    <span *ngIf="orderForm.controls.palletNumbers.invalid" class="small text-danger">
+                      Pallet numbers should be 255 characters or less
+                    </span>
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary" (click)="submitForm()" [disabled]="saveDisabled || !orderForm.valid">Save</button>
+                    <button type="submit" class="btn btn-primary" (click)="submitForm()"
+                      [disabled]="saveDisabled || !orderForm.valid">Save</button>
                   </div>
                 </div>
 
               </div>
+
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 </ng-container>

@@ -133,6 +133,7 @@ export class Order implements IOrder {
         if (form.controls.palletIds.value !== this.palletIds) { return true; }
         if (form.controls.palletCount.value !== this.palletCount) { return true; }
         if (form.controls.palletNumbers.value !== this.palletNumbers) { return true; }
+        if (form.controls.name.value !== this.name) { return true; }
         return false;
     }
 
@@ -181,7 +182,7 @@ export class Order implements IOrder {
             palletIds: new FormControl(this.palletIds, [Validators.maxLength(100)]),
             palletCount: new FormControl(this.palletCount, [Validators.min(0), Validators.max(99999)]),
             palletNumbers: new FormControl(this.palletNumbers, [Validators.maxLength(255)]),
-            name: new FormControl({value: this.name, disabled: true}),
+            name: new FormControl(this.name),
             prime: new FormControl({value: this.prime, disabled: true})
         });
         return OrderForm;

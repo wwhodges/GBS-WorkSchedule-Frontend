@@ -12,7 +12,7 @@ import { IOrderList, OrderList } from '../models/orderList.model';
 import { map } from 'rxjs/operators';
 import { IUserSetting } from '../models/userSetting.model';
 import { IOrderParams, OrderParams } from '../models/orderParams.model';
-import { ICustomer } from '../models/customer.model';
+import { ICustomer, Customer } from '../models/customer.model';
 import { environment } from '../../../environments/environment';
 
 
@@ -24,7 +24,9 @@ export class ApiDataService {
 
   getCustomer(customerNumber: string) {
     const apiURL = `${this.apiRoot}Customer/` + customerNumber;
-    return this.http.get<ICustomer>(apiURL, { withCredentials: true });
+    return this.http.get<Customer>(apiURL, { withCredentials: true }).pipe(
+      map(response => new Customer().deserialise(response))
+    );
   }
 
   getOrderSummary(summaryType: string) {

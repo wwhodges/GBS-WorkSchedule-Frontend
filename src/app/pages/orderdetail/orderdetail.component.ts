@@ -7,6 +7,7 @@ import { takeUntil, delay } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { fieldSettings } from 'src/app/common/models/orderFields';
+import { Customer } from 'src/app/common/models/customer.model';
 
 @Component({
   selector: 'app-orderdetail',
@@ -17,15 +18,19 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject();
   private unsubscribeParams$: Subject<void> = new Subject();
 
+  private queryParam = 'id';
   private orderId: string;
-  public order: Order;
+
   public vistaStatusOptions = fieldSettings.find(f => f.name === 'vistaStatus').options;
   public statusOptions = fieldSettings.find(f => f.name === 'status').options;
-  private queryParam = 'id';
+
   public isLoading = true;
   public saveDisabled = false;
 
+  public order: Order;
   public orderForm: FormGroup;
+  public cust: Customer;
+  public custForm: FormGroup;
 
   constructor(private apiData: ApiDataService,
               private route: ActivatedRoute,
@@ -34,12 +39,14 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
               private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.cust = new Customer();
+    this.custForm = this.cust.CreateFormGroup();
+
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
       this.unsubscribe$.next();
       this.isLoading = true;
       this.saveDisabled = false;
       this.orderId = params.get(this.queryParam);
-      // console.log(this.orderId);
       if (this.orderId === 'new') {
         // delay the new form for a moment because otherwise the form controls aren't
         // disabled. Some kind of bug in Angular.
@@ -48,8 +55,9 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
             this.order = delayedResult;
             this.orderForm = this.order.CreateFormGroup();
             this.isLoading = false;
-            console.log(this.order);
-            console.log(this.orderForm);
+            this.orderForm.get('account').valueChanges.subscribe(
+              acctUpdate => this.getCustomer()
+            );
           }
         );
       } else {
@@ -58,12 +66,21 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
             this.order = apiResult;
             this.orderForm = this.order.CreateFormGroup();
             this.isLoading = false;
-            console.log(this.order);
             console.log(this.orderForm);
+            this.getCustomer();
           }
         );
       }
     });
+  }
+
+  getCustomer() {
+    this.apiData.getCustomer(this.order.account).pipe(takeUntil(this.unsubscribe$)).subscribe(
+      custResult => {
+        this.cust = custResult;
+        this.custForm = this.cust.CreateFormGroup();
+      }
+    )
   }
 
   ngOnDestroy() {
@@ -73,25 +90,10 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
 
   submitForm() {
     this.saveDisabled = true;
-    /*console.log(this.orderForm);
-
-    console.log(this.orderForm.valid);
-
-    const controls = this.orderForm.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        console.log(name + ' is invalid');
-      } else if (!controls[name].valid) {
-        console.log(name + ' is not valid');
-      }
-    }*/
     this.order.SaveFormValues(this.orderForm);
     if (this.order.id === 0) {
-      console.log(this.orderForm);
-      console.log(this.order);
       this.apiData.insertOrder(this.order).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.success('Order has been created', 'Success');
           // redirect to created order
           this.router.navigate(['/order', response.id]);
@@ -103,7 +105,6 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
     } else {
       this.apiData.updateOrder(this.order).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.success('Order has been updated', 'Success');
           this.saveDisabled = false;
         }, error => {

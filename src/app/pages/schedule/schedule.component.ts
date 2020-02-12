@@ -50,7 +50,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.orderParams = new OrderParams();
-    if (this.filterStore.currentPage == 'scheduled') {
+    if (this.filterStore.currentPage == 'schedule') {
       Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
     }
     else {
@@ -69,7 +69,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   loadData() {
     this.unsubscribe$.next();
     this.orderParams.page = this.currentPage;
-    this.filterStore.currentPage = 'scheduled'
+    this.filterStore.currentPage = 'schedule'
     this.filterStore.currentFilter = JSON.stringify(this.orderParams);
     this.isLoading = true;
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
