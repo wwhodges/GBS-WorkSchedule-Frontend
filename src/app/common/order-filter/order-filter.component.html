@@ -10,43 +10,45 @@
                     <div class="list-group" id="list-tab" role="tablist">
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 0"
                             (click)="changeParam(0)" id="list-search-list" data-toggle="list" role="tab"
-                            aria-controls="searchDate">Search</a>
+                            aria-controls="search">Search</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 1"
-                            (click)="changeParam(1)" id="list-schedule-list" data-toggle="list" role="tab"
-                            aria-controls="schedule">(Un)scheduled</a>
+                            (click)="changeParam(1)" id="list-values-list" data-toggle="list" role="tab"
+                            aria-controls="values">Values</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 2"
-                            (click)="changeParam(2)" id="list-status-list" data-toggle="list" role="tab"
-                            aria-controls="status">Schedule Status</a>
+                            (click)="changeParam(2)" id="list-schedule-list" data-toggle="list" role="tab"
+                            aria-controls="schedule">(Un)scheduled</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 3"
-                            (click)="changeParam(3)" id="list-vistaStatus-list" data-toggle="list" role="tab"
-                            aria-controls="vistaStatus">Vista Status</a>
+                            (click)="changeParam(3)" id="list-status-list" data-toggle="list" role="tab"
+                            aria-controls="status">Schedule Status</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 4"
-                            (click)="changeParam(4)" id="list-prime-list" data-toggle="list" role="tab"
-                            aria-controls="prime">Prime</a>
+                            (click)="changeParam(4)" id="list-vistaStatus-list" data-toggle="list" role="tab"
+                            aria-controls="vistaStatus">Vista Status</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 5"
-                            (click)="changeParam(5)" id="list-site-list" data-toggle="list" role="tab"
-                            aria-controls="site">Site</a>
+                            (click)="changeParam(5)" id="list-prime-list" data-toggle="list" role="tab"
+                            aria-controls="prime">Prime</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 6"
-                            (click)="changeParam(6)" id="list-workDate-list" data-toggle="list" role="tab"
-                            aria-controls="workDate">Work Date</a>
+                            (click)="changeParam(6)" id="list-site-list" data-toggle="list" role="tab"
+                            aria-controls="site">Site</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 7"
-                            (click)="changeParam(7)" id="list-despDate-list" data-toggle="list" role="tab"
-                            aria-controls="despDate">Despatch Date</a>
+                            (click)="changeParam(7)" id="list-workDate-list" data-toggle="list" role="tab"
+                            aria-controls="workDate">Work Date</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 8"
-                            (click)="changeParam(8)" id="list-delDate-list" data-toggle="list" role="tab"
-                            aria-controls="delDate">Delivery Date</a>
+                            (click)="changeParam(8)" id="list-despDate-list" data-toggle="list" role="tab"
+                            aria-controls="despDate">Despatch Date</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 9"
-                            (click)="changeParam(9)" id="list-invoiceDate-list" data-toggle="list" role="tab"
-                            aria-controls="invoiceDate">Invoice Date</a>
+                            (click)="changeParam(9)" id="list-delDate-list" data-toggle="list" role="tab"
+                            aria-controls="delDate">Delivery Date</a>
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 10"
-                            (click)="changeParam(10)" id="list-actualDespDate-list" data-toggle="list" role="tab"
+                            (click)="changeParam(10)" id="list-invoiceDate-list" data-toggle="list" role="tab"
+                            aria-controls="invoiceDate">Invoice Date</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 11"
+                            (click)="changeParam(11)" id="list-actualDespDate-list" data-toggle="list" role="tab"
                             aria-controls="actualDespDate">Actual Desp Date</a>
 
                     </div>
                 </div>
                 <div class="col-9">
                     <div class="tab-content" id="nav-tabContent">
-
                         <div class="tab-pane fade active show" id="list-site" *ngIf="paramSection == 0" role="tabpanel"
                             aria-labelledby="list-search-list">
                             <div class="col-12 col-md-6 col-lg-3">
@@ -69,9 +71,71 @@
                                 <input type="text" class="form-control form-control-sm" id="name"
                                     formControlName="filterName">
                             </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="invRun" class="col-form-label col-form-label-sm">Inv Run</label>
+                                <input type="text" class="form-control form-control-sm" id="invRun"
+                                    formControlName="filterInvRun">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="holdLoc" class="col-form-label col-form-label-sm">Hold Loc</label>
+                                <input type="text" class="form-control form-control-sm" id="holdLoc"
+                                    formControlName="filterHoldLoc">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="palDest" class="col-form-label col-form-label-sm">Pal Dest</label>
+                                <input type="text" class="form-control form-control-sm" id="palDest"
+                                    formControlName="filterPalDest">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="comments" class="col-form-label col-form-label-sm">Comments</label>
+                                <input type="text" class="form-control form-control-sm" id="comments"
+                                    formControlName="filterComments">
+                            </div>
                         </div>
-
-                        <div class="tab-pane fade active show" id="list-schedule" *ngIf="paramSection == 1"
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade active show" id="list-values" *ngIf="paramSection == 1"
+                                role="tabpanel" aria-labelledby="list-values-list">
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="minWeight" class="col-form-label col-form-label-sm">Min Weight</label>
+                                    <input type="number" class="form-control form-control-sm" id="minWeight"
+                                        formControlName="weightMin">
+                                    <label for="maxWeight" class="col-form-label col-form-label-sm">Max Weight</label>
+                                    <input type="number" class="form-control form-control-sm" id="maxWeight"
+                                        formControlName="weightMax">
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="minUnits" class="col-form-label col-form-label-sm">Min Units</label>
+                                    <input type="number" class="form-control form-control-sm" id="minUnits"
+                                        formControlName="unitsMin">
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="maxUnits" class="col-form-label col-form-label-sm">Max Units</label>
+                                    <input type="number" class="form-control form-control-sm" id="maxUnits"
+                                        formControlName="unitsMax">
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="minLines" class="col-form-label col-form-label-sm">Min Lines</label>
+                                    <input type="number" class="form-control form-control-sm" id="minLines"
+                                        formControlName="linesMin">
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="maxLines" class="col-form-label col-form-label-sm">Max Lines</label>
+                                    <input type="number" class="form-control form-control-sm" id="maxLines"
+                                        formControlName="linesMax">
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="minPalconPacked" class="col-form-label col-form-label-sm">Min Palcon Packed</label>
+                                    <input type="number" class="form-control form-control-sm" id="minPalconPacked"
+                                        formControlName="palconPackedMin">
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <label for="maxPalconPacked" class="col-form-label col-form-label-sm">Max Palcon Packed</label>
+                                    <input type="number" class="form-control form-control-sm" id="maxPalconPacked"
+                                        formControlName="palconPackedMax">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade active show" id="list-schedule" *ngIf="paramSection == 2"
                             role="tabpanel" aria-labelledby="list-schedule-list">
                             <div class="col-12">
                                 <div class="col col-12">
@@ -90,14 +154,14 @@
                         </div>
                     </div>
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade active show" id="list-status" *ngIf="paramSection == 2"
+                        <div class="tab-pane fade active show" id="list-status" *ngIf="paramSection == 3"
                             role="tabpanel" aria-labelledby="list-status-list">
                             <div class="col-12">
                                 <app-multiselect-input formControlName="filterStatus" [options]="statusOptions">
                                 </app-multiselect-input>
                             </div>
                         </div>
-                        <div class="tab-pane fade active show" id="list-vistaStatus" *ngIf="paramSection == 3"
+                        <div class="tab-pane fade active show" id="list-vistaStatus" *ngIf="paramSection == 4"
                             role="tabpanel" aria-labelledby="list-vistaStatus-list">
                             <div class="col-12">
                                 <app-multiselect-input formControlName="filterVistaStatus"
@@ -105,21 +169,21 @@
                                 </app-multiselect-input>
                             </div>
                         </div>
-                        <div class="tab-pane fade active show" id="list-prime" *ngIf="paramSection == 4" role="tabpanel"
+                        <div class="tab-pane fade active show" id="list-prime" *ngIf="paramSection == 5" role="tabpanel"
                             aria-labelledby="list-prime-list">
                             <div class="col-12">
                                 <app-multiselect-input [options]="marketOptions" formControlName="filterPrime">
                                 </app-multiselect-input>
                             </div>
                         </div>
-                        <div class="tab-pane fade active show" id="list-site" *ngIf="paramSection == 5" role="tabpanel"
+                        <div class="tab-pane fade active show" id="list-site" *ngIf="paramSection == 6" role="tabpanel"
                             aria-labelledby="list-site-list">
                             <div class="col-12">
                                 <app-multiselect-input [options]="siteOptions" formControlName="filterSite">
                                 </app-multiselect-input>
                             </div>
                         </div>
-                        <div class="tab-pane fade active show" id="list-workDate" *ngIf="paramSection == 6"
+                        <div class="tab-pane fade active show" id="list-workDate" *ngIf="paramSection == 7"
                             role="tabpanel" aria-labelledby="list-workDate-list">
                             <div class="col-12 col-md-6 col-lg-3">
                                 <label for="workDateFrom" class="col-form-label col-form-label-sm">From</label>
@@ -145,7 +209,7 @@
                                     formControlName="workDateToOffset">
                             </div>
                         </div>
-                        <div class="tab-pane fade active show" id="list-despDate" *ngIf="paramSection == 7"
+                        <div class="tab-pane fade active show" id="list-despDate" *ngIf="paramSection == 8"
                             role="tabpanel" aria-labelledby="list-despDate-list">
                             <div class="col-12 col-md-6 col-lg-3">
                                 <label for="despDateFrom" class="col-form-label col-form-label-sm">From</label>
@@ -171,7 +235,7 @@
                                     formControlName="despDateToOffset">
                             </div>
                         </div>
-                        <div class="tab-pane fade active show" id="list-delDate" *ngIf="paramSection == 8"
+                        <div class="tab-pane fade active show" id="list-delDate" *ngIf="paramSection == 9"
                             role="tabpanel" aria-labelledby="list-site-list">
                             <div class="col-12 col-md-6 col-lg-3">
                                 <label for="delDateFrom" class="col-form-label col-form-label-sm">From</label>
@@ -197,7 +261,7 @@
                                     formControlName="delDateToOffset">
                             </div>
                         </div>
-                        <div class="tab-pane fade active show" id="list-invoiceDate" *ngIf="paramSection == 9"
+                        <div class="tab-pane fade active show" id="list-invoiceDate" *ngIf="paramSection == 10"
                             role="tabpanel" aria-labelledby="list-site-list">
                             <div class="col-12 col-md-6 col-lg-3">
                                 <label for="invoiceDateFrom" class="col-form-label col-form-label-sm">From</label>
@@ -224,7 +288,7 @@
                                     formControlName="invoiceDateToOffset">
                             </div>
                         </div>
-                        <div class="tab-pane fade active show" id="list-actualDespDate" *ngIf="paramSection == 10"
+                        <div class="tab-pane fade active show" id="list-actualDespDate" *ngIf="paramSection == 11"
                             role="tabpanel" aria-labelledby="list-site-list">
                             <div class="col-12 col-md-6 col-lg-3">
                                 <label for="actualDespDateFrom" class="col-form-label col-form-label-sm">From</label>

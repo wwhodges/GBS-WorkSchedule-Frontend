@@ -13,6 +13,12 @@ export interface IOrderParams {
     // numeric filters
     weightMin: number;
     weightMax: number;
+    unitsMin: number;
+    unitsMax: number;
+    linesMin: number;
+    linesMax: number;
+    palconPackedMin: number;
+    palconPackedMax: number;
 
     // date filters
     workDateFrom: Date;
@@ -44,6 +50,10 @@ export interface IOrderParams {
     filterAccount: string;
     filterInvoice: string;
     filterName: string;
+    filterInvRun: string;
+    filterPalDest: string;
+    filterHoldLoc: string;
+    filterComments: string;
 
     // Sorting
     sortString: string;
@@ -70,6 +80,12 @@ export class OrderParams implements IOrderParams {
     includeScheduled = true;
     weightMin = null;
     weightMax = null;
+    unitsMin = null;
+    unitsMax = null;
+    linesMin = null
+    linesMax = null;
+    palconPackedMin = null;
+    palconPackedMax = null;
     workDateFrom = null;
     workDateFromOffset = null;
     workDateTo = null;
@@ -95,6 +111,10 @@ export class OrderParams implements IOrderParams {
     filterAccount = '';
     filterInvoice = '';
     filterName = '';
+    filterInvRun = '';
+    filterPalDest = '';
+    filterHoldLoc = '';
+    filterComments = '';
     sortString = null;
     sortDir = null;
     sort = 0;
@@ -139,11 +159,21 @@ export class OrderParams implements IOrderParams {
             actualDespDateToOffset: new FormControl(this.actualDespDateToOffset),
             weightMin: new FormControl(this.weightMin),
             weightMax: new FormControl(this.weightMax),
+            unitsMin: new FormControl(this.unitsMin),
+            unitsMax: new FormControl(this.unitsMax),
+            linesMin: new FormControl(this.linesMin),
+            linesMax: new FormControl(this.linesMax),
+            palconPackedMin: new FormControl(this.palconPackedMin),
+            palconPackedMax: new FormControl(this.palconPackedMax),
             filterWorkId: new FormControl(this.filterWorkId),
             filterBatch: new FormControl(this.filterBatch),
             filterAccount: new FormControl(this.filterAccount),
             filterInvoice: new FormControl(this.filterInvoice),
             filterName: new FormControl(this.filterName),
+            filterInvRun: new FormControl(this.filterInvRun),
+            filterPalDest: new FormControl(this.filterPalDest),
+            filterHoldLoc: new FormControl(this.filterHoldLoc),
+            filterComments: new FormControl(this.filterComments),
             sortString: new FormControl(this.sortString),
             sortDir: new FormControl(this.sortDir),
             sort: new FormControl(this.sort),
