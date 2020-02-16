@@ -51,8 +51,8 @@ export class CustomerGroup implements ICustomerGroup {
             includeExcludeAccounts: new FormControl(this.includeExcludeAccounts),
             matchAllBranches: new FormControl(this.matchAllBranches),
             accounts: new FormArray(this.accounts.map(a => new FormControl(a))),
-            filterParams: this.filterParams.CreateFormGroup(),
-            fieldList: new FormArray(this.fieldList.map(f => new FormControl(f)))
+            filterParams: this.filterParams.CreateFormGroup() // ,
+            // fieldList: new FormArray(this.fieldList.map(f => new FormControl(f)))
         });
         return groupForm;
     }

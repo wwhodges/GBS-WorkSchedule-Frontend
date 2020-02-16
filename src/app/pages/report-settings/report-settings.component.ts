@@ -8,7 +8,9 @@ import { FormGroup, FormArray, FormControl } from '@angular/forms';
 import { CompleterService, RemoteData } from 'ng2-completer';
 import { ToastrService } from 'ngx-toastr';
 import { OrderFilterStorage } from 'src/app/common/services/orderFilterStorage.service';
-import { fieldSettings } from 'src/app/common/models/orderFields';
+import { fieldSettings, IFieldSettings, defaultScheduledFields, invoiceField } from 'src/app/common/models/orderFields';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-report-settings',
@@ -21,6 +23,7 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
   private queryParam = 'id';
   public report: CustomerGroup;
   public reportForm: FormGroup = new FormGroup({});
+
   public allFields = fieldSettings;
 
   private unsubscribe$: Subject<void> = new Subject();
@@ -59,6 +62,7 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
         this.report = new CustomerGroup();
         this.report.groupName = 'New Report';
         this.report.groupType = 'R';
+        Object.assign(this.report.fieldList, defaultScheduledFields);
         this.reportForm = this.report.CreateFormGroup();
         this.isLoading = false;
         // console.log(this.reportForm);
@@ -69,6 +73,9 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
             this.report = apiResult;
             this.reportForm = this.report.CreateFormGroup();
             this.isLoading = false;
+            if (this.report.fieldList.length == 0 ) {
+              this.report.fieldList = [invoiceField];
+            }
             // console.log(this.reportForm);
           }
         );
@@ -77,7 +84,12 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
   }
 
   saveGroup() {
+    console.log(this.report.fieldList);
+      console.log(this.report);
+      console.log(this.report.fieldList);
       this.report.SaveFormValues(this.reportForm);
+      console.log(this.report);
+      console.log(this.report.fieldList);
       this.apiData.saveCustomerGroup(this.report).subscribe(response => {
         this.toastr.success('Report settings saved successfully', 'Saved');
         if (this.report.id === 0) {
@@ -114,6 +126,26 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
 
   removeAccount(index: number) {
     this.groupAccounts.removeAt(index);
+  }
+
+  onDrop(event: CdkDragDrop<IFieldSettings[]>) {
+    console.log(event);
+    console.log(this.report.fieldList);
+    if ((!event.isPointerOverContainer || event.container.id === 'allFieldList') && event.previousContainer.id !== 'allFieldList') {
+      event.previousContainer.data.splice(event.previousIndex, 1);
+    } else {
+      if (event.previousContainer === event.container) {
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      } else {
+        if (event.previousContainer.id === 'allFieldList' &&
+          !event.container.data.some(item => item.desc === event.previousContainer.data[event.previousIndex].desc)) {
+          copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+        }
+      }
+    }
+    if (this.report.fieldList.length == 0 ) {
+      this.report.fieldList = [invoiceField];
+    }
   }
 
   ngOnDestroy() {

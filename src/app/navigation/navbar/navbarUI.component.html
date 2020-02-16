@@ -22,8 +22,10 @@
           <a dropdownToggle class="nav-link dropdown-toggle">
             {{menuitem.menuName}}</a>
           <div *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-            <a *ngFor="let subitem of menuitem.subMenu" class="dropdown-item"
-              [routerLink]="subitem.menuLink">{{subitem.menuName}}</a>
+            <ng-container *ngFor="let subitem of menuitem.subMenu">
+              <a *ngIf="subitem.menuName !== 'divider'" class="dropdown-item" [routerLink]="subitem.menuLink">{{subitem.menuName}}</a>
+              <div *ngIf="subitem.menuName === 'divider'" class="dropdown-divider"></div>
+            </ng-container>
           </div>
         </div>
       </li>

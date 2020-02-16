@@ -40,9 +40,10 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.orders = new OrderList();
+    this.report = new CustomerGroup();
 
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
-      console.log('initialising report');
+      // console.log('initialising report');
       this.orderParams = new OrderParams();
       this.reportId = +params.get(this.queryParam);
 
@@ -50,6 +51,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         this.report = reportData;
         this.orderParams = this.report.filterParams;
         this.listedFields = this.report.fieldList;
+        // console.log(this.listedFields);
         if (this.filterStore.currentPage == 'report') {
           Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
         }

@@ -14,6 +14,7 @@ export class OrderTableComponent implements OnChanges, OnInit {
   @Input() listedFields: any[];
   @Input() filters: OrderParams;
   @Input() dataLoading = false;
+  @Input() reportName = 'All Orders';
 
   @Output() formAction = new EventEmitter<string>();
 

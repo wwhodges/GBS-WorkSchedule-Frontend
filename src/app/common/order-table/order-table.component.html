@@ -2,7 +2,7 @@
     <div>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" [class.active]="currentGroup === '*'" (click)="selectedGroup('*')">All Orders</a>
+                <a class="nav-link" [class.active]="currentGroup === '*'" (click)="selectedGroup('*')">{{reportName}}</a>
             </li>
             <li class="nav-item" *ngFor="let group of groups">
                 <a class="nav-link" [class.active]="currentGroup === group.id.toString()"

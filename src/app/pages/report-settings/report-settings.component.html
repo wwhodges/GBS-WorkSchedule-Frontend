@@ -30,29 +30,35 @@
                     <div class="card-body">
                         Accounts
                         <div class="custom-control custom-radio">
-                            <input type="radio" id="includeExclude1" class="custom-control-input" formControlName="includeExcludeAccounts" [value]=0>
+                            <input type="radio" id="includeExclude1" class="custom-control-input"
+                                formControlName="includeExcludeAccounts" [value]=0>
                             <label class="custom-control-label" for="includeExclude1">Include all accounts</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" id="includeExclude2" class="custom-control-input" formControlName="includeExcludeAccounts" [value]=1>
-                            <label class="custom-control-label" for="includeExclude2">Include only selected accounts</label>
+                            <input type="radio" id="includeExclude2" class="custom-control-input"
+                                formControlName="includeExcludeAccounts" [value]=1>
+                            <label class="custom-control-label" for="includeExclude2">Include only selected
+                                accounts</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input type="radio" id="includeExclude3" class="custom-control-input" formControlName="includeExcludeAccounts" [value]=2>
+                            <input type="radio" id="includeExclude3" class="custom-control-input"
+                                formControlName="includeExcludeAccounts" [value]=2>
                             <label class="custom-control-label" for="includeExclude3">Exclude selected accounts</label>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-4 col-form-label col-form-label-sm">Match all branches</div>
                             <div class="col-sm-8">
-                              <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" id="matchAllBranches" formControlName="matchAllBranches">
-                                <label class="custom-control-label" for="matchAllBranches"></label>
-                              </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="matchAllBranches"
+                                        formControlName="matchAllBranches">
+                                    <label class="custom-control-label" for="matchAllBranches"></label>
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col form-inline">
-                                <ng2-completer [(ngModel)]="searchStr" [ngModelOptions]="{standalone: true}" [datasource]="dataService" [minSearchLength]="3"
+                                <ng2-completer [(ngModel)]="searchStr" [ngModelOptions]="{standalone: true}"
+                                    [datasource]="dataService" [minSearchLength]="3"
                                     [inputClass]="['form-control','form-control-sm']"></ng2-completer>
                                 <button type="button" class="btn btn-primary btn-sm ml-2"
                                     (click)="addAccount()">Add</button>
@@ -74,13 +80,39 @@
             </div>
         </div>
         <app-order-filter [orderFilterForm]="reportForm.get('filterParams')"></app-order-filter>
-        
-        <div class="row">
-            <div class="col col-12">
-                <div *ngFor="let field of allFields">
-                    <button class="btn btn-primary btn-sm">{{field.name}}</button>
+    </form>
+    <div class="row mt-4">
+        <div class="col-12">
+            <!--Card-->
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col col-12 col-sm-6">
+                            <h4>All Data Fields</h4>
+                            <ul class="list-group" cdkDropList #allList="cdkDropList" [id]="'allFieldList'"
+                                [cdkDropListData]="allFields" [cdkDropListConnectedTo]="selList"
+                                (cdkDropListDropped)="onDrop($event)">
+                                <li cdkDrag class="list-group-item" *ngFor="let field of allFields;">{{field.desc}}</li>
+                            </ul>
+                        </div>
+                        <div class="col col-12 col-sm-6">
+                            <h4>Report Fields</h4>
+                            <ul class="list-group" cdkDropList #selList="cdkDropList"
+                                [cdkDropListData]="report.fieldList" [cdkDropListConnectedTo]="allList"
+                                (cdkDropListDropped)="onDrop($event)">
+                                <li cdkDrag class="list-group-item" *ngFor="let field of report.fieldList;">
+                                    {{field.desc}}
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="uedit_{{field.name}}"
+                                            [(ngModel)]="field.edit">
+                                        <label class="custom-control-label" for="uedit_{{field.name}}">Editable</label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </ng-container>
