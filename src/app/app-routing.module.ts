@@ -9,12 +9,18 @@ import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { GroupComponent } from './pages/group/group.component';
 import { OrderFilterComponent } from './common/order-filter/order-filter.component';
+import { ReportsComponent } from './pages/reports/reports.component';
+import { ReportSettingsComponent } from './pages/report-settings/report-settings.component';
+import { ReportComponent } from './pages/report/report.component';
 
 
 const routes: Routes = [
   {path: 'filtertest', component: OrderFilterComponent},
   {path: 'groups', component: GroupsComponent},
   {path: 'group/:id', component: GroupComponent},
+  {path: 'report/:reportId', component: ReportComponent },
+  {path: 'reports', component: ReportsComponent},
+  {path: 'report-settings/:id', component: ReportSettingsComponent},
   {path: 'profile', component: UserProfileComponent },
   {path: 'unscheduled', component: UnscheduledComponent},
   {path: 'schedule', component: ScheduleComponent},

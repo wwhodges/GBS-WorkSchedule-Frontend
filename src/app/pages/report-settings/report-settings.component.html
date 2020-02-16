@@ -1,0 +1,86 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<ng-container *ngIf="!isLoading">
+    <h2>{{reportForm.get('groupName').value}}</h2>
+    <form [formGroup]="reportForm">
+        <div class="row mb-3">
+            <div class="col col-12 col-lg-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="groupName" class="col-sm-4 col-form-label col-form-label-sm">Report Name</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control form-control-sm" formControlName="groupName"
+                                    id="groupName" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-primary btn-sm"
+                                    (click)="saveGroup()">{{ report.id === 0 ? 'Create Report' : 'Save Changes' }}</button>
+                                <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteGroup()">Delete
+                                    Report</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-lg-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        Accounts
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="includeExclude1" class="custom-control-input" formControlName="includeExcludeAccounts" [value]=0>
+                            <label class="custom-control-label" for="includeExclude1">Include all accounts</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="includeExclude2" class="custom-control-input" formControlName="includeExcludeAccounts" [value]=1>
+                            <label class="custom-control-label" for="includeExclude2">Include only selected accounts</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="includeExclude3" class="custom-control-input" formControlName="includeExcludeAccounts" [value]=2>
+                            <label class="custom-control-label" for="includeExclude3">Exclude selected accounts</label>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-4 col-form-label col-form-label-sm">Match all branches</div>
+                            <div class="col-sm-8">
+                              <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="matchAllBranches" formControlName="matchAllBranches">
+                                <label class="custom-control-label" for="matchAllBranches"></label>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col form-inline">
+                                <ng2-completer [(ngModel)]="searchStr" [ngModelOptions]="{standalone: true}" [datasource]="dataService" [minSearchLength]="3"
+                                    [inputClass]="['form-control','form-control-sm']"></ng2-completer>
+                                <button type="button" class="btn btn-primary btn-sm ml-2"
+                                    (click)="addAccount()">Add</button>
+                            </div>
+                        </div>
+                        <div class="list-group" formArrayName="accounts">
+                            <div class="list-group-item py-2"
+                                *ngFor="let account of reportForm.get('accounts')['controls']; let accountIndex=index;">
+                                <div class="row" [formGroup]>
+                                    <div class="col col-3">{{account.value.split(',')[0]}}</div>
+                                    <div class="col col-8">{{account.value.split(',')[1]}}</div>
+                                    <div class="col col-1"><button type="button" class="btn btn-danger btn-sm"
+                                            (click)="removeAccount(accountIndex)">X</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-order-filter [orderFilterForm]="reportForm.get('filterParams')"></app-order-filter>
+        
+        <div class="row">
+            <div class="col col-12">
+                <div *ngFor="let field of allFields">
+                    <button class="btn btn-primary btn-sm">{{field.name}}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-container>

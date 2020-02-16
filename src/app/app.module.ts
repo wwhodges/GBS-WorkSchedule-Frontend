@@ -36,6 +36,9 @@ import { LoaderWrapperComponent } from './common/loader-wrapper/loader-wrapper.c
 import { MultiSelectComponent } from './common/multiselect/multiselect.component';
 import { OrderFilterComponent } from './common/order-filter/order-filter.component';
 import { OrderFilterStorage } from './common/services/orderFilterStorage.service';
+import { ReportsComponent } from './pages/reports/reports.component';
+import { ReportSettingsComponent } from './pages/report-settings/report-settings.component';
+import { ReportComponent } from './pages/report/report.component';
 
 export function SetupUser(setup: SetupUserService) {
   return () => setup.initialise();
@@ -55,6 +58,9 @@ export function SetupUser(setup: SetupUserService) {
     ScheduleComponent,
     GroupsComponent,
     GroupComponent,
+    ReportComponent,
+    ReportsComponent,
+    ReportSettingsComponent,
     PaginationComponent,
     OrderTableComponent,
     LoaderComponent,

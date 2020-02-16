@@ -1,0 +1,15 @@
+<div class="card">
+    <div class="card-body">
+    <table class="table">
+    <tr>
+        <th>Group</th>
+        <th>Orders</th>
+    </tr>
+    <tr *ngFor="let report of reports$ | async">
+        <td><a [routerLink]="['/report-settings',report.id]">{{report.groupName}}</a></td>
+        <td>0</td>
+    </tr>
+</table>
+<a class="btn btn-primary" [routerLink]="['/report-settings','new']">Create New</a>
+</div>
+</div>
