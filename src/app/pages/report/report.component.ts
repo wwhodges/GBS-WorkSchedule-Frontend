@@ -30,7 +30,8 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   private queryParam = 'reportId';
   private reportId: number;
-  private report: CustomerGroup;
+  public report: CustomerGroup;
+  private reportString: string;
 
   constructor(private apiData: ApiDataService,
               private userService: ActiveUserService,
@@ -51,19 +52,19 @@ export class ReportComponent implements OnInit, OnDestroy {
         this.report = reportData;
         this.orderParams = this.report.filterParams;
         this.listedFields = this.report.fieldList;
-        // console.log(this.listedFields);
-        if (this.filterStore.currentPage == 'report') {
+        this.reportString = 'report' + this.report.id.toString();
+        if (this.filterStore.currentPage === this.reportString) {
           Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
         }
         this.loadData();
-      })
+      });
     });
   }
 
   loadData() {
     this.unsubscribe$.next();
     this.orderParams.page = this.currentPage;
-    this.filterStore.currentPage = 'report'
+    this.filterStore.currentPage = this.reportString;
     this.filterStore.currentFilter = JSON.stringify(this.orderParams);
     this.isLoading = true;
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))

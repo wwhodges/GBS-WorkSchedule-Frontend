@@ -8,6 +8,6 @@
     </div>
 </div>
 <app-order-table *ngIf="orders" [filters]="orderParams" [orders]="orders.orders" [ordersForm]="ordersForm"
-    [groups]="customerGroups" [listedFields]="listedFields" [dataLoading]="isLoading" [reportName]="report.groupName"
-    (updatedGroup)="groupSelected($event)" (formAction)="formAction($event)">
+    [listedFields]="listedFields" [dataLoading]="isLoading" [reportName]="report.groupName"
+    (formAction)="formAction($event)">
 </app-order-table>
