@@ -80,12 +80,22 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
         this.cust = custResult;
         this.custForm = this.cust.CreateFormGroup();
       }
-    )
+    );
   }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.unsubscribe();
+  }
+
+  deleteOrder() {
+    this.apiData.deleteOrder(this.order).subscribe(
+      (response) => {
+        this.toastr.success('Order deleted', 'Success');
+      }, error => {
+        this.toastr.warning('Failed to delete: ' + error);
+      }
+    );
   }
 
   submitForm() {

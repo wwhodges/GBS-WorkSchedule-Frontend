@@ -117,4 +117,9 @@ export class ApiDataService {
     return this.http.put<IOrder>(apiURL, order, { withCredentials: true });
   }
 
+  deleteOrder(order: IOrder) {
+    const apiURL = `${this.apiRoot}Order/` + order.id;
+    return this.http.delete<IOrder>(apiURL, { withCredentials: true });
+  }
+
 }

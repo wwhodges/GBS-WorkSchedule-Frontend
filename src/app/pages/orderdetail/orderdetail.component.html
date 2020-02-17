@@ -432,9 +432,10 @@
                   <div class="col-sm-12">
                     <button type="submit" class="btn btn-primary" (click)="submitForm()"
                       [disabled]="saveDisabled || !orderForm.valid">Save</button>
+                    <button type="button" class="btn btn-danger ml-3" (click)="deleteOrder()"
+                      [disabled]="!order.manualOrder">Delete</button>
                   </div>
                 </div>
-
               </div>
 
             </div>
