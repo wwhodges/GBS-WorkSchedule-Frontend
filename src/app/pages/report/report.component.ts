@@ -22,7 +22,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   public orders: OrderList;
   public ordersForm: FormGroup;
   public orderParams: OrderParams;
-  public listedFields: string[]
+  public listedFields: string[];
 
   public currentPage = 0;
   public maxPages = 0;

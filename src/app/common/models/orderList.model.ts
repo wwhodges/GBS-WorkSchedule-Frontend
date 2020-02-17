@@ -5,11 +5,14 @@ export interface IOrderList {
     totalRecords: number;
     totalPages: number;
     orders: IOrder[];
+    usedLocations: string[];
 }
 
 export class OrderList implements IOrderList {
-    totalRecords: number;    totalPages: number;
+    totalRecords: number;
+    totalPages: number;
     orders: Order[];
+    usedLocations: string[];
 
     public deserialise(input: any) {
         Object.assign(this, input);

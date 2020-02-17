@@ -2,6 +2,8 @@ import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angu
 import { FormGroup, FormArray } from '@angular/forms';
 import { Order, ICustomerGroup, IWorkParams, sortFields } from 'src/app/common/models';
 import { OrderParams } from '../models/orderParams.model';
+import { group } from '@angular/animations';
+import { OrderList } from '../models/orderList.model';
 
 @Component({
   selector: 'app-order-table',
@@ -9,7 +11,7 @@ import { OrderParams } from '../models/orderParams.model';
   styleUrls: ['./order-table.component.scss']
 })
 export class OrderTableComponent implements OnChanges, OnInit {
-  @Input() orders: Order[] = [];
+  @Input() orders: OrderList; // Order[] = [];
   @Input() ordersForm: FormGroup;
   @Input() listedFields: any[];
   @Input() filters: OrderParams;
@@ -37,18 +39,16 @@ export class OrderTableComponent implements OnChanges, OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.currentGroup = this.filters.groupId == 0 ? '*' : this.filters.groupId.toString();
-    // this.filterForm = this.filters.CreateFormGroup();
-    const sortField = this.sortArray.find( item => item.value === this.filters.sort);
+    this.currentGroup = this.filters.groupId === 0 ? '*' : this.filters.groupId.toString();
+    const sortField = this.sortArray.find(item => item.value === this.filters.sort);
     this.currentSort = sortField.description;
   }
 
   ngOnChanges() {
-    // this.filterForm = this.filters.CreateFormGroup();
   }
 
-  selectedGroup(group: any) {
-    this.currentGroup = group;
+  selectedGroup(groupId: any) {
+    this.currentGroup = groupId;
     this.updatedGroup.emit(this.currentGroup);
   }
 
@@ -85,15 +85,28 @@ export class OrderTableComponent implements OnChanges, OnInit {
 
   allocateDest() {
     const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-    const day = days[new Date().getDay()];
-    let newDestNo = 1;
-    const items = this.ordersForm.get('orders') as FormArray;
-    for (let i = 0; i < items.length; i++) {
-      const row = items.at(i);
-      const box = row.get('scheduled');
-      const palDest = row.get('palDest');
-      if (box.value) {
-        palDest.setValue(day + newDestNo++);
+    const groupObj = this.groups.find(grp => grp.id === +this.currentGroup);
+    console.log(groupObj);
+    if (groupObj) {
+      const day = days[new Date().getDay() + groupObj.dayOffset % 7];
+      let newDestNo = groupObj.destinationBase + 1;
+      let currentDestination = day + newDestNo.toString();
+      console.log(currentDestination);
+      const items = this.ordersForm.get('orders') as FormArray;
+      for (let i = 0; i < items.length; i++) {
+        const row = items.at(i);
+        const box = row.get('scheduled');
+        const palDest = row.get('palDest');
+        if (box.value && palDest.value === '') {
+          while ( this.orders.usedLocations.includes(currentDestination)) {
+            console.log('skipping ' + currentDestination);
+            newDestNo++;
+            currentDestination = day + newDestNo.toString();
+          }
+          palDest.setValue(currentDestination);
+          newDestNo++;
+          currentDestination = day + newDestNo.toString();
+        }
       }
     }
   }
@@ -106,13 +119,6 @@ export class OrderTableComponent implements OnChanges, OnInit {
     this.formAction.emit('cancel');
   }
 
-  // filterUpdated() {
-  //   this.filters.SaveFormValues(this.filterForm);
-  //   this.formAction.emit('updated');
-
-  //   this.isFilterVisible = false;
-  // }
-
   setSort(sortField: string) {
     const sortfieldname = 'sort';
     if (sortField === this.currentSort) {
@@ -121,18 +127,14 @@ export class OrderTableComponent implements OnChanges, OnInit {
       this.sortAscending = true;
       this.currentSort = sortField;
     }
-    const sortItem = this.sortArray.find( field => field.description === sortField);
+    const sortItem = this.sortArray.find(field => field.description === sortField);
     if (this.sortAscending) {
       this.filters.sort = sortItem.value;
     } else {
       this.filters.sort = sortItem.value + 100;
     }
-    // this.filterForm.controls[sortfieldname + 'String'].setValue(sortField);
-    // this.filterForm.controls[sortfieldname + 'Dir'].setValue();
-    // this.filterForm.controls[sortfieldname].setValue(this.filters.sort);
-    // this.filterUpdated();
 
-    this.filters.sortString  = sortField;
+    this.filters.sortString = sortField;
     this.filters.sortDir = this.sortAscending ? 'ASC' : 'DESC';
     this.formAction.emit('updated');
   }

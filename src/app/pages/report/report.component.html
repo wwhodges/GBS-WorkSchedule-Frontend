@@ -7,7 +7,7 @@
         <button class="btn btn-primary" (click)="getExcel()">Export Data<i class="ml-1 fas fa-file-excel"></i></button>
     </div>
 </div>
-<app-order-table *ngIf="orders" [filters]="orderParams" [orders]="orders.orders" [ordersForm]="ordersForm"
+<app-order-table *ngIf="orders" [filters]="orderParams" [orders]="orders" [ordersForm]="ordersForm"
     [listedFields]="listedFields" [dataLoading]="isLoading" [reportName]="report.groupName"
     (formAction)="formAction($event)">
 </app-order-table>

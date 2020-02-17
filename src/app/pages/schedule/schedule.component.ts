@@ -50,10 +50,9 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.orderParams = new OrderParams();
-    if (this.filterStore.currentPage == 'schedule') {
+    if (this.filterStore.currentPage === 'schedule') {
       Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
-    }
-    else {
+    } else {
       this.orderParams.includeScheduled = true;
       this.orderParams.includeUnscheduled = false;
       this.orderParams.filterStatus = '["","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Prepared","Prepared 48Hr"]';
@@ -69,7 +68,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
   loadData() {
     this.unsubscribe$.next();
     this.orderParams.page = this.currentPage;
-    this.filterStore.currentPage = 'schedule'
+    this.filterStore.currentPage = 'schedule';
     this.filterStore.currentFilter = JSON.stringify(this.orderParams);
     this.isLoading = true;
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))

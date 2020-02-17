@@ -10,7 +10,7 @@
             </li>
         </ul>
     </div>
-    <form [formGroup]="ordersForm" *ngIf="orders">
+    <form [formGroup]="ordersForm" *ngIf="orders.orders">
         <div>
             <table class="table table-hover">
                 <thead>
@@ -60,15 +60,15 @@
                                             </div>
                                         </td>
                                         <td *ngSwitchCase="'date'">
-                                            {{orders[i][field.name] | date: 'dd/MM/yyyy'}}
+                                            {{order.controls[field.name].value | date: 'dd/MM/yyyy'}}
                                         </td>
                                         <td *ngSwitchDefault>
                                             <ng-container *ngIf="field.name === 'invoice'; else notInvoice">
-                                                <a [routerLink]="['/order', orders[i].id]"
-                                                    style="cursor: pointer;">{{orders[i][field.name]}}</a>
+                                                <a [routerLink]="['/order', order.controls['id'].value]"
+                                                    style="cursor: pointer;">{{order.controls[field.name].value}}</a>
                                             </ng-container>
                                             <ng-template #notInvoice>
-                                                {{orders[i][field.name]}}
+                                                {{order.controls[field.name].value}}
                                             </ng-template>
                                         </td>
                                     </ng-container>
