@@ -57,7 +57,7 @@ export interface IOrderParams {
 
     // Sorting
     sortString: string;
-    sortDir: string; //ASC or DESC
+    sortDir: string; // ASC or DESC
     sort: number;
 
     // Group account join - Not part of filter screen
@@ -82,7 +82,7 @@ export class OrderParams implements IOrderParams {
     weightMax = null;
     unitsMin = null;
     unitsMax = null;
-    linesMin = null
+    linesMin = null;
     linesMax = null;
     palconPackedMin = null;
     palconPackedMax = null;
@@ -115,8 +115,8 @@ export class OrderParams implements IOrderParams {
     filterPalDest = '';
     filterHoldLoc = '';
     filterComments = '';
-    sortString = null;
-    sortDir = null;
+    sortString = 'default';
+    sortDir = 'ASC';
     sort = 0;
     includeExcludeAccounts = 0;
     matchAllBranches = false;

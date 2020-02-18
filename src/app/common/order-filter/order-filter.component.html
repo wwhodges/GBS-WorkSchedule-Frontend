@@ -44,6 +44,9 @@
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 11"
                             (click)="changeParam(11)" id="list-actualDespDate-list" data-toggle="list" role="tab"
                             aria-controls="actualDespDate">Actual Desp Date</a>
+                        <a class="list-group-item list-group-item-action" [class.active]="paramSection == 12"
+                            (click)="changeParam(12)" id="list-sort-list" data-toggle="list" role="tab"
+                            aria-controls="sort">Sort Order</a>
 
                     </div>
                 </div>
@@ -124,12 +127,14 @@
                                         formControlName="linesMax">
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
-                                    <label for="minPalconPacked" class="col-form-label col-form-label-sm">Min Palcon Packed</label>
+                                    <label for="minPalconPacked" class="col-form-label col-form-label-sm">Min Palcon
+                                        Packed</label>
                                     <input type="number" class="form-control form-control-sm" id="minPalconPacked"
                                         formControlName="palconPackedMin">
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-3">
-                                    <label for="maxPalconPacked" class="col-form-label col-form-label-sm">Max Palcon Packed</label>
+                                    <label for="maxPalconPacked" class="col-form-label col-form-label-sm">Max Palcon
+                                        Packed</label>
                                     <input type="number" class="form-control form-control-sm" id="maxPalconPacked"
                                         formControlName="palconPackedMax">
                                 </div>
@@ -236,7 +241,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade active show" id="list-delDate" *ngIf="paramSection == 9"
-                            role="tabpanel" aria-labelledby="list-site-list">
+                            role="tabpanel" aria-labelledby="list-delDate-list">
                             <div class="col-12 col-md-6 col-lg-3">
                                 <label for="delDateFrom" class="col-form-label col-form-label-sm">From</label>
                                 <input type="text" class="form-control form-control-sm" bsDatepicker
@@ -262,7 +267,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade active show" id="list-invoiceDate" *ngIf="paramSection == 10"
-                            role="tabpanel" aria-labelledby="list-site-list">
+                            role="tabpanel" aria-labelledby="list-invoiceDate-list">
                             <div class="col-12 col-md-6 col-lg-3">
                                 <label for="invoiceDateFrom" class="col-form-label col-form-label-sm">From</label>
                                 <input type="text" class="form-control form-control-sm" bsDatepicker
@@ -289,7 +294,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade active show" id="list-actualDespDate" *ngIf="paramSection == 11"
-                            role="tabpanel" aria-labelledby="list-site-list">
+                            role="tabpanel" aria-labelledby="list-actualDespDate-list">
                             <div class="col-12 col-md-6 col-lg-3">
                                 <label for="actualDespDateFrom" class="col-form-label col-form-label-sm">From</label>
                                 <input type="text" class="form-control form-control-sm" bsDatepicker
@@ -315,6 +320,25 @@
                                     formControlName="actualDespDateToOffset">
                             </div>
                         </div>
+                        <div class="tab-pane fade active show" id="list-sort" *ngIf="paramSection == 12" role="tabpanel"
+                            aria-labelledby="list-sort-list">
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="sortString" class="col-form-label col-form-label-sm">Sort By</label>
+                                <select class="form-control form-control-sm" id="sortString"
+                                    formControlName="sortString">
+                                    <option *ngFor="let sortField of sortOptions" value="{{sortField.description}}">
+                                        {{sortField.description}}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="sortOrder" class="col-form-label col-form-label-sm">Order</label>
+                                <select class="form-control form-control-sm" id="sortOrder" formControlName="sortDir">
+                                    <option *ngFor="let sortOrder of sortOrders" value="{{sortOrder.value}}">
+                                        {{sortOrder.description}}</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

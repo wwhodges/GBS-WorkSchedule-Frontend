@@ -40,7 +40,16 @@ export class OrderTableComponent implements OnChanges, OnInit {
 
   ngOnInit() {
     this.currentGroup = this.filters.groupId === 0 ? '*' : this.filters.groupId.toString();
-    const sortField = this.sortArray.find(item => item.value === this.filters.sort);
+
+    let sortIdx = 0;
+    if (this.filters.sort > 200 ) {
+      sortIdx = this.filters.sort - 100;
+      this.sortAscending = false;
+    } else {
+      sortIdx = this.filters.sort;
+      this.sortAscending = true;
+    }
+    const sortField = this.sortArray.find(item => item.value === sortIdx);
     this.currentSort = sortField.description;
   }
 
