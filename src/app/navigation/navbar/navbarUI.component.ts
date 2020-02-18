@@ -32,7 +32,6 @@ export class NavbarUIComponent implements OnInit {
     }
 
     searchTriggered() {
-        // console.log(this.searchForm.value.searchTerm);
         this.search.emit(this.searchForm.value.searchTerm);
     }
 

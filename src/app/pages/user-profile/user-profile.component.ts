@@ -48,7 +48,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   }
 
   onDrop(event: CdkDragDrop<IFieldSettings[]>) {
-    console.log(event);
     if ((!event.isPointerOverContainer || event.container.id === 'allFieldList') && event.previousContainer.id !== 'allFieldList') {
       event.previousContainer.data.splice(event.previousIndex, 1);
     } else {

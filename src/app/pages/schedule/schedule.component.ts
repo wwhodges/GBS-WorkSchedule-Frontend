@@ -125,7 +125,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       }
       forkJoin(saveObservableBatch).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.success('Saved ' + saveObservableBatch.length + ' orders', 'Success');
         }
       );

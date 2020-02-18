@@ -55,14 +55,13 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.listedFields = this.userService.config.unscheduledScreen;
 
     this.orderParams = new OrderParams();
-    if (this.filterStore.currentPage == 'search') {
-      console.log('retrieving previous search')
+    if (this.filterStore.currentPage === 'search') {
+
       Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
       this.loadData();
     }
     else {
       this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
-        console.log('initialising search');
         this.orderParams = new OrderParams();
         this.searchString = params.get(this.queryParam);
         if (this.searchString) {
@@ -85,8 +84,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.orderParams.page = this.currentPage;
     this.isLoading = true;
-    console.log('loading data');
-    console.log(this.orderParams);
     this.filterStore.currentPage = 'search'
     this.filterStore.currentFilter = JSON.stringify(this.orderParams);
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
@@ -143,7 +140,6 @@ export class SearchComponent implements OnInit, OnDestroy {
       }
       forkJoin(saveObservableBatch).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.success('Saved ' + saveObservableBatch.length + ' orders', 'Success');
         }
       );

@@ -47,14 +47,11 @@ export class NavbarComponent implements OnInit {
       reps.map( rep => {return {menuName: rep.groupName, menuLink: '/report/' + rep.id, menuActive: false, subMenu: []} } )};
       reportsMenu.subMenu.push({menuName: 'divider', menuLink: '', menuActive: false, subMenu: []});
       reportsMenu.subMenu.push({menuName: 'Maintenance', menuLink: '/reports', menuActive: false, subMenu: []});
-      console.log(reportsMenu);
       this.menuItems.push(reportsMenu);
-      console.log(this.menuData);
     });
   }
 
   onSearched($event) {
-    console.log($event);
     this.router.navigate(['/search', $event]);
   }
 

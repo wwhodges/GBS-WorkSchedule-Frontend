@@ -138,7 +138,6 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
       }
       forkJoin(saveObservableBatch).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.success('Saved ' + saveObservableBatch.length + ' orders', 'Success');
         }
       );
@@ -147,7 +146,6 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
       this.ordersForm = this.orders.CreateFormGroup();
     }
     if ($event === 'updated') {
-      console.log(this.orderParams);
       this.loadData();
     }
   }

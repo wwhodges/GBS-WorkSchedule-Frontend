@@ -65,8 +65,6 @@ export class GroupComponent implements OnInit, OnDestroy {
             this.group = apiResult;
             this.groupForm = this.group.CreateFormGroup();
             this.isLoading = false;
-            console.log(this.group);
-            console.log(this.groupForm);
           }
         );
       }
@@ -75,10 +73,7 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   saveGroup() {
       this.group.SaveFormValues(this.groupForm);
-      console.log(this.groupForm);
-      console.log(this.group);
       this.apiData.saveCustomerGroup(this.group).subscribe(response => {
-        // console.log(response);
         this.toastr.success('Group saved successfully', 'Saved');
         if (this.group.id === 0) {
           this.group.id = +response;
@@ -107,7 +102,6 @@ export class GroupComponent implements OnInit, OnDestroy {
     this.apiData.getCustomer(this.searchStr).subscribe(
       response => {
         this.groupAccounts.push(new FormControl(response.account + ',' + response.name));
-        console.log(this.groupForm);
       }
     );
   }

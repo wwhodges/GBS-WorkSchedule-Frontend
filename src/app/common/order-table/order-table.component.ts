@@ -95,12 +95,10 @@ export class OrderTableComponent implements OnChanges, OnInit {
   allocateDest() {
     const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     const groupObj = this.groups.find(grp => grp.id === +this.currentGroup);
-    console.log(groupObj);
     if (groupObj) {
       const day = days[new Date().getDay() + groupObj.dayOffset % 7];
       let newDestNo = groupObj.destinationBase + 1;
       let currentDestination = day + newDestNo.toString();
-      console.log(currentDestination);
       const items = this.ordersForm.get('orders') as FormArray;
       for (let i = 0; i < items.length; i++) {
         const row = items.at(i);
@@ -108,7 +106,6 @@ export class OrderTableComponent implements OnChanges, OnInit {
         const palDest = row.get('palDest');
         if (box.value && palDest.value === '') {
           while ( this.orders.usedLocations.includes(currentDestination)) {
-            console.log('skipping ' + currentDestination);
             newDestNo++;
             currentDestination = day + newDestNo.toString();
           }

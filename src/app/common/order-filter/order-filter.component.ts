@@ -60,7 +60,6 @@ export class OrderFilterComponent implements OnInit, OnChanges {
   }
 
   filterUpdated() {
-    console.log(this.orderFilterForm);
     Object.assign(this.orderFilter, this.orderFilterForm.value);
     this.filterStore.currentFilter = JSON.stringify(this.orderFilter);
     this.router.navigate([this.currentPage]);

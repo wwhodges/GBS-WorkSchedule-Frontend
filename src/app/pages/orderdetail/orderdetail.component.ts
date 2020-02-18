@@ -66,7 +66,6 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
             this.order = apiResult;
             this.orderForm = this.order.CreateFormGroup();
             this.isLoading = false;
-            console.log(this.orderForm);
             this.getCustomer();
           }
         );

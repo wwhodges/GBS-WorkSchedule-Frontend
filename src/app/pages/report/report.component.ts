@@ -44,7 +44,6 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.report = new CustomerGroup();
 
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
-      // console.log('initialising report');
       this.orderParams = new OrderParams();
       this.reportId = +params.get(this.queryParam);
 
@@ -123,7 +122,6 @@ export class ReportComponent implements OnInit, OnDestroy {
       }
       forkJoin(saveObservableBatch).subscribe(
         (response) => {
-          console.log(response);
           this.toastr.success('Saved ' + saveObservableBatch.length + ' orders', 'Success');
         }
       );

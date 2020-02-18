@@ -65,7 +65,6 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
         Object.assign(this.report.fieldList, defaultScheduledFields);
         this.reportForm = this.report.CreateFormGroup();
         this.isLoading = false;
-        // console.log(this.reportForm);
       } else {
         this.reportId = +params.get(this.queryParam);
         this.apiData.getCustomerGroup(this.reportId).pipe(takeUntil(this.unsubscribe$)).subscribe(
@@ -76,7 +75,6 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
             if (this.report.fieldList.length === 0) {
               this.report.fieldList = [invoiceField];
             }
-            // console.log(this.reportForm);
           }
         );
       }
@@ -84,12 +82,7 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
   }
 
   saveGroup() {
-    console.log(this.report.fieldList);
-    console.log(this.report);
-    console.log(this.report.fieldList);
     this.report.SaveFormValues(this.reportForm);
-    console.log(this.report);
-    console.log(this.report.fieldList);
     this.apiData.saveCustomerGroup(this.report).subscribe(response => {
       this.toastr.success('Report settings saved successfully', 'Saved');
       if (this.report.id === 0) {
@@ -119,7 +112,6 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
     this.apiData.getCustomer(this.searchStr).subscribe(
       response => {
         this.groupAccounts.push(new FormControl(response.account + ',' + response.name));
-        // console.log(this.reportForm);
       }
     );
   }
@@ -129,8 +121,6 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
   }
 
   onDrop(event: CdkDragDrop<IFieldSettings[]>) {
-    console.log(event);
-    console.log(this.report.fieldList);
     if ((!event.isPointerOverContainer || event.container.id === 'allFieldList') && event.previousContainer.id !== 'allFieldList') {
       event.previousContainer.data.splice(event.previousIndex, 1);
     } else {
