@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { OrderFilterStorage } from 'src/app/common/services/orderFilterStorage.service';
 import { fieldSettings, IFieldSettings, defaultScheduledFields, invoiceField } from 'src/app/common/models/orderFields';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
-
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-report-settings',
@@ -40,13 +40,13 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
               private completerService: CompleterService,
               private toastr: ToastrService,
               private filterStore: OrderFilterStorage) {
+    const apiRoot = environment.apiEndpoint + 'GBSWorkSchedule/';
     this.dataService =
-      this.completerService.remote('http://warehouseapidev.penguinrandomhouse.co.uk/api/GBSWorkSchedule/Customer/Search/',
-       'account,name', 'account');
+      this.completerService.remote(apiRoot + 'Customer/Search/', 'account,name', 'account');
 
     this.dataService.descriptionField('name');
-    this.dataService.requestOptions({withCredentials: true});
-    }
+    this.dataService.requestOptions({ withCredentials: true });
+  }
 
   ngOnInit() {
     this.filterStore.currentPage = '';
@@ -73,7 +73,7 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
             this.report = apiResult;
             this.reportForm = this.report.CreateFormGroup();
             this.isLoading = false;
-            if (this.report.fieldList.length == 0 ) {
+            if (this.report.fieldList.length === 0) {
               this.report.fieldList = [invoiceField];
             }
             // console.log(this.reportForm);
@@ -85,18 +85,18 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
 
   saveGroup() {
     console.log(this.report.fieldList);
-      console.log(this.report);
-      console.log(this.report.fieldList);
-      this.report.SaveFormValues(this.reportForm);
-      console.log(this.report);
-      console.log(this.report.fieldList);
-      this.apiData.saveCustomerGroup(this.report).subscribe(response => {
-        this.toastr.success('Report settings saved successfully', 'Saved');
-        if (this.report.id === 0) {
-          this.report.id = +response;
-          this.router.navigate(['report-settings', this.report.id]);
-        }
-      },
+    console.log(this.report);
+    console.log(this.report.fieldList);
+    this.report.SaveFormValues(this.reportForm);
+    console.log(this.report);
+    console.log(this.report.fieldList);
+    this.apiData.saveCustomerGroup(this.report).subscribe(response => {
+      this.toastr.success('Report settings saved successfully', 'Saved');
+      if (this.report.id === 0) {
+        this.report.id = +response;
+        this.router.navigate(['report-settings', this.report.id]);
+      }
+    },
       error => {
         this.toastr.warning('A problem occurred saving the report', 'Not Saved');
       });
@@ -143,7 +143,7 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
         }
       }
     }
-    if (this.report.fieldList.length == 0 ) {
+    if (this.report.fieldList.length === 0) {
       this.report.fieldList = [invoiceField];
     }
   }

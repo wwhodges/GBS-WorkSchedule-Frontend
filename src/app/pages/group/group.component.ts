@@ -9,6 +9,7 @@ import { CompleterService, CompleterData, RemoteData } from 'ng2-completer';
 import { HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { OrderFilterStorage } from 'src/app/common/services/orderFilterStorage.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-group',
@@ -35,9 +36,9 @@ export class GroupComponent implements OnInit, OnDestroy {
               private completerService: CompleterService,
               private toastr: ToastrService,
               private filterStore: OrderFilterStorage) {
+    const apiRoot = environment.apiEndpoint + 'GBSWorkSchedule/';
     this.dataService =
-      this.completerService.remote('http://warehouseapidev.penguinrandomhouse.co.uk/api/GBSWorkSchedule/Customer/Search/',
-       'account,name', 'account');
+      this.completerService.remote(apiRoot + 'Customer/Search/', 'account,name', 'account');
 
     this.dataService.descriptionField('name');
     this.dataService.requestOptions({withCredentials: true});

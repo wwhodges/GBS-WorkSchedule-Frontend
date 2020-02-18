@@ -15,7 +15,7 @@ import { ReportComponent } from './pages/report/report.component';
 
 
 const routes: Routes = [
-  {path: 'filtertest', component: OrderFilterComponent},
+  {path: 'filter', component: OrderFilterComponent},
   {path: 'groups', component: GroupsComponent},
   {path: 'group/:id', component: GroupComponent},
   {path: 'report/:reportId', component: ReportComponent },
