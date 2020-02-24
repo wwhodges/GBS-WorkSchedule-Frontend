@@ -4,8 +4,8 @@ import { IActiveUser } from '../models/index';
 import { tap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { IUserSetting, IUserConfig } from '../models/userSetting.model';
-import { fieldSettings, defaultScheduledFields, defaultUnscheduledFields, IFieldSettings } from 'src/app/common/models/orderFields';
-import { environment } from '../../../environments/environment'
+import { defaultScheduledFields, defaultUnscheduledFields } from 'src/app/common/models/orderFields';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

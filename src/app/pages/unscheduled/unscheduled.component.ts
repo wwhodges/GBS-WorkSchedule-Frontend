@@ -95,20 +95,39 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
       );
   }
 
-  getExcel() {
+  public downloadExcel(): void {
     this.apiData.getOrderExcelFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        respData => { this.downLoadFile(respData, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); }
-      );
-  }
+      .subscribe(x => {
+        // It is necessary to create a new blob object with mime-type explicitly set
+        // otherwise only Chrome works like it should
+        const newBlob = new Blob([x as Blob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-  downLoadFile(data: any, type: string) {
-      const blob = new Blob([data], { type: type.toString() });
-      const url = window.URL.createObjectURL(blob);
-      const pwa = window.open(url);
-      if (!pwa || pwa.closed || typeof pwa.closed === 'undefined') {
-          alert('Please disable your Pop-up blocker and try again.');
-      }
+        // IE doesn't allow using a blob object directly as link href
+        // instead it is necessary to use msSaveOrOpenBlob
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(newBlob);
+          return;
+        }
+
+        // For other browsers:
+        // Create a link pointing to the ObjectURL containing the blob.
+        const data = window.URL.createObjectURL(newBlob);
+
+        const link = document.createElement('a');
+        link.href = data;
+        const date = new Date();
+        // tslint:disable-next-line: max-line-length
+        const currDate = `${date.getDate()}${date.getMonth() + 1}${date.getFullYear()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+        link.download = 'OrderList' + currDate + '.xlsx';
+        // this is necessary as link.click() does not work on the latest firefox
+        link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+        setTimeout(y => {
+          // For Firefox it is necessary to delay revoking the ObjectURL
+          window.URL.revokeObjectURL(data);
+          link.remove();
+        }, 100);
+      });
   }
 
   ngOnDestroy() {

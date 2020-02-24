@@ -369,7 +369,7 @@
                 <div class="form-group row">
                   <label for="comments" class="col-sm-4 col-form-label col-form-label-sm">Comments</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control form-control-sm" id="comments" formControlName="comments">
+                    <textarea class="form-control form-control-sm" id="comments" formControlName="comments" rows="5"></textarea>
                     <span *ngIf="orderForm.controls.comments.invalid" class="small text-danger">
                       Comments should be 255 characters or less
                     </span>
@@ -432,8 +432,10 @@
                   <div class="col-sm-12">
                     <button type="submit" class="btn btn-primary" (click)="submitForm()"
                       [disabled]="saveDisabled || !orderForm.valid">Save</button>
+                      <button type="button" class="btn btn-secondary ml-3" (click)="resetForm()"
+                      [disabled]="orderForm.pristine">Cancel</button>
                     <button type="button" class="btn btn-danger ml-3" (click)="deleteOrder()"
-                      [disabled]="!order.manualOrder">Delete</button>
+                      [disabled]="!order.manualOrder || order.id === 0">Delete</button>
                   </div>
                 </div>
               </div>

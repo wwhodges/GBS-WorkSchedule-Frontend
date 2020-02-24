@@ -67,6 +67,7 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
             this.orderForm = this.order.CreateFormGroup();
             this.isLoading = false;
             this.getCustomer();
+            console.log(this.orderForm);
           }
         );
       }
@@ -95,6 +96,10 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
         this.toastr.warning('Failed to delete: ' + error);
       }
     );
+  }
+
+  resetForm() {
+    this.orderForm = this.order.CreateFormGroup();
   }
 
   submitForm() {
