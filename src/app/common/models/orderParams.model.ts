@@ -103,7 +103,7 @@ export class OrderParams implements IOrderParams {
     actualDespDateTo = null;
     actualDespDateToOffset = null;
     invoiceDateFrom = null;
-    invoiceDateFromOffset = -182;
+    invoiceDateFromOffset = -60;
     invoiceDateTo = null;
     invoiceDateToOffset = null;
     filterWorkId = null;

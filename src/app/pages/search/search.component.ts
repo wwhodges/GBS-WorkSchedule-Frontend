@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ApiDataService, ActiveUserService } from 'src/app/common/services';
 import { ICustomerGroup } from 'src/app/common/models';
-import { takeUntil } from 'rxjs/operators';
-import { Subject, forkJoin } from 'rxjs';
+import { takeUntil, catchError } from 'rxjs/operators';
+import { Subject, forkJoin, of } from 'rxjs';
 import { OrderList } from 'src/app/common/models/orderList.model';
 import { FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -45,10 +45,10 @@ export class SearchComponent implements OnInit, OnDestroy {
   public orderParams: OrderParams;
 
   constructor(private route: ActivatedRoute,
-    private apiData: ApiDataService,
-    private userService: ActiveUserService,
-    private toastr: ToastrService,
-    private filterStore: OrderFilterStorage) { }
+              private apiData: ApiDataService,
+              private userService: ActiveUserService,
+              private toastr: ToastrService,
+              private filterStore: OrderFilterStorage) { }
 
   ngOnInit() {
     this.orders = new OrderList();
@@ -59,17 +59,20 @@ export class SearchComponent implements OnInit, OnDestroy {
 
       Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
       this.loadData();
-    }
-    else {
+    } else {
       this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
         this.orderParams = new OrderParams();
         this.searchString = params.get(this.queryParam);
         if (this.searchString) {
-          if (this.searchString.length === 5 && parseInt(this.searchString, 10) > 0) { this.orderParams.filterBatch = this.searchString; } else
-            if (this.searchString.length === 10 && parseInt(this.searchString, 10) > 0) { this.orderParams.filterAccount = this.searchString; } else
-              if (this.searchString.length === 8 && parseInt(this.searchString.substring(2, 4), 10) > 0) { this.orderParams.filterInvoice = this.searchString; } else {
-                this.orderParams.filterName = '%' + this.searchString + '%';
-              }
+          if (this.searchString.length === 5 && parseInt(this.searchString, 10) > 0) {
+            this.orderParams.filterBatch = this.searchString;
+          } else if (this.searchString.length === 10 && parseInt(this.searchString, 10) > 0) {
+            this.orderParams.filterAccount = this.searchString;
+          } else if (this.searchString.length === 8 && parseInt(this.searchString.substring(2, 4), 10) > 0) {
+            this.orderParams.filterInvoice = this.searchString;
+          } else {
+            this.orderParams.filterName = '%' + this.searchString + '%';
+          }
           this.loadData();
         }
       });
@@ -84,7 +87,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.orderParams.page = this.currentPage;
     this.isLoading = true;
-    this.filterStore.currentPage = 'search'
+    this.filterStore.currentPage = 'search';
     this.filterStore.currentFilter = JSON.stringify(this.orderParams);
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
@@ -153,14 +156,20 @@ export class SearchComponent implements OnInit, OnDestroy {
           // save order
           order.SaveFormValues(ordForm);
           saveObservableBatch.push(
-            this.apiData.updateOrder(order)
+            this.apiData.updateOrder(order).pipe(catchError((err) => {
+              this.toastr.error(err.error, 'Failure', {timeOut: 0});
+              return of(undefined);
+              }
+              ))
           );
         }
       }
       forkJoin(saveObservableBatch).subscribe(
         (response) => {
-          this.toastr.success('Saved ' + saveObservableBatch.length + ' orders', 'Success');
-        }
+          let success = saveObservableBatch.length;
+          response.forEach( resp => { if (resp === undefined) { success--; } } );
+          this.toastr.success('Saved ' + success + ' of ' + saveObservableBatch.length + ' orders', 'Success');
+        }, (error) => { console.log(error); }
       );
     }
     if ($event === 'cancel') {

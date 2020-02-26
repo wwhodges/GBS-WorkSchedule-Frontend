@@ -112,7 +112,8 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
           // redirect to created order
           this.router.navigate(['/order', response.id]);
         }, error => {
-          this.toastr.warning('Insert failed: ' + error);
+          console.log(error);
+          this.toastr.warning('Insert failed: ' + error.error);
           this.saveDisabled = false;
         }
       );
@@ -122,7 +123,8 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
           this.toastr.success('Order has been updated', 'Success');
           this.saveDisabled = false;
         }, error => {
-          this.toastr.warning('Update failed: ' + error);
+          console.log(error);
+          this.toastr.warning('Update failed: ' + error.error);
           this.saveDisabled = false;
         }
       );
