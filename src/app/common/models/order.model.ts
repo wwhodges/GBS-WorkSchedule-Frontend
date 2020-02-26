@@ -48,7 +48,7 @@ export class Order implements IOrder {
     site = 'G';
     invoice = 'MANORDER';
     invRun = 'MANUAL';
-    workType = 'MANUAL';
+    workType = '';
     batch = '00000';
     doc = '000';
     account: string;

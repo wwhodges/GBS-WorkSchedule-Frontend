@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil, delay } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { fieldSettings } from 'src/app/common/models/orderFields';
+import { fieldSettings, workTypeField } from 'src/app/common/models/orderFields';
 import { Customer } from 'src/app/common/models/customer.model';
 
 @Component({
@@ -23,6 +23,7 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
 
   public vistaStatusOptions = fieldSettings.find(f => f.name === 'vistaStatus').options;
   public statusOptions = fieldSettings.find(f => f.name === 'status').options;
+  public workTypeOptions = workTypeField.options;
 
   public isLoading = true;
   public saveDisabled = false;
@@ -39,6 +40,7 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
               private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
+    console.log(this.workTypeOptions);
     this.cust = new Customer();
     this.custForm = this.cust.CreateFormGroup();
 
