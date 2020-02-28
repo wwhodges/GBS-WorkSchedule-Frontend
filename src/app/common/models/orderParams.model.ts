@@ -5,6 +5,7 @@ export interface IOrderParams {
     filterStatus: string; // Get statusField.options
     filterSite: string; // Get siteField.options
     filterPrime: string; // Get primeField.options
+    filterWorkType: string; // Get workTypeField.options
 
     // scheduled status filters
     includeUnscheduled: boolean;
@@ -54,6 +55,7 @@ export interface IOrderParams {
     filterPalDest: string;
     filterHoldLoc: string;
     filterComments: string;
+    filterBrick: string;
 
     // Sorting
     sortString: string;
@@ -73,9 +75,11 @@ export interface IOrderParams {
 export class OrderParams implements IOrderParams {
     filterVistaStatus = '["Despatched","Part Despatched","Part Packed","Part Picked","Unstarted"]';
     // tslint:disable-next-line:max-line-length
-    filterStatus = '["","Despatched","Despatched 48Hr","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Complete","Complete 48Hr","Prepared","Prepared 48Hr","Cancelled","Credit","Pulp","Collection","On Hold"]';
+    filterStatus = '["","Despatched","Despatched 48Hr","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Complete","Complete 48Hr","Prepared","Prepared 48Hr","Cancelled","Credit","Pulp","Collection","On Hold","Pending"]';
     filterSite = '["G"]';
     filterPrime = '["H","X"]';
+    // tslint:disable-next-line:max-line-length
+    filterWorkType = '["", "Answers","Cash Sale","Chge Only","Cycl 24H","Cycle 24H","D2C 24hr","Drop Ship","Dues Rel","Dues rel","LP 24","PH 24","Planned","Prio Y","PriorityR","Proformas","Red HLine","Rev Dues","Samples","Spec Rel","Spec Rel2","Spec Rel3","Specials","Specific","Specific2","Stock","WHS Ret","WHS Trav"]';
     includeUnscheduled = true;
     includeScheduled = true;
     weightMin = null;
@@ -115,6 +119,7 @@ export class OrderParams implements IOrderParams {
     filterPalDest = '';
     filterHoldLoc = '';
     filterComments = '';
+    filterBrick = '';
     sortString = 'default';
     sortDir = 'ASC';
     sort = 0;
@@ -126,6 +131,16 @@ export class OrderParams implements IOrderParams {
 
     public deserialise(input: any) {
         Object.assign(this, input);
+        this.workDateFrom = input.workDateFrom === null ? null : new Date(input.workDateFrom);
+        this.workDateTo = input.workDateTo === null ? null : new Date(input.workDateTo);
+        this.despDateFrom = input.despDateFrom === null ? null : new Date(input.despDateFrom);
+        this.despDateTo = input.despDateTo === null ? null : new Date(input.despDateTo);
+        this.delDateFrom = input.delDateFrom === null ? null : new Date(input.delDateFrom);
+        this.delDateTo = input.delDateTo === null ? null : new Date(input.delDateTo);
+        this.actualDespDateFrom = input.actualDespDateFrom === null ? null : new Date(input.actualDespDateFrom);
+        this.actualDespDateTo = input.actualDespDateTo === null ? null : new Date(input.actualDespDateTo);
+        this.invoiceDateFrom = input.invoiceDateFrom === null ? null : new Date(input.invoiceDateFrom);
+        this.invoiceDateTo = input.invoiceDateTo === null ? null : new Date(input.invoiceDateTo);
         return this;
     }
 
@@ -135,6 +150,7 @@ export class OrderParams implements IOrderParams {
             filterStatus: new FormControl(this.filterStatus),
             filterPrime: new FormControl(this.filterPrime),
             filterSite: new FormControl(this.filterSite),
+            filterWorkType: new FormControl(this.filterWorkType),
             includeScheduled: new FormControl(this.includeScheduled),
             includeUnscheduled: new FormControl(this.includeUnscheduled),
             workDateFrom: new FormControl(this.workDateFrom),
@@ -174,6 +190,7 @@ export class OrderParams implements IOrderParams {
             filterPalDest: new FormControl(this.filterPalDest),
             filterHoldLoc: new FormControl(this.filterHoldLoc),
             filterComments: new FormControl(this.filterComments),
+            filterBrick: new FormControl(this.filterBrick),
             sortString: new FormControl(this.sortString),
             sortDir: new FormControl(this.sortDir),
             sort: new FormControl(this.sort),
@@ -233,5 +250,8 @@ export const sortOrderFields = [
     {description: 'palletNumbers', value: 135},
     {description: 'name', value: 136},
     {description: 'prime', value: 137},
-    {description: 'postCode', value: 138}
+    {description: 'postCode', value: 138},
+    {description: 'invRun', value: 139},
+    {description: 'workType', value: 140},
+    {description: 'brick', value: 141}
 ];

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
-  IWorkParams,
   IOrder,
   Order,
   IOrderSummary,
@@ -76,7 +75,7 @@ export class ApiDataService {
     return this.http.delete(apiURL, { withCredentials: true });
   }
 
-  getOrderBySearch(term: string, workParams: IWorkParams) {
+  /*getOrderBySearch(term: string, workParams: IWorkParams) {
     if (term.length === 5 && parseInt(term, 10) > 0) { workParams.BATCH = term; } else
       if (term.length === 10 && parseInt(term, 10) > 0) { workParams.ACCOUNT = term; } else
         if (term.length === 8 && parseInt(term.substring(2, 4), 10) > 0) { workParams.INVOICE = term; } else {
@@ -86,7 +85,7 @@ export class ApiDataService {
     return this.http.post<OrderList>(apiURL, workParams, { withCredentials: true }).pipe(
       map(response => new OrderList().deserialise(response))
     );
-  }
+  }*/
 
   getOrderFilteredType(workParams: OrderParams) {
     const apiURL = `${this.apiRoot}Order`;
@@ -98,6 +97,15 @@ export class ApiDataService {
   getOrderExcelFilteredType(workParams: OrderParams) {
     const apiURL = `${this.apiRoot}OrderExcel`;
     return this.http.post(apiURL, workParams, { withCredentials: true, responseType: 'blob' as 'json' });
+  }
+
+  putOrderExcel(formData: FormData) {
+    const ulheaders = new HttpHeaders();
+    /** In Angular 5, including the header Content-Type can invalidate your request */
+    ulheaders.append('Content-Type', 'multipart/form-data');
+    ulheaders.append('Accept', 'application/json');
+    const apiUrl = `${this.apiRoot}OrderExcel\Upload`;
+    return this.http.post(apiUrl, formData, { withCredentials: true, headers: ulheaders });
   }
 
   getOrderById(id: string) {

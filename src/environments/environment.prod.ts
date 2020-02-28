@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiEndpoint: 'http://warehouseapidev.penguinrandomhouse.co.uk/api/'
+  apiEndpoint: 'http://warehouseapi.penguinrandomhouse.co.uk/api/'
 };

@@ -41,6 +41,7 @@ export interface IOrder {
     palletNumbers: string;
     name: string;
     prime: string;
+    brick: string;
 }
 
 export class Order implements IOrder {
@@ -84,14 +85,15 @@ export class Order implements IOrder {
     palletNumbers = '';
     name = '';
     prime = '';
+    brick = '';
 
     public deserialise(input: any) {
         Object.assign(this, input);
-        this.dateInvoiced = new Date(this.dateInvoiced);
-        this.workDate = new Date(this.workDate);
-        this.delDate = new Date(this.delDate);
-        this.despDate = new Date(this.despDate);
-        this.dateDespatchedActual = new Date(this.dateDespatchedActual);
+        this.dateInvoiced = this.dateInvoiced === null ? null : new Date(this.dateInvoiced);
+        this.workDate = this.workDate === null ? null : new Date(this.workDate);
+        this.delDate = this.delDate === null ? null : new Date(this.delDate);
+        this.despDate = this.despDate === null ? null : new Date(this.despDate);
+        this.dateDespatchedActual = this.dateDespatchedActual === null ? null : new Date(this.dateDespatchedActual);
         return this;
     }
 
@@ -188,7 +190,8 @@ export class Order implements IOrder {
             palletCount: new FormControl(this.palletCount, [Validators.min(0), Validators.max(99999)]),
             palletNumbers: new FormControl(this.palletNumbers, [Validators.maxLength(255)]),
             name: new FormControl(this.name),
-            prime: new FormControl({value: this.prime, disabled: true})
+            prime: new FormControl({value: this.prime, disabled: true}),
+            brick: new FormControl({value: this.brick, disabled: true})
         });
         return OrderForm;
     }

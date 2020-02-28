@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
-import { Order, ICustomerGroup, IWorkParams, sortFields } from 'src/app/common/models';
-import { OrderParams } from '../models/orderParams.model';
+import { Order, ICustomerGroup } from 'src/app/common/models';
+import { OrderParams, sortOrderFields } from '../models/orderParams.model';
 import { group } from '@angular/animations';
 import { OrderList } from '../models/orderList.model';
 
@@ -23,7 +23,7 @@ export class OrderTableComponent implements OnChanges, OnInit {
   // public filterForm: FormGroup;
   public isFilterVisible = false;
 
-  private sortArray = sortFields;
+  private sortArray = sortOrderFields;
   public sortAscending = true;
   public currentSort = '';
 
@@ -96,9 +96,12 @@ export class OrderTableComponent implements OnChanges, OnInit {
     const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
     const groupObj = this.groups.find(grp => grp.id === +this.currentGroup);
     if (groupObj) {
-      const day = days[new Date().getDay() + groupObj.dayOffset % 7];
+      let dayNo = new Date().getDay() + groupObj.dayOffset % 7;
+      if (dayNo === 6 ) { dayNo = 1; }
+      if (dayNo === 0 ) { dayNo = 1; }
+      const day = days[dayNo];
       let newDestNo = groupObj.destinationBase + 1;
-      let currentDestination = day + newDestNo.toString();
+      let currentDestination = day + newDestNo.toString().padStart(2, '0');
       const items = this.ordersForm.get('orders') as FormArray;
       for (let i = 0; i < items.length; i++) {
         const row = items.at(i);
@@ -107,11 +110,16 @@ export class OrderTableComponent implements OnChanges, OnInit {
         if (box.value && palDest.value === '') {
           while ( this.orders.usedLocations.includes(currentDestination)) {
             newDestNo++;
-            currentDestination = day + newDestNo.toString();
+            currentDestination = day + newDestNo.toString().padStart(2, '0');
+          }
+          const existing = items.value.map( rowVal => rowVal.palDest );
+          while (existing.includes(currentDestination)) {
+            newDestNo++;
+            currentDestination = day + newDestNo.toString().padStart(2, '0');
           }
           palDest.setValue(currentDestination);
           newDestNo++;
-          currentDestination = day + newDestNo.toString();
+          currentDestination = day + newDestNo.toString().padStart(2, '0');
         }
       }
     }

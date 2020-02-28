@@ -56,6 +56,7 @@ export const vistaStatusField = {
         'Unstarted',
     ]
 };
+// tslint:disable-next-line:max-line-length
 export const dateDespatchedActualField = { name: 'dateDespatchedActual', edit: false, type: 'date', desc: 'Act Desp Date', size: '10', style: '', options: [] };
 export const dateInvoicedField = { name: 'dateInvoiced', edit: false, type: 'date', desc: 'Inv Date', size: '10', style: '', options: [] };
 export const nameField = { name: 'name', edit: false, type: 'text', desc: 'Name', size: '34', style: '', options: [] };
@@ -76,7 +77,8 @@ export const statusField = {
         'Credit',
         'Pulp',
         'Collection',
-        'On Hold'
+        'On Hold',
+        'Pending'
     ]
 };
 export const invWeightField = { name: 'invWeight', edit: false, type: 'text', desc: 'Weight', size: '8', style: '', options: [] };
@@ -90,7 +92,9 @@ export const despDateField = { name: 'despDate', edit: true, type: 'date', desc:
 export const pickedQtyField = { name: 'pickedQty', edit: false, type: 'text', desc: 'Picked Qty', size: '8', style: '', options: [] };
 export const pickedBulkField = { name: 'pickedBulk', edit: false, type: 'text', desc: 'Picked Bulk', size: '8', style: '', options: [] };
 export const pickedLooseField = { name: 'pickedLoose', edit: false, type: 'text', desc: 'Picked Loose', size: '8', style: '', options: [] };
+// tslint:disable-next-line:max-line-length
 export const vistaPickedField = { name: 'vistaPicked', edit: false, type: 'checkbox', desc: 'Picked (V)', size: '1', style: '', options: [] };
+// tslint:disable-next-line:max-line-length
 export const vistaPackedField = { name: 'vistaPacked', edit: false, type: 'checkbox', desc: 'Packed (V)', size: '1', style: '', options: [] };
 export const destinationField = { name: 'destination', edit: false, type: 'text', desc: 'Destination', size: '8', style: '', options: [] };
 export const scheduledField = { name: 'scheduled', edit: true, type: 'checkbox', desc: 'Scheduled', size: '1', style: '', options: [] };
@@ -99,12 +103,15 @@ export const benchField = { name: 'bench', edit: false, type: 'text', desc: 'Ben
 export const priorityField = { name: 'priority', edit: false, type: 'text', desc: 'Priority', size: '3', style: '', options: [] };
 export const pickedField = { name: 'picked', edit: false, type: 'checkbox', desc: 'Picked', size: '1', style: '', options: [] };
 export const packedField = { name: 'packed', edit: false, type: 'checkbox', desc: 'Packed', size: '1', style: '', options: [] };
+// tslint:disable-next-line:max-line-length
 export const palconPackedField = { name: 'palconPacked', edit: false, type: 'text', desc: 'Palcon Packed', size: '5', style: '', options: [] };
 export const commentsField = { name: 'comments', edit: false, type: 'text', desc: 'Comments', size: '60', style: '', options: [] };
 export const palletIdsField = { name: 'palletIds', edit: false, type: 'text', desc: 'Pallet Ids', size: '15', style: '', options: [] };
 export const palletCountField = { name: 'palletCount', edit: false, type: 'text', desc: 'Pallet Count', size: '6', style: '', options: [] };
+// tslint:disable-next-line:max-line-length
 export const palletNumbersField = { name: 'palletNumbers', edit: false, type: 'text', desc: 'Pallet Nos', size: '10', style: '', options: [] };
 export const primeField = { name: 'prime', edit: false, type: 'text', desc: 'Prime', size: '1', style: '', options: ['H', 'X'] };
+export const brickField = { name: 'brick', edit: false, type: 'text', desc: 'Brick', size: '4', style: '', options: [] };
 
 
 export const fieldSettings: IFieldSettings[] = [
@@ -145,7 +152,8 @@ export const fieldSettings: IFieldSettings[] = [
     palletIdsField,
     palletCountField,
     palletNumbersField,
-    primeField
+    primeField,
+    brickField
 ];
 
 export const defaultUnscheduledFields: IFieldSettings[] = [
