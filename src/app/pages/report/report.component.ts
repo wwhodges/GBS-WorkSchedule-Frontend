@@ -145,7 +145,6 @@ export class ReportComponent implements OnInit, OnDestroy {
       }
       forkJoin(saveObservableBatch).subscribe(
         (response) => {
-          console.log(response);
           let success = saveObservableBatch.length;
           response.forEach(resp => { if (resp === undefined) { success--; } });
           this.toastr.success('Saved ' + success + ' of ' + saveObservableBatch.length + ' orders', 'Success');
