@@ -90,6 +90,7 @@ export class Order implements IOrder {
         this.delDate = new Date(this.delDate);
         this.despDate = new Date(this.despDate);
         this.dateDespatchedActual = new Date(this.dateDespatchedActual);
+        if (this.destination !== '' && this.palDest === '') { this.palDest = this.destination; }
         return this;
     }
 
@@ -172,7 +173,7 @@ export class Order implements IOrder {
             picked: new FormControl(this.picked),
             packed: new FormControl(this.packed),
             holdLoc: new FormControl(this.holdLoc, [Validators.maxLength(80)]),
-            palDest: new FormControl(this.palDest, [Validators.maxLength(10)]),
+            palDest: new FormControl({value: this.palDest, disabled: this.destination !== ''}, [Validators.maxLength(10)]),
             palconPacked: new FormControl(this.palconPacked, [Validators.min(0), Validators.max(99999)]),
             status: new FormControl(this.status),
             comments: new FormControl(this.comments, [Validators.maxLength(255)]),
