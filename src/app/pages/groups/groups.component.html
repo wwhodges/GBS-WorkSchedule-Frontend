@@ -1,21 +1,28 @@
-<div class="card">
-    <div class="card-body">
-    <table class="table">
-    <tr>
-        <th>Group</th>
-        <th>Min Weight</th>
-        <th>Group By Acct</th>
-        <th>Base Destination</th>
-        <th>Unscheduled Orders</th>
-    </tr>
-    <tr *ngFor="let group of groups$ | async">
-        <td><a [routerLink]="['/group',group.id]">{{group.groupName}}</a></td>
-        <td>{{group.minWeight}}</td>
-        <td>{{group.groupByAcct}}</td>
-        <td>{{group.destinationBase}}</td>
-        <td>{{group.unscheduledOrders}}</td>
-    </tr>
-</table>
-<a class="btn btn-primary" [routerLink]="['/group','new']">Create New</a>
+<div *ngIf="(groups$ | async) as groups; else loading">
+    <div class="card">
+        <div class="card-body">
+        <table class="table">
+        <tr>
+            <th>Group</th>
+            <th>Base Destination</th>
+            <th>Day Offset</th>
+            <th>Delivery Days</th>
+            <th>Unscheduled Orders</th>
+            <th>Scheduled Orders</th>
+        </tr>
+        <tr *ngFor="let group of groups">
+            <td><a [routerLink]="['/group',group.id]">{{group.groupName}}</a></td>
+            <td>{{group.dayOffset}}</td>
+            <td>{{group.deliveryDays}}</td>
+            <td>{{group.groupByAcct}}</td>
+            <td>{{group.unscheduledOrders}}</td>
+            <td>{{group.scheduledOrders}}</td>
+        </tr>
+    </table>
+    <a class="btn btn-primary" [routerLink]="['/group','new']">Create New</a>
+    </div>
+    </div>
 </div>
-</div>
+<ng-template #loading>
+<app-loader-wrapper [showSpinner]="true"></app-loader-wrapper>
+</ng-template>

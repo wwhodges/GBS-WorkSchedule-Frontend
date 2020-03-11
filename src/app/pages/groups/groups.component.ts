@@ -16,7 +16,7 @@ export class GroupsComponent implements OnInit {
   constructor(private apiData: ApiDataService) { }
 
   ngOnInit() {
-    this.groups$ = this.apiData.getCustomerGroups('C', false);
+    this.groups$ = this.apiData.getCustomerGroups('C', true);
   }
 
 }
