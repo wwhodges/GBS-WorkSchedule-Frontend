@@ -94,6 +94,7 @@ export class Order implements IOrder {
         this.delDate = this.delDate === null ? null : new Date(this.delDate);
         this.despDate = this.despDate === null ? null : new Date(this.despDate);
         this.dateDespatchedActual = this.dateDespatchedActual === null ? null : new Date(this.dateDespatchedActual);
+        if (this.destination === ' ') { this.destination = ''; }
         if (this.destination !== '' && this.palDest === '') { this.palDest = this.destination; }        
         return this;
     }
