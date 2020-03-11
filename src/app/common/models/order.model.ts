@@ -5,6 +5,7 @@ export interface IOrder {
     site: string;
     invoice: string;
     invRun: string;
+    workType: string;
     batch: string;
     doc: string;
     account: string;
@@ -40,6 +41,7 @@ export interface IOrder {
     palletNumbers: string;
     name: string;
     prime: string;
+    brick: string;
 }
 
 export class Order implements IOrder {
@@ -47,6 +49,7 @@ export class Order implements IOrder {
     site = 'G';
     invoice = 'MANORDER';
     invRun = 'MANUAL';
+    workType = '';
     batch = '00000';
     doc = '000';
     account: string;
@@ -82,15 +85,16 @@ export class Order implements IOrder {
     palletNumbers = '';
     name = '';
     prime = '';
+    brick = '';
 
     public deserialise(input: any) {
         Object.assign(this, input);
-        this.dateInvoiced = new Date(this.dateInvoiced);
-        this.workDate = new Date(this.workDate);
-        this.delDate = new Date(this.delDate);
-        this.despDate = new Date(this.despDate);
-        this.dateDespatchedActual = new Date(this.dateDespatchedActual);
-        if (this.destination !== '' && this.palDest === '') { this.palDest = this.destination; }
+        this.dateInvoiced = this.dateInvoiced === null ? null : new Date(this.dateInvoiced);
+        this.workDate = this.workDate === null ? null : new Date(this.workDate);
+        this.delDate = this.delDate === null ? null : new Date(this.delDate);
+        this.despDate = this.despDate === null ? null : new Date(this.despDate);
+        this.dateDespatchedActual = this.dateDespatchedActual === null ? null : new Date(this.dateDespatchedActual);
+        if (this.destination !== '' && this.palDest === '') { this.palDest = this.destination; }        
         return this;
     }
 
@@ -99,6 +103,7 @@ export class Order implements IOrder {
         if (form.controls.site.value !== this.site) { return true; }
         if (form.controls.invoice.value !== this.invoice) { return true; }
         if (form.controls.invRun.value !== this.invRun) { return true; }
+        if (form.controls.workType.value !== this.workType) { return true; }
         if (form.controls.batch.value !== this.batch) { return true; }
         if (form.controls.doc.value !== this.doc) { return true; }
         if (form.controls.account.value !== this.account) { return true; }
@@ -146,6 +151,8 @@ export class Order implements IOrder {
                 [Validators.required, Validators.maxLength(8), Validators.minLength(8)]),
             invRun: new FormControl({ value: this.invRun, disabled: !this.manualOrder},
                 [Validators.maxLength(10)]),
+            workType: new FormControl({value: this.workType, disabled: !this.manualOrder},
+                [Validators.maxLength(10)]),
             batch: new FormControl({value: this.batch, disabled: !this.manualOrder}, [Validators.minLength(5), Validators.maxLength(5)]),
             doc: new FormControl({value: this.doc, disabled: !this.manualOrder}, [Validators.minLength(3), Validators.maxLength(3)]),
             account: new FormControl({value: this.account, disabled: !this.manualOrder},
@@ -184,7 +191,8 @@ export class Order implements IOrder {
             palletCount: new FormControl(this.palletCount, [Validators.min(0), Validators.max(99999)]),
             palletNumbers: new FormControl(this.palletNumbers, [Validators.maxLength(255)]),
             name: new FormControl(this.name),
-            prime: new FormControl({value: this.prime, disabled: true})
+            prime: new FormControl({value: this.prime, disabled: true}),
+            brick: new FormControl({value: this.brick, disabled: true})
         });
         return OrderForm;
     }

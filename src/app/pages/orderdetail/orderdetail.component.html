@@ -92,6 +92,15 @@
                   </div>
                 </div>
                 <div class="form-group row">
+                  <label for="workType" class="col-sm-4 col-form-label col-form-label-sm">Work Type</label>
+                  <div class="col-sm-8">
+                    <select formControlName="workType" class="form-control form-control-sm">
+                      <option *ngFor="let option of workTypeOptions" [value]="option">{{option}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
                   <label for="invWeight" class="col-sm-4 col-form-label col-form-label-sm">Weight</label>
                   <div class="col-sm-8">
                     <input type="number" class="form-control form-control-sm" id="invWeight"
@@ -209,13 +218,13 @@
                       formControlName="friendlyName">
                   </div>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                   <label for="accountGroup" class="col-sm-4 col-form-label col-form-label-sm">Account Group</label>
                   <div class="col-sm-8">
                     <input type="text" class="form-control form-control-sm" id="accountGroup"
                       formControlName="accountGroup" />
                   </div>
-                </div>
+                </div> -->
                 <div class="form-group row">
                   <label for="address1" class="col-sm-4 col-form-label col-form-label-sm">Address</label>
                   <div class="col-sm-8">

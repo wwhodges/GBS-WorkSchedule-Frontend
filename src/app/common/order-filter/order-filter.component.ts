@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { OrderParams, sortOrderFields } from '../models/orderParams.model';
-import { vistaStatusField, statusField } from '../models/orderFields';
+import { vistaStatusField, statusField, workTypeField } from '../models/orderFields';
 import { OrderFilterStorage } from '../services/orderFilterStorage.service';
 import { Router } from '@angular/router';
 
@@ -20,6 +20,7 @@ export class OrderFilterComponent implements OnInit, OnChanges {
   public statusOptions = statusField.options;
   public marketOptions = ['H', 'X'];
   public siteOptions = ['G'];
+  public workTypeOptions = workTypeField.options;
   public sortOptions = sortOrderFields;
   public sortOrders = [{description: 'Ascending', value: 'ASC'}, {description: 'Descending', value: 'DESC'}];
 
@@ -36,8 +37,7 @@ export class OrderFilterComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (this.filterStore.currentFilter) {
-      this.orderFilter = new OrderParams();
-      Object.assign(this.orderFilter, JSON.parse(this.filterStore.currentFilter));
+      this.orderFilter = new OrderParams().deserialise(JSON.parse(this.filterStore.currentFilter));
       this.orderFilterForm = this.orderFilter.CreateFormGroup();
       this.updateButton = true;
       this.currentPage = this.filterStore.currentPage;

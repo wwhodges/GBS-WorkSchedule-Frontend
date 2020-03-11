@@ -47,6 +47,9 @@
                         <a class="list-group-item list-group-item-action" [class.active]="paramSection == 12"
                             (click)="changeParam(12)" id="list-sort-list" data-toggle="list" role="tab"
                             aria-controls="sort">Sort Order</a>
+                            <a class="list-group-item list-group-item-action" [class.active]="paramSection == 13"
+                            (click)="changeParam(13)" id="list-workType-list" data-toggle="list" role="tab"
+                            aria-controls="workType">Work Type</a>                            
 
                     </div>
                 </div>
@@ -93,6 +96,11 @@
                                 <label for="comments" class="col-form-label col-form-label-sm">Comments</label>
                                 <input type="text" class="form-control form-control-sm" id="comments"
                                     formControlName="filterComments">
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <label for="brick" class="col-form-label col-form-label-sm">Brick</label>
+                                <input type="text" class="form-control form-control-sm" id="brick"
+                                    formControlName="filterBrick">
                             </div>
                         </div>
                         <div class="tab-content" id="nav-tabContent">
@@ -157,8 +165,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-content" id="nav-tabContent">
+                        <!--</div>
+                    <div class="tab-content" id="nav-tabContent">-->
                         <div class="tab-pane fade active show" id="list-status" *ngIf="paramSection == 3"
                             role="tabpanel" aria-labelledby="list-status-list">
                             <div class="col-12">
@@ -338,6 +346,14 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="tab-pane fade active show" id="list-workType" *ngIf="paramSection == 13"
+                            role="tabpanel" aria-labelledby="list-workType-list">
+                            <div class="col-12">
+                                <app-multiselect-input formControlName="filterWorkType" [options]="workTypeOptions">
+                                </app-multiselect-input>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>

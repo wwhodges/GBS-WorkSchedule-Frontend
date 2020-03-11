@@ -39,6 +39,7 @@ import { OrderFilterStorage } from './common/services/orderFilterStorage.service
 import { ReportsComponent } from './pages/reports/reports.component';
 import { ReportSettingsComponent } from './pages/report-settings/report-settings.component';
 import { ReportComponent } from './pages/report/report.component';
+import { FileuploadComponent } from './upload/fileupload/fileupload.component';
 
 export function SetupUser(setup: SetupUserService) {
   return () => setup.initialise();
@@ -66,7 +67,8 @@ export function SetupUser(setup: SetupUserService) {
     LoaderComponent,
     LoaderWrapperComponent,
     MultiSelectComponent,
-    OrderFilterComponent
+    OrderFilterComponent,
+    FileuploadComponent
   ],
   imports: [
     BrowserModule,

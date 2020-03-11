@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ApiDataService, ActiveUserService } from 'src/app/common/services';
 import { ICustomerGroup } from 'src/app/common/models';
-import { takeUntil } from 'rxjs/operators';
-import { Subject, forkJoin } from 'rxjs';
+import { takeUntil, catchError } from 'rxjs/operators';
+import { Subject, forkJoin, of } from 'rxjs';
 import { OrderList } from 'src/app/common/models/orderList.model';
 import { FormGroup, FormArray } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -138,14 +138,20 @@ export class ScheduleComponent implements OnInit, OnDestroy {
           // save order
           order.SaveFormValues(ordForm);
           saveObservableBatch.push(
-            this.apiData.updateOrder(order)
+            this.apiData.updateOrder(order).pipe(catchError((err) => {
+              this.toastr.error(err.error, 'Failure', {timeOut: 0});
+              return of(undefined);
+              }
+              ))
           );
         }
       }
       forkJoin(saveObservableBatch).subscribe(
         (response) => {
-          this.toastr.success('Saved ' + saveObservableBatch.length + ' orders', 'Success');
-        }
+          let success = saveObservableBatch.length;
+          response.forEach( resp => { if (resp === undefined) { success--; } } );
+          this.toastr.success('Saved ' + success + ' of ' + saveObservableBatch.length + ' orders', 'Success');
+        }, (error) => { console.log(error); }
       );
     }
     if ($event === 'cancel') {
