@@ -56,6 +56,7 @@ export interface IOrderParams {
     filterHoldLoc: string;
     filterComments: string;
     filterBrick: string;
+    excludeBrick: boolean;
 
     // Sorting
     sortString: string;
@@ -120,6 +121,7 @@ export class OrderParams implements IOrderParams {
     filterHoldLoc = '';
     filterComments = '';
     filterBrick = '';
+    excludeBrick = false;
     sortString = 'default';
     sortDir = 'ASC';
     sort = 0;
@@ -191,6 +193,7 @@ export class OrderParams implements IOrderParams {
             filterHoldLoc: new FormControl(this.filterHoldLoc),
             filterComments: new FormControl(this.filterComments),
             filterBrick: new FormControl(this.filterBrick),
+            excludeBrick: new FormControl(this.excludeBrick),
             sortString: new FormControl(this.sortString),
             sortDir: new FormControl(this.sortDir),
             sort: new FormControl(this.sort),
@@ -210,8 +213,8 @@ export class OrderParams implements IOrderParams {
 
 export const sortOrderFields = [
     {description: 'default', value: 0},
-    {description: 'Account Weight', value: 1},
-    {description: 'Postcode Weight', value: 2},
+    {description: 'Account Weight', value: 175},
+    {description: 'Postcode Weight', value: 176},
     {description: 'id', value: 100},
     {description: 'site', value: 101},
     {description: 'invoice', value: 102},
