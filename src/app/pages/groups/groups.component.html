@@ -8,15 +8,13 @@
             <th>Day Offset</th>
             <th>Delivery Days</th>
             <th>Unscheduled Orders</th>
-            <th>Scheduled Orders</th>
         </tr>
         <tr *ngFor="let group of groups">
             <td><a [routerLink]="['/group',group.id]">{{group.groupName}}</a></td>
+            <td>{{group.destinationBase}}</td>
             <td>{{group.dayOffset}}</td>
             <td>{{group.deliveryDays}}</td>
-            <td>{{group.groupByAcct}}</td>
             <td>{{group.unscheduledOrders}}</td>
-            <td>{{group.scheduledOrders}}</td>
         </tr>
     </table>
     <a class="btn btn-primary" [routerLink]="['/group','new']">Create New</a>

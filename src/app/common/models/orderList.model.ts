@@ -20,9 +20,9 @@ export class OrderList implements IOrderList {
         return this;
     }
 
-    public CreateFormGroup(): FormGroup {
+    public CreateFormGroup(dayOffset?: number, deliveryDays?: number): FormGroup {
         const ListForm = new FormArray([]);
-        this.orders.map((order) => ListForm.push(order.CreateFormGroup()));
+        this.orders.map((order) => ListForm.push(order.CreateFormGroup(dayOffset, deliveryDays)));
         const OrderListForm = new FormGroup({
             orders: ListForm
         });

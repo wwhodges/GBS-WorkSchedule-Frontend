@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
 import { ApiDataService, ActiveUserService } from 'src/app/common/services';
-import { ICustomerGroup } from 'src/app/common/models';
+import { ICustomerGroup, CustomerGroup } from 'src/app/common/models';
 import { takeUntil, catchError } from 'rxjs/operators';
 import { Subject, forkJoin, Observable, zip, of } from 'rxjs';
 import { OrderList } from 'src/app/common/models/orderList.model';
@@ -87,8 +87,16 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         apiResult => {
+          console.log(this.orderParams);
+          let thisGroup = this.customerGroups.find(grp => grp.id === this.orderParams.groupId);
+          console.log(thisGroup);
+          if (thisGroup === undefined) {
+            thisGroup = new CustomerGroup();
+            thisGroup.dayOffset = 0;
+          }
+          console.log(thisGroup);
           this.orders = apiResult;
-          this.ordersForm = apiResult.CreateFormGroup();
+          this.ordersForm = apiResult.CreateFormGroup(thisGroup.dayOffset);
           this.maxPages = this.orders.totalPages;
           this.isLoading = false;
         }, (error) => { console.log(error); }

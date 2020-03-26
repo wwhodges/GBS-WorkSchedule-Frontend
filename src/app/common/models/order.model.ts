@@ -95,7 +95,7 @@ export class Order implements IOrder {
         this.despDate = this.despDate === null ? null : new Date(this.despDate);
         this.dateDespatchedActual = this.dateDespatchedActual === null ? null : new Date(this.dateDespatchedActual);
         if (this.destination === ' ') { this.destination = ''; }
-        if (this.destination !== '' && this.palDest === '') { this.palDest = this.destination; }        
+        if (this.destination !== '' && this.palDest === '') { this.palDest = this.destination; }
         return this;
     }
 
@@ -144,7 +144,15 @@ export class Order implements IOrder {
         return false;
     }
 
-    public CreateFormGroup(): FormGroup {
+    public CreateFormGroup(dayOffset?: number, deliveryDays?: number): FormGroup {
+        if (dayOffset === undefined) { dayOffset = 0; }
+        if (deliveryDays === undefined) { deliveryDays = 1; }
+        if (!this.scheduled) {
+            this.workDate.setDate(new Date().getDate() + dayOffset);
+            this.despDate.setDate(new Date().getDate() + dayOffset);
+            this.delDate.setDate(this.despDate.getDate() + deliveryDays);
+        }
+
         const OrderForm = new FormGroup({
             id: new FormControl({ value: this.id, disabled: true}),
             site: new FormControl({value: this.site, disabled: !this.manualOrder}, [Validators.minLength(1), Validators.maxLength(1)]),
