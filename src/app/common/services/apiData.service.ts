@@ -54,6 +54,7 @@ export class ApiDataService {
       groupType: group.groupType,
       destinationBase: group.destinationBase,
       dayOffset: group.dayOffset,
+      deliveryDays: group.deliveryDays,
       includeExcludeAccounts: group.includeExcludeAccounts,
       matchAllBranches: group.matchAllBranches,
       accounts: group.accounts,

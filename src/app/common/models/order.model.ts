@@ -145,6 +145,7 @@ export class Order implements IOrder {
     }
 
     public CreateFormGroup(dayOffset?: number, deliveryDays?: number): FormGroup {
+        console.log(deliveryDays);
         if (dayOffset === undefined) { dayOffset = 0; }
         if (deliveryDays === undefined) { deliveryDays = 1; }
         if (!this.scheduled) {

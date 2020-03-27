@@ -7,6 +7,7 @@ export interface ICustomerGroup {
     groupType: string;
     destinationBase: number;
     dayOffset: number;
+    deliveryDays: number;
     unscheduledOrders: number;
     scheduledOrders: number;
     includeExcludeAccounts: number;
@@ -22,6 +23,7 @@ export class CustomerGroup implements ICustomerGroup {
     groupType = 'C';
     destinationBase = 0;
     dayOffset = 0;
+    deliveryDays = 1;
     unscheduledOrders = 0;
     scheduledOrders = 0;
     includeExcludeAccounts = 0;
@@ -46,6 +48,7 @@ export class CustomerGroup implements ICustomerGroup {
             groupType: new FormControl(this.groupType),
             destinationBase: new FormControl(this.destinationBase),
             dayOffset: new FormControl(this.dayOffset),
+            deliveryDays: new FormControl(this.deliveryDays),
             unscheduledOrders: new FormControl(this.unscheduledOrders),
             scheduledOrders: new FormControl(this.scheduledOrders),
             includeExcludeAccounts: new FormControl(this.includeExcludeAccounts),

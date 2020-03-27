@@ -87,16 +87,14 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         apiResult => {
-          console.log(this.orderParams);
           let thisGroup = this.customerGroups.find(grp => grp.id === this.orderParams.groupId);
-          console.log(thisGroup);
           if (thisGroup === undefined) {
             thisGroup = new CustomerGroup();
             thisGroup.dayOffset = 0;
+            thisGroup.deliveryDays = 1;
           }
-          console.log(thisGroup);
           this.orders = apiResult;
-          this.ordersForm = apiResult.CreateFormGroup(thisGroup.dayOffset);
+          this.ordersForm = apiResult.CreateFormGroup(thisGroup.dayOffset, thisGroup.deliveryDays);
           this.maxPages = this.orders.totalPages;
           this.isLoading = false;
         }, (error) => { console.log(error); }
