@@ -22,6 +22,7 @@ export class GroupComponent implements OnInit, OnDestroy {
   private queryParam = 'id';
   public group: CustomerGroup;
   public isLoading = true;
+  public saveDisabled = false;
   public groupForm: FormGroup = new FormGroup({});
 
   private unsubscribe$: Subject<void> = new Subject();
@@ -73,8 +74,10 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   saveGroup() {
       this.group.SaveFormValues(this.groupForm);
+      this.saveDisabled = true;
       this.apiData.saveCustomerGroup(this.group).subscribe(response => {
         this.toastr.success('Group saved successfully', 'Saved');
+        this.saveDisabled = false;
         if (this.group.id === 0) {
           this.group.id = +response;
           this.router.navigate(['group', this.group.id]);
@@ -82,6 +85,7 @@ export class GroupComponent implements OnInit, OnDestroy {
       },
       error => {
         this.toastr.warning('A problem occurred saving the group', 'Not Saved');
+        this.saveDisabled = false;
       });
   }
 
