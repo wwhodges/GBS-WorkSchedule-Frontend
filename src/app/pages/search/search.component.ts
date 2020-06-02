@@ -70,6 +70,8 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.orderParams.filterAccount = this.searchString;
           } else if (this.searchString.length === 8 && parseInt(this.searchString.substring(2, 4), 10) > 0) {
             this.orderParams.filterInvoice = this.searchString;
+          } else if (this.searchString.length > 3 && parseInt(this.searchString.substr(3,3), 10) > 0) {
+            this.orderParams.filterPalDest = this.searchString;
           } else {
             this.orderParams.filterName = '%' + this.searchString + '%';
           }
