@@ -8,9 +8,13 @@ import { ApiDataService } from 'src/app/common/services';
 })
 export class FileuploadComponent implements OnInit {
 
+  uploadResults: any;
+  selectFile: boolean;
+
   constructor(private apiData: ApiDataService) { }
 
   ngOnInit() {
+    this.selectFile = true;
   }
 
   fileChange(event) {
@@ -20,7 +24,11 @@ export class FileuploadComponent implements OnInit {
       const formData: FormData = new FormData();
       formData.append('uploadFile', file, file.name);
       this.apiData.putOrderExcel(formData).subscribe(
-        response => console.log(response),
+        response => {
+          this.uploadResults = response;
+          this.selectFile = false;
+          //console.log(this.uploadResults);
+        },
         error => console.log(error)
       );
     }

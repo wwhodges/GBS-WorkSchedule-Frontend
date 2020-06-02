@@ -145,13 +145,13 @@ export class Order implements IOrder {
     }
 
     public CreateFormGroup(dayOffset?: number, deliveryDays?: number): FormGroup {
-        console.log(deliveryDays);
+        const now = new Date();
         if (dayOffset === undefined) { dayOffset = 0; }
         if (deliveryDays === undefined) { deliveryDays = 1; }
         if (!this.scheduled) {
-            this.workDate.setDate(new Date().getDate() + dayOffset);
-            this.despDate.setDate(new Date().getDate() + dayOffset);
-            this.delDate.setDate(this.despDate.getDate() + deliveryDays);
+            this.workDate = new Date(now.getFullYear(),now.getMonth(),now.getDate() + dayOffset);
+            this.despDate = new Date(now.getFullYear(),now.getMonth(),now.getDate() + dayOffset);
+            this.delDate = new Date(now.getFullYear(),now.getMonth(),now.getDate() + dayOffset + deliveryDays);
         }
 
         const OrderForm = new FormGroup({

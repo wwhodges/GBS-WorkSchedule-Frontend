@@ -1,1 +1,33 @@
-<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".xlsx">
+<div *ngIf="selectFile">
+    <h3>Select file for Upload</h3>
+    <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".xlsx">
+</div>
+<div *ngIf="!selectFile">
+    <h3>Upload Results</h3>
+    <table class="table">
+        <tr>
+            <th>Invoice</th>
+            <th>Order Id</th>
+            <th>Status</th>
+            <th>Changes</th>
+        </tr>
+        <tr *ngFor="let change of uploadResults">
+            <td><a [routerLink]="['/order', change.orderId]"
+                style="cursor: pointer;">{{change.invoice}}</a></td>
+            <td>{{change.orderId}}</td>
+            <td>{{change.status}}</td>
+            <td>
+                <table>
+                    <tr *ngFor="let changeField of change.changes">
+                        <th>{{changeField.field}}</th>
+                        <th>Old Value</th>
+                        <td>{{changeField.oldValue}}</td>
+                        <th>New Value</th>
+                        <td>{{changeField.newValue}}</td>
+                    </tr>
+                </table>    
+            </td>
+        </tr>
+    </table>
+</div>
+

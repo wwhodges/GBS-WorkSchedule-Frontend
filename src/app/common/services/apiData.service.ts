@@ -105,7 +105,7 @@ export class ApiDataService {
     /** In Angular 5, including the header Content-Type can invalidate your request */
     ulheaders.append('Content-Type', 'multipart/form-data');
     ulheaders.append('Accept', 'application/json');
-    const apiUrl = `${this.apiRoot}OrderExcel\Upload`;
+    const apiUrl = `${this.apiRoot}OrderExcel/Upload`;
     return this.http.post(apiUrl, formData, { withCredentials: true, headers: ulheaders });
   }
 

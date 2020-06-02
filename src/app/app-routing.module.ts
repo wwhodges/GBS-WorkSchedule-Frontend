@@ -12,6 +12,7 @@ import { OrderFilterComponent } from './common/order-filter/order-filter.compone
 import { ReportsComponent } from './pages/reports/reports.component';
 import { ReportSettingsComponent } from './pages/report-settings/report-settings.component';
 import { ReportComponent } from './pages/report/report.component';
+import { FileuploadComponent } from './upload/fileupload/fileupload.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path: 'search/:terms', component: SearchComponent },
   {path: 'search', component: SearchComponent },
   {path: 'order/:id', component: OrderdetailComponent },
+  {path: 'upload', component: FileuploadComponent },
   {path: '**', component: DashboardComponent }
 ];
 

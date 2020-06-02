@@ -97,8 +97,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           }
         },
         "lint": {
@@ -127,6 +126,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "GBSApps"
+    }
+  },
+  "defaultProject": "GBSApps",
+  "cli": {
+    "analytics": "c66e6c5f-a002-4e07-b2ba-c8a8f3a6b6f5"
+  }
 }
