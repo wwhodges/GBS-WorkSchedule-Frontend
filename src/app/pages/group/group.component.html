@@ -40,7 +40,7 @@
                             <div class="col-sm-6">
                                 <button type="button" class="btn btn-primary btn-sm"
                                     (click)="saveGroup()" [disabled]="saveDisabled || !groupForm.valid">{{ group.id === 0 ? 'Create Group' : 'Save Changes' }}</button>
-                                <button type="button" class="btn btn-danger btn-sm ml-2" (click)="deleteGroup()">Delete
+                                <button type="button" class="btn btn-danger btn-sm ml-2" (click)="openConfirmWindow(template)">Delete
                                     Group</button>
                             </div>
                         </div>
@@ -98,3 +98,10 @@
         <app-order-filter [orderFilterForm]="groupForm.get('filterParams')"></app-order-filter>
     </form>
 </ng-container>
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Really delete this group?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="cancel()" >Cancel</button>
+    </div>
+</ng-template>

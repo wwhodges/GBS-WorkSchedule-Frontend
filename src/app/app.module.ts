@@ -7,6 +7,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { Ng2CompleterModule } from 'ng2-completer';
 import { ToastrModule } from 'ngx-toastr';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -82,6 +83,7 @@ export function SetupUser(setup: SetupUserService) {
     BsDatepickerModule.forRoot(),
     CollapseModule.forRoot(),
     AccordionModule.forRoot(),
+    ModalModule.forRoot(),
     Ng2CompleterModule,
     ToastrModule.forRoot(),
     DragDropModule

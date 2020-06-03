@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
 import { ICustomerGroup, CustomerGroup } from 'src/app/common/models';
 import { Subject } from 'rxjs';
 import { ApiDataService } from 'src/app/common/services';
@@ -10,6 +10,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { OrderFilterStorage } from 'src/app/common/services/orderFilterStorage.service';
 import { environment } from '../../../environments/environment';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-group',
@@ -31,12 +32,15 @@ export class GroupComponent implements OnInit, OnDestroy {
   public searchStr: string;
   public dataService: RemoteData;
 
+  public modalRef: BsModalRef;
+
   constructor(private apiData: ApiDataService,
               private route: ActivatedRoute,
               private router: Router,
               private completerService: CompleterService,
               private toastr: ToastrService,
-              private filterStore: OrderFilterStorage) {
+              private filterStore: OrderFilterStorage,
+              private modalService: BsModalService) {
     const apiRoot = environment.apiEndpoint + 'GBSWorkSchedule/';
     this.dataService =
       this.completerService.remote(apiRoot + 'Customer/Search/', 'account,name', 'account');
@@ -87,6 +91,19 @@ export class GroupComponent implements OnInit, OnDestroy {
         this.toastr.warning('A problem occurred saving the group', 'Not Saved');
         this.saveDisabled = false;
       });
+  }
+
+  openConfirmWindow(template: TemplateRef<any>){
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.deleteGroup();
+    this.modalRef.hide();
+  }
+
+  cancel(): void {
+    this.modalRef.hide();
   }
 
   deleteGroup() {
