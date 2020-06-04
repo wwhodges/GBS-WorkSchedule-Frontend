@@ -1,33 +1,94 @@
 <div *ngIf="selectFile">
-    <h3>Select file for Upload</h3>
-    <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".xlsx">
+    <div class="row">
+        <div class="col col-12 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <div class="text-center">Upload Excel File</div>
+                    </h3>
+                    <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".xlsx">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-12 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <div class="text-center">Excel File Specifications</div>
+                    </h3>
+                    <span>Files must:
+                        <ul>
+                            <li>be in .xlsx format</li>
+                            <li>contain a first row with column headings</li>
+                            <li>include either the invoice number or order id for the order to be updated</li>
+                        </ul>
+                    </span>
+                    <span>
+                        Fields which will be checked for are:
+                        <ul>
+                            <li>id</li>
+                            <li>invoice</li>
+                            <li>ALP</li>
+                            <li>bench</li>
+                            <li>priority</li>
+                            <li>picked</li>
+                            <li>packed</li>
+                            <li>palDest</li>
+                            <li>holdLoc</li>
+                            <li>palconPacked</li>
+                            <li>status</li>
+                            <li>comments</li>
+                            <li>workDate</li>
+                            <li>delDate</li>
+                            <li>despDate</li>
+                            <li>palletIds</li>
+                            <li>palletCount</li>
+                            <li>palletNumbers</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div *ngIf="!selectFile">
-    <h3>Upload Results</h3>
-    <table class="table">
-        <tr>
-            <th>Invoice</th>
-            <th>Order Id</th>
-            <th>Status</th>
-            <th>Changes</th>
-        </tr>
-        <tr *ngFor="let change of uploadResults">
-            <td><a [routerLink]="['/order', change.orderId]"
-                style="cursor: pointer;">{{change.invoice}}</a></td>
-            <td>{{change.orderId}}</td>
-            <td>{{change.status}}</td>
-            <td>
-                <table>
-                    <tr *ngFor="let changeField of change.changes">
-                        <th>{{changeField.field}}</th>
-                        <th>Old Value</th>
-                        <td>{{changeField.oldValue}}</td>
-                        <th>New Value</th>
-                        <td>{{changeField.newValue}}</td>
+    <div class="col col-12 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">
+                    <div class="text-center">Upload Results</div>
+                </h3>
+                <div *ngIf="uploadResults.length === 0">
+                    No orders were found in the file
+                </div>
+                <table class="table" *ngIf="uploadResults.length !== 0">
+                    <tr>
+                        <th>Invoice</th>
+                        <th>Order Id</th>
+                        <th>Status</th>
+                        <th>Changes</th>
                     </tr>
-                </table>    
-            </td>
-        </tr>
-    </table>
+                    <tr *ngFor="let change of uploadResults">
+                        <td><a [routerLink]="['/order', change.orderId]" style="cursor: pointer;">{{change.invoice}}</a>
+                        </td>
+                        <td>{{change.orderId}}</td>
+                        <td>{{change.status}}</td>
+                        <td>
+                            <table>
+                                <tr *ngFor="let changeField of change.changes">
+                                    <th>{{changeField.field}}</th>
+                                    <th>Old Value</th>
+                                    <td>{{changeField.oldValue}}</td>
+                                    <th>New Value</th>
+                                    <td>{{changeField.newValue}}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-
