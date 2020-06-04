@@ -63,20 +63,18 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
         this.orderParams = new OrderParams();
         this.searchString = params.get(this.queryParam);
-        if (this.searchString) {
-          if (this.searchString.length === 5 && parseInt(this.searchString, 10) > 0) {
-            this.orderParams.filterBatch = this.searchString;
-          } else if (this.searchString.length === 10 && parseInt(this.searchString, 10) > 0) {
-            this.orderParams.filterAccount = this.searchString;
-          } else if (this.searchString.length === 8 && parseInt(this.searchString.substring(2, 4), 10) > 0) {
-            this.orderParams.filterInvoice = this.searchString;
-          } else if (this.searchString.length > 3 && parseInt(this.searchString.substr(3,3), 10) > 0) {
-            this.orderParams.filterPalDest = this.searchString;
-          } else {
-            this.orderParams.filterName = '%' + this.searchString + '%';
-          }
-          this.loadData();
+        if(/^\d{5}$/.test(this.searchString)) {
+          this.orderParams.filterBatch = this.searchString;
+        } else if (/^\d{10}$/.test(this.searchString)) {
+          this.orderParams.filterAccount = this.searchString;
+        } else if (/^[A-Z,a-z]{3}\d{2,}$/.test(this.searchString)) {
+          this.orderParams.filterPalDest = this.searchString;
+        } else if (/^[A-Z,a-z].\d{4}[A-Z,a-z]{2}$/.test(this.searchString)) {
+          this.orderParams.filterInvoice = this.searchString;
+        } else {
+          this.orderParams.filterName = '%' + this.searchString + '%';
         }
+          this.loadData();
       });
     }
 
