@@ -100,7 +100,7 @@ export class OrderTableComponent implements OnChanges, OnInit {
       if (dayNo === 6 ) { dayNo = 1; }
       if (dayNo === 0 ) { dayNo = 1; }
       const day = days[dayNo];
-      let newDestNo = groupObj.destinationBase + 1;
+      let newDestNo = groupObj.destinationBase;
       let currentDestination = day + newDestNo.toString().padStart(2, '0');
       const items = this.ordersForm.get('orders') as FormArray;
       for (let i = 0; i < items.length; i++) {
