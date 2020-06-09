@@ -58,7 +58,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
       this.orderParams = new OrderParams();
       this.searchString = params.get(this.queryParam);
-      if (this.filterStore.currentPage === 'search' && this.searchString === '')
+      if (this.filterStore.currentPage === 'search' && this.searchString === null)
       {
         Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
       } else {
