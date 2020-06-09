@@ -74,7 +74,7 @@ export interface IOrderParams {
 }
 
 export class OrderParams implements IOrderParams {
-    filterVistaStatus = '["Despatched","Part Despatched","Part Packed","Part Picked","Unstarted"]';
+    filterVistaStatus = '["Despatched","Part Despatched","Part Packed","Part Picked","Unstarted","In Progress"]';
     // tslint:disable-next-line:max-line-length
     filterStatus = '["","Despatched","Despatched 48Hr","In Progress","In Progress 48Hr","Unstarted","Unstarted 48Hr","Complete","Complete 48Hr","Prepared","Prepared 48Hr","Cancelled","Credit","Pulp","Collection","On Hold","Pending"]';
     filterSite = '["G"]';

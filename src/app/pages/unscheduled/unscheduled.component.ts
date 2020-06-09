@@ -49,7 +49,7 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     if (this.filterStore.currentPage === 'unscheduled') {
       Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
     } else {
-      this.orderParams.filterVistaStatus = '["Part Despatched","Part Packed","Part Picked","Unstarted"]';
+      this.orderParams.filterVistaStatus = '["Part Despatched","Part Packed","Part Picked","Unstarted","In Progress"]';
     }
     this.orders = new OrderList();
     this.loadData();
