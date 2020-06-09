@@ -53,6 +53,7 @@ export const vistaStatusField = {
         'Part Despatched',
         'Part Packed',
         'Part Picked',
+        'In Progress',
         'Unstarted',
     ]
 };

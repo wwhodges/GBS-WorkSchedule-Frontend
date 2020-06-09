@@ -53,16 +53,15 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.orders = new OrderList();
     this.listedFields = this.userService.config.unscheduledScreen;
-
     this.orderParams = new OrderParams();
-    if (this.filterStore.currentPage === 'search') {
 
-      Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
-      this.loadData();
-    } else {
-      this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
-        this.orderParams = new OrderParams();
-        this.searchString = params.get(this.queryParam);
+    this.route.paramMap.pipe(takeUntil(this.unsubscribeParams$)).subscribe((params) => {
+      this.orderParams = new OrderParams();
+      this.searchString = params.get(this.queryParam);
+      if (this.filterStore.currentPage === 'search' && this.searchString === '')
+      {
+        Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
+      } else {
         if(/^\d{5}$/.test(this.searchString)) {
           this.orderParams.filterBatch = this.searchString;
         } else if (/^\d{10}$/.test(this.searchString)) {
@@ -74,10 +73,9 @@ export class SearchComponent implements OnInit, OnDestroy {
         } else {
           this.orderParams.filterName = '%' + this.searchString + '%';
         }
-          this.loadData();
-      });
-    }
-
+      }
+      this.loadData();
+    });
   }
 
   groupSelected(group: string) {
