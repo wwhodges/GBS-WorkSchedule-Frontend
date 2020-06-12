@@ -41,6 +41,7 @@ import { ReportsComponent } from './pages/reports/reports.component';
 import { ReportSettingsComponent } from './pages/report-settings/report-settings.component';
 import { ReportComponent } from './pages/report/report.component';
 import { FileuploadComponent } from './upload/fileupload/fileupload.component';
+import { UsedDestinationsComponent } from './pages/used-destinations/used-destinations.component';
 
 export function SetupUser(setup: SetupUserService) {
   return () => setup.initialise();
@@ -69,7 +70,8 @@ export function SetupUser(setup: SetupUserService) {
     LoaderWrapperComponent,
     MultiSelectComponent,
     OrderFilterComponent,
-    FileuploadComponent
+    FileuploadComponent,
+    UsedDestinationsComponent
   ],
   imports: [
     BrowserModule,

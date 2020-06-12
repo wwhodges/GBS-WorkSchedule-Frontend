@@ -1,0 +1,30 @@
+<app-loader-wrapper [showSpinner]="dataLoading">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Destination</th>
+                <th>Invoice</th>
+                <th>Invoice Date</th>
+                <th>Vista Status</th>
+                <th>Scheduled</th>
+                <th>Schedule Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let day of dayOrders">
+            <tr *ngIf="day.orders.length > 0" class="table-info">
+                <th colspan="6">{{day.desc}}</th>
+            </tr>
+            <tr *ngFor="let order of day.orders">
+                <td>{{order.palDest === '' ? order.destination : order.palDest}}</td>
+                <td><a [routerLink]="['/order', order.id]"
+                    style="cursor: pointer;">{{order.invoice}}</a></td>
+                <td>{{order.dateInvoiced | date: 'dd/MM/yyyy'}}</td>
+                <td>{{order.vistaStatus}}</td>
+                <td>{{order.scheduled}}</td>
+                <td>{{order.status}}</td>                
+            </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</app-loader-wrapper>

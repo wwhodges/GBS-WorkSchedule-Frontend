@@ -95,6 +95,13 @@ export class ApiDataService {
     );
   }
 
+  getOrderUsedDestinations() {
+    const apiURL = `${this.apiRoot}Order/Used`;
+    return this.http.get<OrderList>(apiURL, { withCredentials: true }).pipe(
+      map(response => new OrderList().deserialise(response))
+    );    
+  }
+
   getOrderExcelFilteredType(workParams: OrderParams) {
     const apiURL = `${this.apiRoot}OrderExcel`;
     return this.http.post(apiURL, workParams, { withCredentials: true, responseType: 'blob' as 'json' });
