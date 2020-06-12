@@ -45,6 +45,7 @@ export class NavbarComponent implements OnInit {
     this.apiData.getCustomerGroups('R',false).subscribe(reps => {
       const reportsMenu = {menuName: 'Reports', menuLink: '', menuActive: false, subMenu:
       reps.map( rep => {return {menuName: rep.groupName, menuLink: '/report/' + rep.id, menuActive: false, subMenu: []} } )};
+      reportsMenu.subMenu.push({menuName: 'Used Destinations', menuLink: '/used', menuActive: false, subMenu: []});
       reportsMenu.subMenu.push({menuName: 'divider', menuLink: '', menuActive: false, subMenu: []});
       reportsMenu.subMenu.push({menuName: 'Maintenance', menuLink: '/reports', menuActive: false, subMenu: []});
       reportsMenu.subMenu.push({menuName: 'Excel Upload', menuLink: '/upload', menuActive: false, subMenu: []});
