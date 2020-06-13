@@ -78,6 +78,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
           this.ordersForm = apiResult.CreateFormGroup();
           this.maxPages = this.orders.totalPages;
           this.isLoading = false;
+          console.log(this.orders);
         }, (error) => { console.log(error); }
       );
   }
