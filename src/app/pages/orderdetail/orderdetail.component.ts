@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { Order } from 'src/app/common/models';
 import { ApiDataService } from 'src/app/common/services';
 import { Subject, of } from 'rxjs';
@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { fieldSettings, workTypeField } from 'src/app/common/models/orderFields';
 import { Customer } from 'src/app/common/models/customer.model';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-orderdetail',
@@ -33,11 +34,14 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
   public cust: Customer;
   public custForm: FormGroup;
 
+  modalRef: BsModalRef;
+
   constructor(private apiData: ApiDataService,
               private route: ActivatedRoute,
               private router: Router,
               private toastr: ToastrService,
-              private cdr: ChangeDetectorRef) { }
+              private cdr: ChangeDetectorRef,
+              private modalService: BsModalService) { }
 
   ngOnInit() {
     this.cust = new Customer();
@@ -127,6 +131,17 @@ export class OrderdetailComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+  confirm(): void {
+    this.orderForm.controls['vistaStatus'].enable();
+    this.modalRef.hide();
+  }
+  decline(): void {
+    this.modalRef.hide();
   }
 
 }

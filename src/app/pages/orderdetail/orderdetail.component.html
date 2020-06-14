@@ -84,11 +84,14 @@
               <div class="col">
                 <div class="form-group row">
                   <label for="vistaStatus" class="col-sm-4 col-form-label col-form-label-sm">Status</label>
-                  <div class="col-sm-8">
+                  <div class="col-sm-6">
                     <select formControlName="vistaStatus" class="form-control form-control-sm">
                       <option *ngFor="let option of vistaStatusOptions" [value]="option">{{option}}
                       </option>
                     </select>
+                  </div>
+                  <div class="col-sm-2">
+                    <button class="btn btn-sm btn-danger btn-block" (click)="openModal(allowEdit)">Allow Edit</button>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -456,3 +459,12 @@
     </div>
   </div>
 </ng-container>
+
+<ng-template #allowEdit>
+  <div class="modal-body text-center">
+    <p>The Vista status should only be updated manually in exceptional circimstances</p>
+    <p>Do you wish to proceed?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
+  </div>
+</ng-template>
