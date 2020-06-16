@@ -73,7 +73,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         } else {
           this.orderParams.filterName = '%' + this.searchString + '%';
         }
-        this.orderParams.invoiceDateFromOffset = null;
+        this.orderParams.invoiceDateFromOffset = -90;
       }
       this.loadData();
     });
