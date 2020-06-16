@@ -125,12 +125,26 @@ export class ApiDataService {
 
   insertOrder(order: IOrder) {
     const apiURL = `${this.apiRoot}Order`;
-    return this.http.put<IOrder>(apiURL, order, { withCredentials: true });
+    const newOrder = new Order();
+    Object.assign(newOrder, order);
+    newOrder.dateInvoiced = convertDate(order.dateInvoiced);
+    newOrder.delDate = convertDate(order.delDate);
+    newOrder.despDate = convertDate(order.despDate);
+    newOrder.workDate = convertDate(order.workDate);
+    newOrder.dateDespatchedActual = convertDate(order.dateDespatchedActual);    
+    return this.http.put<IOrder>(apiURL, newOrder, { withCredentials: true });
   }
 
   updateOrder(order: IOrder) {
     const apiURL = `${this.apiRoot}Order/` + order.id;
-    return this.http.put<IOrder>(apiURL, order, { withCredentials: true });
+    const newOrder = new Order();
+    Object.assign(newOrder,order);
+    newOrder.dateInvoiced = convertDate(order.dateInvoiced);
+    newOrder.delDate = convertDate(order.delDate);
+    newOrder.despDate = convertDate(order.despDate);
+    newOrder.workDate = convertDate(order.workDate);
+    newOrder.dateDespatchedActual = convertDate(order.dateDespatchedActual);    
+    return this.http.put<IOrder>(apiURL, newOrder, { withCredentials: true });
   }
 
   deleteOrder(order: IOrder) {
@@ -138,4 +152,11 @@ export class ApiDataService {
     return this.http.delete<IOrder>(apiURL, { withCredentials: true });
   }
 
+}
+
+function convertDate(myDate: Date): Date {
+  //When Angular sends the date as JSON it convert to UTC taking the timezone into account
+  //this compensates for that so the correct date is saved instead of taking an hour off during BST
+  const newDate = myDate === null ? null : new Date(myDate.getTime() - ( myDate.getTimezoneOffset() * 60 * 1000));
+  return newDate;
 }

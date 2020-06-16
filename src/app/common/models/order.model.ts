@@ -208,6 +208,6 @@ export class Order implements IOrder {
     }
 
     public SaveFormValues(orderForm: FormGroup) {
-        Object.assign(this, orderForm.value);
+        Object.assign(this, orderForm.getRawValue);
     }
 }
