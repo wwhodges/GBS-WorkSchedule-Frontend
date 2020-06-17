@@ -143,7 +143,7 @@ export class ApiDataService {
     newOrder.delDate = convertDate(order.delDate);
     newOrder.despDate = convertDate(order.despDate);
     newOrder.workDate = convertDate(order.workDate);
-    newOrder.dateDespatchedActual = convertDate(order.dateDespatchedActual);    
+    newOrder.dateDespatchedActual = convertDate(order.dateDespatchedActual);
     return this.http.put<IOrder>(apiURL, newOrder, { withCredentials: true });
   }
 
