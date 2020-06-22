@@ -51,6 +51,11 @@ export class ReportComponent implements OnInit, OnDestroy {
         this.report = reportData;
         this.orderParams = this.report.filterParams;
         this.listedFields = this.report.fieldList;
+
+        this.orderParams.groupId = this.reportId;
+        this.orderParams.matchAllBranches = this.report.matchAllBranches;
+        this.orderParams.includeExcludeAccounts = this.report.includeExcludeAccounts;
+  
         this.reportString = 'report/' + this.report.id.toString();
         if (this.filterStore.currentPage === this.reportString) {
           Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
