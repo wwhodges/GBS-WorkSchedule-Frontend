@@ -64,7 +64,7 @@ export class Order implements IOrder {
     destination = '';
     vistaStatus = 'Unstarted';
     dateDespatchedActual = null;
-    dateInvoiced = new Date();
+    dateInvoiced = new Date(new Date().setHours(0,0,0,0));
     scheduled = false;
     manualOrder = true;
     alp = '';
@@ -77,9 +77,9 @@ export class Order implements IOrder {
     palconPacked = 0;
     status = 'Unstarted';
     comments = '';
-    workDate = new Date();
-    delDate = new Date();
-    despDate = new Date();
+    workDate = new Date(new Date().setHours(0,0,0,0));
+    delDate = new Date(new Date().setHours(0,0,0,0));
+    despDate = new Date(new Date().setHours(0,0,0,0));
     palletIds = '';
     palletCount = 0;
     palletNumbers = '';
