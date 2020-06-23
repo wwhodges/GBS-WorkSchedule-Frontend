@@ -148,11 +148,9 @@ export class Order implements IOrder {
         const now = new Date();
         if (dayOffset === undefined) { dayOffset = 0; }
         if (deliveryDays === undefined) { deliveryDays = 1; }
-        if (!this.scheduled) {
-            this.workDate = new Date(now.getFullYear(),now.getMonth(),now.getDate() + dayOffset);
-            this.despDate = new Date(now.getFullYear(),now.getMonth(),now.getDate() + dayOffset);
-            this.delDate = new Date(now.getFullYear(),now.getMonth(),now.getDate() + dayOffset + deliveryDays);
-        }
+        if (this.workDate === null) this.workDate = new Date(now.getFullYear(),now.getMonth(),now.getDate() + dayOffset);
+        if (this.despDate === null) this.despDate = new Date(now.getFullYear(),now.getMonth(),now.getDate() + dayOffset);
+        if (this.delDate === null) this.delDate = new Date(now.getFullYear(),now.getMonth(),now.getDate() + dayOffset + deliveryDays);
 
         const OrderForm = new FormGroup({
             id: new FormControl({ value: this.id, disabled: true}),
