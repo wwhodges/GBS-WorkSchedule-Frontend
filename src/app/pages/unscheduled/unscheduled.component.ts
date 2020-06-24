@@ -47,7 +47,7 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.orderParams = new OrderParams();
     if (this.filterStore.currentPage === 'unscheduled') {
-      Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
+      Object.assign(this.orderParams, this.filterStore.currentFilter);
     } else {
       this.orderParams.filterVistaStatus = '["Part Despatched","Part Packed","Part Picked","Unstarted","In Progress"]';
     }
@@ -83,7 +83,7 @@ export class UnscheduledComponent implements OnInit, OnDestroy {
     );
     this.orderParams.page = this.currentPage;
     this.filterStore.currentPage = 'unscheduled';
-    this.filterStore.currentFilter = JSON.stringify(this.orderParams);
+    this.filterStore.currentFilter = this.orderParams;
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         apiResult => {

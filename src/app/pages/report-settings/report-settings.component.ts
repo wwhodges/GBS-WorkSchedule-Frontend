@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CustomerGroup } from 'src/app/common/models';
+import { CustomerGroup, OrderParams } from 'src/app/common/models';
 import { Subject } from 'rxjs';
 import { ApiDataService } from 'src/app/common/services';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -50,7 +50,7 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.filterStore.currentPage = '';
-    this.filterStore.currentFilter = '';
+    this.filterStore.currentFilter = new OrderParams();
     this.loadData();
   }
 

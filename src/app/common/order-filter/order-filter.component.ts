@@ -37,7 +37,8 @@ export class OrderFilterComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     if (this.filterStore.currentFilter) {
-      this.orderFilter = new OrderParams().deserialise(JSON.parse(this.filterStore.currentFilter));
+      this.orderFilter = new OrderParams(); //new OrderParams().deserialise(JSON.parse(this.filterStore.currentFilter));
+      Object.assign(this.orderFilter, this.filterStore.currentFilter);
       this.orderFilterForm = this.orderFilter.CreateFormGroup();
       this.updateButton = true;
       this.currentPage = this.filterStore.currentPage;
@@ -61,7 +62,7 @@ export class OrderFilterComponent implements OnInit, OnChanges {
 
   filterUpdated() {
     Object.assign(this.orderFilter, this.orderFilterForm.value);
-    this.filterStore.currentFilter = JSON.stringify(this.orderFilter);
+    this.filterStore.currentFilter = this.orderFilter; //JSON.stringify(this.orderFilter);
     this.router.navigate([this.currentPage]);
   }
 

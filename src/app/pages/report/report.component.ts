@@ -58,7 +58,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   
         this.reportString = 'report/' + this.report.id.toString();
         if (this.filterStore.currentPage === this.reportString) {
-          Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
+          Object.assign(this.orderParams, this.filterStore.currentFilter);
         }
         this.loadData();
       });
@@ -69,7 +69,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.orderParams.page = this.currentPage;
     this.filterStore.currentPage = this.reportString;
-    this.filterStore.currentFilter = JSON.stringify(this.orderParams);
+    this.filterStore.currentFilter = this.orderParams; //JSON.stringify(this.orderParams);
     this.isLoading = true;
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$))
       .subscribe(

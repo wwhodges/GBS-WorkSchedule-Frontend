@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, TemplateRef } from '@angular/core';
-import { ICustomerGroup, CustomerGroup } from 'src/app/common/models';
+import { ICustomerGroup, CustomerGroup, OrderParams } from 'src/app/common/models';
 import { Subject } from 'rxjs';
 import { ApiDataService } from 'src/app/common/services';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,7 +51,7 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.filterStore.currentPage = '';
-    this.filterStore.currentFilter = '';
+    this.filterStore.currentFilter = new OrderParams();
     this.loadData();
   }
 

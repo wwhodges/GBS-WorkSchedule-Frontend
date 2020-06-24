@@ -60,7 +60,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.searchString = params.get(this.queryParam);
       if (this.filterStore.currentPage === 'search' && this.searchString === null)
       {
-        Object.assign(this.orderParams, JSON.parse(this.filterStore.currentFilter));
+        Object.assign(this.orderParams, this.filterStore.currentFilter);
       } else {
         if(/^\d{5}$/.test(this.searchString)) {
           this.orderParams.filterBatch = this.searchString;
@@ -87,7 +87,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.orderParams.page = this.currentPage;
     this.isLoading = true;
     this.filterStore.currentPage = 'search';
-    this.filterStore.currentFilter = JSON.stringify(this.orderParams);
+    this.filterStore.currentFilter = this.orderParams; //JSON.stringify(this.orderParams);
     this.apiData.getOrderFilteredType(this.orderParams).pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
         this.orders = apiResult;

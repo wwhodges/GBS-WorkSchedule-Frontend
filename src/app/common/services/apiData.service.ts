@@ -7,11 +7,10 @@ import {
   ICustomerGroup,
   CustomerGroup
 } from '../models/index';
-import { IOrderList, OrderList } from '../models/orderList.model';
+import { OrderList } from '../models/orderList.model';
 import { map } from 'rxjs/operators';
-import { IUserSetting } from '../models/userSetting.model';
-import { IOrderParams, OrderParams } from '../models/orderParams.model';
-import { ICustomer, Customer } from '../models/customer.model';
+import { OrderParams } from '../models/orderParams.model';
+import { Customer } from '../models/customer.model';
 import { environment } from '../../../environments/environment';
 
 
@@ -90,7 +89,20 @@ export class ApiDataService {
 
   getOrderFilteredType(workParams: OrderParams) {
     const apiURL = `${this.apiRoot}Order`;
-    return this.http.post<OrderList>(apiURL, workParams, { withCredentials: true }).pipe(
+    const newParams = new OrderParams();
+    Object.assign(newParams, workParams);
+    newParams.invoiceDateFrom = convertDate(newParams.invoiceDateFrom);
+    newParams.invoiceDateTo = convertDate(newParams.invoiceDateTo);
+    newParams.workDateFrom = convertDate(newParams.workDateFrom);
+    newParams.workDateTo = convertDate(newParams.workDateTo);
+    newParams.despDateFrom = convertDate(newParams.despDateFrom);
+    newParams.despDateTo = convertDate(newParams.despDateTo);
+    newParams.delDateFrom = convertDate(newParams.delDateFrom);
+    newParams.delDateTo = convertDate(newParams.delDateTo);
+    newParams.actualDespDateFrom = convertDate(newParams.actualDespDateFrom);
+    newParams.actualDespDateTo = convertDate(newParams.actualDespDateTo);
+    
+    return this.http.post<OrderList>(apiURL, newParams, { withCredentials: true }).pipe(
       map(response => new OrderList().deserialise(response))
     );
   }
@@ -104,7 +116,19 @@ export class ApiDataService {
 
   getOrderExcelFilteredType(workParams: OrderParams) {
     const apiURL = `${this.apiRoot}OrderExcel`;
-    return this.http.post(apiURL, workParams, { withCredentials: true, responseType: 'blob' as 'json' });
+    const newParams = new OrderParams();
+    Object.assign(newParams, workParams);
+    newParams.invoiceDateFrom = convertDate(newParams.invoiceDateFrom);
+    newParams.invoiceDateTo = convertDate(newParams.invoiceDateTo);
+    newParams.workDateFrom = convertDate(newParams.workDateFrom);
+    newParams.workDateTo = convertDate(newParams.workDateTo);
+    newParams.despDateFrom = convertDate(newParams.despDateFrom);
+    newParams.despDateTo = convertDate(newParams.despDateTo);
+    newParams.delDateFrom = convertDate(newParams.delDateFrom);
+    newParams.delDateTo = convertDate(newParams.delDateTo);
+    newParams.actualDespDateFrom = convertDate(newParams.actualDespDateFrom);
+    newParams.actualDespDateTo = convertDate(newParams.actualDespDateTo);
+    return this.http.post(apiURL, newParams, { withCredentials: true, responseType: 'blob' as 'json' });
   }
 
   putOrderExcel(formData: FormData) {
