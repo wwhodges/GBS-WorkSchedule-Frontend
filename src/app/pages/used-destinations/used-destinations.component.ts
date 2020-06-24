@@ -30,7 +30,6 @@ export class UsedDestinationsComponent implements OnInit, OnDestroy {
     this.apiData.getOrderUsedDestinations().pipe(takeUntil(this.unsubscribe$)).subscribe(
       apiResult => {
         this.orders = apiResult;
-        console.log(this.orders);
         this.isLoading = false;
         this.dayOrders = [{ desc: 'MON', orders: this.orders.orders.filter( ord => ord.destination.startsWith('MON') || ord.palDest.startsWith('MON')).sort(compare) },
                           { desc: 'TUE', orders: this.orders.orders.filter( ord => ord.destination.startsWith('TUE') || ord.palDest.startsWith('TUE')).sort(compare) },
@@ -40,7 +39,6 @@ export class UsedDestinationsComponent implements OnInit, OnDestroy {
                           { desc: 'SAT', orders: this.orders.orders.filter( ord => ord.destination.startsWith('SAT') || ord.palDest.startsWith('SAT')).sort(compare) },
                           { desc: 'SUN', orders: this.orders.orders.filter( ord => ord.destination.startsWith('SUN') || ord.palDest.startsWith('SUN')).sort(compare) }
                 ];
-        console.log(this.dayOrders);
       }, (error) => { console.log(error); }
     );
   }

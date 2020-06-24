@@ -27,7 +27,6 @@ export class FileuploadComponent implements OnInit {
         response => {
           this.uploadResults = response;
           this.selectFile = false;
-          //console.log(this.uploadResults);
         },
         error => console.log(error)
       );
