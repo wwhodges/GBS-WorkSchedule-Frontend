@@ -83,6 +83,8 @@ export class ReportSettingsComponent implements OnInit, OnDestroy {
 
   saveGroup() {
     this.report.SaveFormValues(this.reportForm);
+    console.log(this.reportForm);
+    console.log(this.report);
     this.apiData.saveCustomerGroup(this.report).subscribe(response => {
       this.toastr.success('Report settings saved successfully', 'Saved');
       if (this.report.id === 0) {

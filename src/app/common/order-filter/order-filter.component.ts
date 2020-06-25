@@ -36,7 +36,7 @@ export class OrderFilterComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    if (this.filterStore.currentFilter) {
+    if (this.filterStore.currentFilter && !this.orderFilterForm) {
       this.orderFilter = new OrderParams(); //new OrderParams().deserialise(JSON.parse(this.filterStore.currentFilter));
       Object.assign(this.orderFilter, this.filterStore.currentFilter);
       this.orderFilterForm = this.orderFilter.CreateFormGroup();
