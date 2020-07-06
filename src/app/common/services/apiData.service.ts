@@ -185,13 +185,13 @@ function convertDate(myDate: Date): Date {
   return newDate;
 }
 
-function setFromToTime(inputDate: Date, toFrom: string) {
+function setFromToTime(inputDate: Date, fromTo: string) {
   // John S - PRHUKWD-151 / INC0274891
   // bsDatePicker can include the current time as part of the date object in certain situations, which can
   // cause 0 rows to be returned if running a query for a single date.  This function sets the start/end
   // of day times for from/to dates to avoid this.
   if (inputDate == null) { return null; }
-  if (toFrom === 'from') { inputDate.setHours(0, 0, 0); }
-  if (toFrom === 'to') { inputDate.setHours(23, 59, 59); }
+  if (fromTo === 'from') { inputDate.setHours(0, 0, 0); }
+  if (fromTo === 'to') { inputDate.setHours(23, 59, 59); }
   return inputDate;
 }
