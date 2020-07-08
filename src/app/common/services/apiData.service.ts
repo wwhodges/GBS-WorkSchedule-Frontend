@@ -101,7 +101,7 @@ export class ApiDataService {
     newParams.delDateTo = convertDate(newParams.delDateTo);
     newParams.actualDespDateFrom = convertDate(newParams.actualDespDateFrom);
     newParams.actualDespDateTo = convertDate(newParams.actualDespDateTo);
-    
+
     return this.http.post<OrderList>(apiURL, newParams, { withCredentials: true }).pipe(
       map(response => new OrderList().deserialise(response))
     );
@@ -111,23 +111,23 @@ export class ApiDataService {
     const apiURL = `${this.apiRoot}Order/Used`;
     return this.http.get<OrderList>(apiURL, { withCredentials: true }).pipe(
       map(response => new OrderList().deserialise(response))
-    );    
+    );
   }
 
   getOrderExcelFilteredType(workParams: OrderParams) {
     const apiURL = `${this.apiRoot}OrderExcel`;
     const newParams = new OrderParams();
     Object.assign(newParams, workParams);
-    newParams.invoiceDateFrom = convertDate(newParams.invoiceDateFrom);
-    newParams.invoiceDateTo = convertDate(newParams.invoiceDateTo);
-    newParams.workDateFrom = convertDate(newParams.workDateFrom);
-    newParams.workDateTo = convertDate(newParams.workDateTo);
-    newParams.despDateFrom = convertDate(newParams.despDateFrom);
-    newParams.despDateTo = convertDate(newParams.despDateTo);
-    newParams.delDateFrom = convertDate(newParams.delDateFrom);
-    newParams.delDateTo = convertDate(newParams.delDateTo);
-    newParams.actualDespDateFrom = convertDate(newParams.actualDespDateFrom);
-    newParams.actualDespDateTo = convertDate(newParams.actualDespDateTo);
+    newParams.invoiceDateFrom = convertDate(setFromToTime(newParams.invoiceDateFrom, 'from'));
+    newParams.invoiceDateTo = convertDate(setFromToTime(newParams.invoiceDateTo, 'to'));
+    newParams.workDateFrom = convertDate(setFromToTime(newParams.workDateFrom, 'from'));
+    newParams.workDateTo = convertDate(setFromToTime(newParams.workDateTo, 'to'));
+    newParams.despDateFrom = convertDate(setFromToTime(newParams.despDateFrom, 'from'));
+    newParams.despDateTo = convertDate(setFromToTime(newParams.despDateTo, 'to'));
+    newParams.delDateFrom = convertDate(setFromToTime(newParams.delDateFrom, 'from'));
+    newParams.delDateTo = convertDate(setFromToTime(newParams.delDateTo, 'to'));
+    newParams.actualDespDateFrom = convertDate(setFromToTime(newParams.actualDespDateFrom, 'from'));
+    newParams.actualDespDateTo = convertDate(setFromToTime(newParams.actualDespDateTo, 'to'));
     return this.http.post(apiURL, newParams, { withCredentials: true, responseType: 'blob' as 'json' });
   }
 
@@ -155,14 +155,14 @@ export class ApiDataService {
     newOrder.delDate = convertDate(order.delDate);
     newOrder.despDate = convertDate(order.despDate);
     newOrder.workDate = convertDate(order.workDate);
-    newOrder.dateDespatchedActual = convertDate(order.dateDespatchedActual);    
+    newOrder.dateDespatchedActual = convertDate(order.dateDespatchedActual);
     return this.http.put<IOrder>(apiURL, newOrder, { withCredentials: true });
   }
 
   updateOrder(order: IOrder) {
     const apiURL = `${this.apiRoot}Order/` + order.id;
     const newOrder = new Order();
-    Object.assign(newOrder,order);
+    Object.assign(newOrder, order);
     newOrder.dateInvoiced = convertDate(order.dateInvoiced);
     newOrder.delDate = convertDate(order.delDate);
     newOrder.despDate = convertDate(order.despDate);
@@ -179,8 +179,19 @@ export class ApiDataService {
 }
 
 function convertDate(myDate: Date): Date {
-  //When Angular sends the date as JSON it convert to UTC taking the timezone into account
-  //this compensates for that so the correct date is saved instead of taking an hour off during BST
+  // When Angular sends the date as JSON it convert to UTC taking the timezone into account
+  // this compensates for that so the correct date is saved instead of taking an hour off during BST
   const newDate = myDate === null ? null : new Date(myDate.getTime() - ( myDate.getTimezoneOffset() * 60 * 1000));
   return newDate;
+}
+
+function setFromToTime(inputDate: Date, fromTo: string) {
+  // John S - PRHUKWD-151 / INC0274891
+  // bsDatePicker can include the current time as part of the date object in certain situations, which can
+  // cause 0 rows to be returned if running a query for a single date.  This function sets the start/end
+  // of day times for from/to dates to avoid this.
+  if (inputDate == null) { return null; }
+  if (fromTo === 'from') { inputDate.setHours(0, 0, 0); }
+  if (fromTo === 'to') { inputDate.setHours(23, 59, 59); }
+  return inputDate;
 }
