@@ -80,7 +80,7 @@ export class OrderParams implements IOrderParams {
     filterSite = '["G"]';
     filterPrime = '["H","X"]';
     // tslint:disable-next-line:max-line-length
-    filterWorkType = '["", "Answers","Cash Sale","Chge Only","Cycl 24H","Cycle 24H","D2C 24hr","Drop Ship","Dues Rel","Dues rel","LP 24","PH 24","Planned","Prio Y","PriorityR","Proformas","Red HLine","Rev Dues","Samples","Spec Rel","Spec Rel2","Spec Rel3","Specials","Specific","Specific2","Stock","WHS Ret","WHS Trav"]';
+    filterWorkType = '["", "Answers","Cash Sale","Chge Only","Cycl 24H","Cycle 24H","D2C 24hr","Drop Ship","Dues Rel","Dues rel","Mixed","LP 24","PH 24","Planned","Prio Y","PriorityR","Proformas","Red HLine","Rev Dues","Samples","Spec Rel","Spec Rel2","Spec Rel3","Specials","Specific","Specific2","Stock","WHS Ret","WHS Trav"]';
     includeUnscheduled = true;
     includeScheduled = true;
     weightMin = null;
