@@ -25,6 +25,7 @@ export const workTypeField = {
         'Dues Rel',
         'Dues rel',
         'LP 24',
+        'Mixed',
         'PH 24',
         'Planned',
         'Prio Y',
